@@ -1,0 +1,9 @@
+form {
+  align-items: center;
+  display: flex;
+  gap: var(--space-1x);
+}
+
+input {
+  flex-grow: 1;
+}

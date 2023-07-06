@@ -1,0 +1,27 @@
+{
+  "app": {
+    "title": "Suno",
+    "tagline": "Direction of the sun during car trips"
+  },
+  "nav": {
+    "continue": "Continue"
+  },
+  "cookie": {
+    "title": "Cookie consent",
+    "advisory": "Legal advisory",
+    "accept": "Accept"
+  },
+  "journey": {
+    "title": "Journey",
+    "from": {
+      "label": "From",
+      "placeholder": "Choose starting point..."
+    },
+    "to": {
+      "label": "To",
+      "placeholder": "Choose destination..."
+    },
+    "search": "Search",
+    "searchResults": "Choose location matching '{{query}}':"
+  }
+}

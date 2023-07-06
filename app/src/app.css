@@ -1,0 +1,9 @@
+#app {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+}
+
+#app > * {
+  margin: var(--space-4x);
+}

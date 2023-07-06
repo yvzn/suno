@@ -1,0 +1,10 @@
+section {
+  padding-block-start: var(--space-2x);
+}
+
+li {
+  list-style-type: '\1F4CD';
+  list-style-position: inside;
+  margin-block-start: var(--space-2x);
+  margin-block-end: var(--space-2x);
+}

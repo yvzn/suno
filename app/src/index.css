@@ -1,0 +1,23 @@
+* {
+  font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro,
+    sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --space-1x: 0.5rem;
+  --space-2x: calc(2 * var(--space-1x));
+  --space-4x: calc(4 * var(--space-1x));
+}
+
+html,
+body {
+  height: 100dvh;
+}
+
+input,
+button {
+  padding: var(--space-1x);
+}
