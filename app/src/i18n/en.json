@@ -22,6 +22,20 @@
       "placeholder": "Choose destination..."
     },
     "search": "Search",
-    "searchResults": "Choose location matching '{{query}}':"
+    "searchResults": "Choose location for '{{query}}':",
+    "searchResultsEmpty": "No location found for '{{query}}'. Please try another search."
+  },
+  "notFound": {
+    "title": "Not found",
+    "message": "The requested content is either deleted or has been moved. Sorry for inconvenience."
+  },
+  "directions": {
+    "title": "Directions",
+    "message": "From {{from}} to {{to}}:"
+  },
+  "fetch": {
+    "loading": "Loading...",
+    "retry": "Retry",
+    "error": "Failed to load results. Are you online ?"
   }
 }

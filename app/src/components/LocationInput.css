@@ -4,6 +4,20 @@ form {
   gap: var(--space-1x);
 }
 
-input {
+span {
+  align-items: center;
+  display: flex;
   flex-grow: 1;
+  position: relative;
+}
+
+input {
+  width: 100%;
+}
+
+.has-coords span::after {
+  content: '\A0\2714';
+  color: green;
+  position: absolute;
+  right: var(--space-1x);
 }
