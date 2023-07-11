@@ -20,8 +20,8 @@ export function serializeJourney(from, to) {
   return journey;
 }
 
-export function deserializeJourney(string) {
-  const params = parseSearchParams(string);
+export function deserializeJourney(searchParams) {
+  const params = parseSearchParams(searchParams);
   return {
     from: {
       name: params['f'],

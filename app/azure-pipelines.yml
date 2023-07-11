@@ -20,6 +20,17 @@ jobs:
     inputs:
       command: 'ci'
       workingDir: 'app'
+  - task: DownloadSecureFile@1
+    name: dotEnvProduction
+    displayName: 'Download .env.production'
+    inputs:
+      secureFile: '.env.production'
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        echo Installing $(dotEnvProduction.secureFilePath) to build directory
+        cp $(dotEnvProduction.secureFilePath) $(Build.Repository.LocalPath)/app/.env.production
   - task: Npm@1
     displayName: 'npm build'
     inputs:
