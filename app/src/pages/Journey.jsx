@@ -4,7 +4,9 @@ import { Link } from 'preact-router';
 
 import { LocationInput } from '../components/LocationInput';
 import { LocationSearchResults } from '../components/LocationSearchResults';
+import { StartDateInput } from '../components/StartDateInput';
 import { serializeJourney } from '../services/serialize';
+
 import './Journey.css';
 
 const InputFrom = withText('journey.from.label')(
@@ -21,6 +23,7 @@ export function Journey() {
   });
   const [locationTo, setLocationTo] = useState({ name: '', coord: undefined });
   const [search, setSearch] = useState({});
+  const [startDate, setStartDate] = useState('now');
 
   const onChangeLocationFrom = (value) => {
     setLocationFrom({ name: value, coord: undefined });
@@ -42,6 +45,10 @@ export function Journey() {
     setSearch({});
   };
 
+  const onChangeStartDate = (value) => {
+    setStartDate(value);
+  }
+
   return (
     <>
       <main>
@@ -60,15 +67,20 @@ export function Journey() {
           onChange={onChangeLocationTo}
           autoFocus={locationFrom.coord && !locationTo.coord}
         />
+        {locationFrom.coord && locationTo.coord && (
+          <StartDateInput
+            value={startDate}
+            onChange={onChangeStartDate} />
+        )}
         <LocationSearchResults
           query={search.query}
           onSelect={onSelectLocation}
         />
       </main>
-      {locationFrom.coord && locationTo.coord && (
+      {locationFrom.coord && locationTo.coord && startDate && (
         <footer>
           <Link
-            href={'/directions?' + serializeJourney(locationFrom, locationTo)}
+            href={'/directions?' + serializeJourney(locationFrom, locationTo, startDate)}
             autoFocus={true}
           >
             <Text id="nav.continue">Continue</Text>

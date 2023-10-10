@@ -25,6 +25,7 @@ body {
 }
 
 input,
-button {
+button,
+select {
   padding: var(--space-1x);
 }

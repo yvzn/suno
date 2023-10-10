@@ -1,6 +1,6 @@
 import { parseSearchParams } from './parser';
 
-export function serializeJourney(from, to) {
+export function serializeJourney(from, to, startDate) {
   let journey = '';
 
   journey += 'f=';
@@ -16,6 +16,9 @@ export function serializeJourney(from, to) {
   journey += to.coord.lat;
   journey += '&to=';
   journey += to.coord.lon;
+
+  journey += '&d=';
+  journey += (startDate instanceof Date ? startDate.toISOString() : startDate);
 
   return journey;
 }
@@ -37,5 +40,15 @@ export function deserializeJourney(searchParams) {
         lon: params['to'],
       },
     },
+    startDate: deserializeDate(params['d'])
   };
+}
+
+function deserializeDate(param) {
+  try {
+    const d = new Date(param);
+    if (!isNaN(d)) return d;
+  } catch (_) {
+  }
+  return 'now'
 }
