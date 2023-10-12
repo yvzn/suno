@@ -31,7 +31,13 @@
   },
   "directions": {
     "title": "Directions",
-    "message": "From {{from}} to {{to}}:"
+    "message": "From {{from}} to {{to}}:",
+    "sun": "Sun position"
+  },
+  "sun": {
+    "title": "Sun position",
+    "message": "From {{from}} to {{to}}:",
+    "directions": "Directions"
   },
   "fetch": {
     "loading": "Loading...",

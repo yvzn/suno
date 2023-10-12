@@ -80,7 +80,7 @@ export function Journey() {
       {locationFrom.coord && locationTo.coord && startDate && (
         <footer>
           <Link
-            href={'/directions?' + serializeJourney(locationFrom, locationTo, startDate)}
+            href={'/sun?' + serializeJourney(locationFrom, locationTo, startDate)}
             autoFocus={true}
           >
             <Text id="nav.continue">Continue</Text>

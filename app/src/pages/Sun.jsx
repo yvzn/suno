@@ -3,7 +3,7 @@ import { Text } from 'preact-i18n';
 import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
-export function Directions() {
+export function Sun() {
   const [locationFrom, setLocationFrom] = useState({ name: undefined });
   const [locationTo, setLocationTo] = useState({ name: undefined });
   useEffect(() => {
@@ -19,11 +19,11 @@ export function Directions() {
     <>
       <main>
         <h1>
-          <Text id="directions.title">Directions</Text>
+          <Text id="sun.title">Sun position</Text>
         </h1>
         <p>
           <Text
-            id="directions.message"
+            id="sun.message"
             fields={{
               from: locationFrom.name,
               to: locationTo.name,
@@ -37,10 +37,10 @@ export function Directions() {
       {locationFrom.name && locationTo.name && (
         <footer>
           <Link
-            href={'/sun' + window.location.search}
+            href={'/directions' + window.location.search}
             autoFocus={true}
           >
-            <Text id="directions.sun">Sun position</Text>
+            <Text id="sun.directions">Directions</Text>
           </Link>
         </footer>
       )}
