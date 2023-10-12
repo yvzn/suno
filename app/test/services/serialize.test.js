@@ -4,25 +4,25 @@ import { deserializeJourney, serializeJourney } from '../../src/services/seriali
 
 describe(serializeJourney.name, () => {
     test('serialize valid journey', () => {
-        const from = Nantes();
+        const from = LeCroisic();
         const to = Angers();
         const startDate = 'now';
 
         const actual = serializeJourney(from, to, startDate);
 
-        expect(actual).toBe('f=Nantes&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now');
+        expect(actual).toBe('f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now');
     });
 });
 
 describe(deserializeJourney.name, () => {
     test('deserialize valid journey', () => {
-        const journey = 'f=Nantes&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now';
+        const journey = 'f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now';
 
         const actual = deserializeJourney(journey);
 
         expect(actual).toEqual(
             {
-                from: Nantes(),
+                from: LeCroisic(),
                 to: Angers(),
                 startDate: 'now'
             }
@@ -30,9 +30,9 @@ describe(deserializeJourney.name, () => {
     });
 });
 
-function Nantes() {
+function LeCroisic() {
     return ({
-        name: 'Nantes',
+        name: 'Le Croisic',
         coord: {
             lat: '47.2292',
             lon: '-1.547',

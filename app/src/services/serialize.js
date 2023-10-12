@@ -1,46 +1,37 @@
-import { parseSearchParams } from './parser';
-
 export function serializeJourney(from, to, startDate) {
-  let journey = '';
+  let journey = new URLSearchParams();
 
-  journey += 'f=';
-  journey += encodeURIComponent(from.name);
-  journey += '&fa=';
-  journey += from.coord.lat;
-  journey += '&fo=';
-  journey += from.coord.lon;
+  journey.set('f', from.name)
+  journey.set('fa', from.coord.lat)
+  journey.set('fo', from.coord.lon)
 
-  journey += '&t=';
-  journey += encodeURIComponent(to.name);
-  journey += '&ta=';
-  journey += to.coord.lat;
-  journey += '&to=';
-  journey += to.coord.lon;
+  journey.set('t', to.name)
+  journey.set('ta', to.coord.lat)
+  journey.set('to', to.coord.lon)
 
-  journey += '&d=';
-  journey += (startDate instanceof Date ? startDate.toISOString() : startDate);
+  journey.set('d', (startDate instanceof Date ? startDate.toISOString() : startDate))
 
-  return journey;
+  return journey.toString();
 }
 
 export function deserializeJourney(searchParams) {
-  const params = parseSearchParams(searchParams);
+  const params = new URLSearchParams(searchParams);
   return {
     from: {
-      name: params['f'],
+      name: params.get('f'),
       coord: {
-        lat: params['fa'],
-        lon: params['fo'],
+        lat: params.get('fa'),
+        lon: params.get('fo'),
       },
     },
     to: {
-      name: params['t'],
+      name: params.get('t'),
       coord: {
-        lat: params['ta'],
-        lon: params['to'],
+        lat: params.get('ta'),
+        lon: params.get('to'),
       },
     },
-    startDate: deserializeDate(params['d'])
+    startDate: deserializeDate(params.get('d'))
   };
 }
 
