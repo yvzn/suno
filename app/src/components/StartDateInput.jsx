@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { Text } from 'preact-i18n';
 
 export function StartDateInput(props) {
-    const { value, onChange } = props;
-
-    const [selectedOption, setSelectedOption] = useState(value === 'now' ? 'now' : 'at');
-    const [departureDate, setDepartureDate] = useState(value instanceof Date ? value : new Date());
+    const [selectedOption, setSelectedOption] = useState(props.value === 'now' ? 'now' : 'at');
+    const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date());
     const startDateInputRef = useRef();
     const startTimeInputRef = useRef();
 
@@ -32,9 +30,9 @@ export function StartDateInput(props) {
 
     useEffect(() => {
         if (selectedOption === 'now') {
-            onChange('now');
+            props.onChange('now');
         } else {
-            onChange(departureDate);
+            props.onChange(departureDate);
         }
     }, [selectedOption, departureDate]);
 

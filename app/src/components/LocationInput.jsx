@@ -8,12 +8,12 @@ export function LocationInput(props) {
   const [nameValue, setNameValue] = useState(props.nameValue);
   const inputRef = useRef();
 
-  const onSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     props.onChange(nameValue);
   };
 
-  const onInput = (event) => {
+  const handleInput = (event) => {
     const { value: newValue } = event.target;
     setNameValue(newValue);
   };
@@ -22,17 +22,22 @@ export function LocationInput(props) {
     setNameValue(props.nameValue);
   }, [props.nameValue]);
 
-  const onFocus = (event) => {
+  const handleSetFocus = (event) => {
     event.target.select();
   };
 
   useEffect(
-    () => props.autoFocus && inputRef.current && inputRef.current.focus(),
+    () => {
+      if (props.autoFocus && inputRef.current) {
+        inputRef.current.focus();
+        inputRef.current.select();
+      };
+    },
     [props.autoFocus]
   );
 
   return (
-    <form onSubmit={onSubmit} className={props.coordValue && 'has-coords'}>
+    <form onSubmit={handleSubmit} className={props.coordValue && 'has-coords'}>
       <label htmlFor={fieldId}>{props.label}</label>
       <span>
         <input
@@ -40,8 +45,8 @@ export function LocationInput(props) {
           id={fieldId}
           value={nameValue}
           ref={inputRef}
-          onInput={onInput}
-          onFocus={onFocus}
+          onInput={handleInput}
+          onFocus={handleSetFocus}
         />
       </span>
       <button type="submit">
