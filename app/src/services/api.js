@@ -9,8 +9,8 @@ async function findLocationsApi(searchQuery) {
   params.set("q", searchQuery);
 
   const response = await fetch(`${apiUrl}/geocoding?${params.toString()}`);
-  const json = await response.json();
 
+  const json = await response.json();
   return json.results;
 }
 
@@ -95,6 +95,7 @@ function getDirectionsMock(_journey) {
   return Promise.resolve(results);
 }
 
-export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
-
+// export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
 // export { findLocationsMock as findLocations, getDirectionsMock as getDirections }
+
+export { findLocationsApi as findLocations, getDirectionsApi as getDirections }

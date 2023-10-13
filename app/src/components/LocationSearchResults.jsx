@@ -21,8 +21,7 @@ export function LocationSearchResults(props) {
 
     setLoading(true);
     findLocations(props.query)
-      .then(setSearchResults)
-      .catch(setError)
+      .then(setSearchResults, setError)
       .finally(() => setLoading(false));
   };
 

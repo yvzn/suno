@@ -52,7 +52,7 @@ export function Sun() {
 
 function dateFormat(date) {
   if (date instanceof Date) {
-    return 'at ' + date.toLocaleDateString();
+    return 'at ' + new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: 'short'}).format(date);
   }
   return date;
 }
