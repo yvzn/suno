@@ -2,11 +2,9 @@ import { Chart, PolarAreaController, ArcElement, RadialLinearScale } from 'chart
 
 Chart.register(PolarAreaController, ArcElement, RadialLinearScale);
 
-const data = [25, 15, 15, 5, 5, 5, 5, 25];
-
-export function drawChart(canvasElement) {
+export function drawChart(canvasElement, chartData) {
     if (canvasElement) {
-        loadBackgroundImage().then(renderChart(canvasElement))
+        loadBackgroundImage().then(renderChart(canvasElement, chartData))
     }
 }
 
@@ -41,14 +39,14 @@ function backgroundImagePlugin(image) {
     };
 }
 
-function renderChart(canvasElement) {
+function renderChart(canvasElement, chartData) {
     return function (backgroundImage) {
         const chart = new Chart(canvasElement, {
             type: 'polarArea',
             data: {
                 datasets: [
                     {
-                        data,
+                        data: chartData,
                         backgroundColor: ['#ffb703aa'],
                     },
                 ],

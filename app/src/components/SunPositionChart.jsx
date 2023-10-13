@@ -3,6 +3,7 @@ import { Text } from 'preact-i18n';
 
 import { getDirections } from '../services/api';
 import { drawChart } from '../services/chart';
+import { computeSunDirectionAggregated } from "../services/sun-position";
 
 
 export function SunPositionChart(props) {
@@ -15,7 +16,10 @@ export function SunPositionChart(props) {
 
         setLoading(true);
         getDirections(props.journey)
-            .then(() => drawChart(canvasRef.current), setError)
+            .then((directions) => {
+                const data = computeSunDirectionAggregated(directions, props.journey.startDate)
+                return drawChart(canvasRef.current, data);
+            }, setError)
             .finally(() => setLoading(false));
     }
 

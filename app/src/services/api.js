@@ -79,16 +79,16 @@ function getDirectionsMock(_journey) {
   };
 
   const results = {
-    "legs": [
+    legs: [
       {
-        "start": Nantes,
-        "end": Angers,
-        "durationInSeconds": 3600
+        start: Nantes,
+        end: Angers,
+        durationInSeconds: 3600
       },
       {
-        "start": Angers,
-        "end": Paris,
-        "durationInSeconds": 12600
+        start: Angers,
+        end: Paris,
+        durationInSeconds: 12600
       }
     ]
   }
@@ -98,4 +98,4 @@ function getDirectionsMock(_journey) {
 // export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
 // export { findLocationsMock as findLocations, getDirectionsMock as getDirections }
 
-export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
+export { findLocationsMock as findLocations, getDirectionsMock as getDirections }

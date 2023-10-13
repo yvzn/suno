@@ -13,7 +13,8 @@
     "chart.js": "^4.4.0",
     "preact": "^10.15.1",
     "preact-i18n": "^2.4.0-preactx",
-    "preact-router": "^4.1.1"
+    "preact-router": "^4.1.1",
+    "suncalc": "^1.9.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
