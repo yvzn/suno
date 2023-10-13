@@ -1,21 +1,22 @@
-export function serializeJourney(from, to, startDate) {
-  let journey = new URLSearchParams();
+export function serializeJourney({ from, to, startDate }) {
+  let params = new URLSearchParams();
 
-  journey.set('f', from.name)
-  journey.set('fa', from.coord.lat)
-  journey.set('fo', from.coord.lon)
+  params.set('f', from.name);
+  params.set('fa', from.coord.lat);
+  params.set('fo', from.coord.lon);
 
-  journey.set('t', to.name)
-  journey.set('ta', to.coord.lat)
-  journey.set('to', to.coord.lon)
+  params.set('t', to.name);
+  params.set('ta', to.coord.lat);
+  params.set('to', to.coord.lon);
 
-  journey.set('d', (startDate instanceof Date ? startDate.toISOString() : startDate))
+  params.set('d', (startDate instanceof Date ? startDate.toISOString() : startDate));
 
-  return journey.toString();
+  return params;
 }
 
 export function deserializeJourney(searchParams) {
   const params = new URLSearchParams(searchParams);
+
   return {
     from: {
       name: params.get('f'),
@@ -35,9 +36,9 @@ export function deserializeJourney(searchParams) {
   };
 }
 
-function deserializeDate(param) {
+function deserializeDate(maybeSomeDate) {
   try {
-    const d = new Date(param);
+    const d = new Date(maybeSomeDate);
     if (!isNaN(d)) return d;
   } catch (_) {
   }

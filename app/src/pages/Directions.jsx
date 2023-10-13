@@ -4,15 +4,14 @@ import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
 export function Directions() {
-  const [locationFrom, setLocationFrom] = useState({ name: undefined });
-  const [locationTo, setLocationTo] = useState({ name: undefined });
+  const [journey, setJourney] = useState();
+
   useEffect(() => {
-    const { from, to } = deserializeJourney(location.search);
-    if (!from.name || !to.name) {
+    const journey = deserializeJourney(location.search);
+    if (!journey.from || !journey.to || !journey.startDate) {
       route('/journey');
     }
-    setLocationFrom(from);
-    setLocationTo(to);
+    setJourney(journey)
   }, []);
 
   return (
@@ -25,8 +24,8 @@ export function Directions() {
           <Text
             id="directions.message"
             fields={{
-              from: locationFrom.name,
-              to: locationTo.name,
+              from: journey?.from?.name,
+              to: journey?.to?.name,
             }}
           >
             Itinerary details
@@ -34,7 +33,7 @@ export function Directions() {
         </p>
         <p>TODO</p>
       </main>
-      {locationFrom.name && locationTo.name && (
+      {journey && (
         <footer>
           <Link
             href={'/sun' + window.location.search}

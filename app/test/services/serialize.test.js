@@ -8,9 +8,9 @@ describe(serializeJourney.name, () => {
         const to = Angers();
         const startDate = 'now';
 
-        const actual = serializeJourney(from, to, startDate);
+        const actual = serializeJourney({from, to, startDate});
 
-        expect(actual).toBe('f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now');
+        expect(String(actual)).toBe('f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now');
     });
 });
 

@@ -36,7 +36,7 @@
   },
   "sun": {
     "title": "Sun position",
-    "message": "From {{from}} to {{to}}:",
+    "message": "From {{from}} to {{to}}, leave {{startDate}}",
     "directions": "Directions"
   },
   "fetch": {

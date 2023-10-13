@@ -3,16 +3,17 @@ import { Text } from 'preact-i18n';
 import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
+import { SunPositionChart } from '../components/SunPositionChart';
+
 export function Sun() {
-  const [locationFrom, setLocationFrom] = useState({ name: undefined });
-  const [locationTo, setLocationTo] = useState({ name: undefined });
+  const [journey, setJourney] = useState();
+
   useEffect(() => {
-    const { from, to } = deserializeJourney(location.search);
-    if (!from.name || !to.name) {
+    const journey = deserializeJourney(location.search);
+    if (!journey.from || !journey.to || !journey.startDate) {
       route('/journey');
     }
-    setLocationFrom(from);
-    setLocationTo(to);
+    setJourney(journey)
   }, []);
 
   return (
@@ -25,16 +26,17 @@ export function Sun() {
           <Text
             id="sun.message"
             fields={{
-              from: locationFrom.name,
-              to: locationTo.name,
+              from: journey?.from?.name,
+              to: journey?.to?.name,
+              startDate: dateFormat(journey?.startDate)
             }}
           >
             Itinerary details
           </Text>
         </p>
-        <p>TODO</p>
+        {journey && <SunPositionChart journey={journey} />}
       </main>
-      {locationFrom.name && locationTo.name && (
+      {journey && (
         <footer>
           <Link
             href={'/directions' + window.location.search}
@@ -46,4 +48,11 @@ export function Sun() {
       )}
     </>
   );
+}
+
+function dateFormat(date) {
+  if (date instanceof Date) {
+    return 'at ' + date.toLocaleDateString();
+  }
+  return date;
 }
