@@ -98,4 +98,4 @@ function getDirectionsMock(_journey) {
 // export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
 // export { findLocationsMock as findLocations, getDirectionsMock as getDirections }
 
-export { findLocationsMock as findLocations, getDirectionsMock as getDirections }
+export { findLocationsApi as findLocations, getDirectionsApi as getDirections }

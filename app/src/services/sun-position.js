@@ -1,31 +1,24 @@
 import SunCalc from 'suncalc';
 
-export function computeSunPositions(itinerary, tripDate) {
-    if (tripDate === 'now') tripDate = new Date();
-    let durationSumInSeconds = 0;
+const SECTOR_COUNT = 8;
+const SECTOR_SIZE = (2 * Math.PI) / SECTOR_COUNT;
+const DURATION_BUCKET_IN_SECONDS = 60 * 60;
 
-    const SECTOR_COUNT = 8;
+const VECTOR_POINTING_SOUTH = { x: 0, y: -1 };
+
+export function computeSunPositions(itinerary, startDate) {
+    if (startDate === 'now') startDate = new Date();
+
+    const { legs } = itinerary;
+    const legDates = computeLegDates(legs, startDate);
+
     const durationSumPerSectorInSeconds = Array(SECTOR_COUNT).fill(0);
 
-    const SECTOR_SIZE = (2 * Math.PI) / SECTOR_COUNT;
+    for (const [index, leg] of legs.entries()) {
+        const legDate = legDates[index];
 
-    const DURATION_BUCKET_IN_SECONDS = 60 * 60;
-
-    for (let leg of itinerary.legs) {
-        const legDate = {
-            start: new Date(tripDate.getTime() + durationSumInSeconds * 1000),
-            end: new Date(
-                tripDate.getTime() + (durationSumInSeconds + leg.durationInSeconds) * 1000
-            ),
-        };
-
-        durationSumInSeconds += leg.durationInSeconds;
-
-        // https://www.wikihow.com/Find-the-Angle-Between-Two-Vectors
-        const u = { x: 0, y: -1 }; // vector pointing south
-        const v = { x: leg.end.coord.lon - leg.start.coord.lon, y: leg.end.coord.lat - leg.start.coord.lat };
-
-        const legAngle = Math.atan2(u.x * v.y - u.y * v.x, u.x * v.x + u.y * v.y);
+        const legVector = { x: leg.end.coord.lon - leg.start.coord.lon, y: leg.end.coord.lat - leg.start.coord.lat };
+        const legAngle = computeAngleBetween(VECTOR_POINTING_SOUTH, legVector);
 
         const bucketCount = Math.ceil(
             leg.durationInSeconds / DURATION_BUCKET_IN_SECONDS
@@ -34,7 +27,8 @@ export function computeSunPositions(itinerary, tripDate) {
             lat: (leg.end.coord.lat - leg.start.coord.lat) / bucketCount,
             lon: (leg.end.coord.lon - leg.start.coord.lon) / bucketCount,
             durationInSeconds: leg.durationInSeconds / bucketCount,
-        };
+        }; 
+
         for (let bucket = 0; bucket < bucketCount; ++bucket) {
             const bucketStart = {
                 lat: leg.start.coord.lat + bucket * bucketIncrement.lat,
@@ -53,7 +47,7 @@ export function computeSunPositions(itinerary, tripDate) {
 
             if (bucketSunPosition.altitude < 0) continue;
 
-            let bucketAngle = legAngle - bucketSunPosition.azimuth;
+            let bucketAngle = bucketSunPosition.azimuth - legAngle;
             while (bucketAngle < 0) bucketAngle += 2 * Math.PI;
             while (bucketAngle > 2 * Math.PI) bucketAngle -= 2 * Math.PI;
 
@@ -65,4 +59,20 @@ export function computeSunPositions(itinerary, tripDate) {
     }
 
     return durationSumPerSectorInSeconds;
+}
+
+export function computeLegDates(legs, startDate) {
+    let start = startDate.getTime();
+
+    return legs.map((leg) => {
+        const end = start + leg.durationInSeconds * 1000;
+        const legDates = { start: new Date(start), end: new Date(end) };
+        start = end;
+        return legDates;
+    });
+}
+
+export function computeAngleBetween(u, v) {
+    // https://www.wikihow.com/Find-the-Angle-Between-Two-Vectors
+    return Math.atan2(u.x * v.y - u.y * v.x, u.x * v.x + u.y * v.y);
 }
