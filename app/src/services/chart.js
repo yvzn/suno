@@ -1,65 +1,49 @@
 import { Chart, PolarAreaController, ArcElement, RadialLinearScale } from 'chart.js';
 
+import carImage from '/car.svg';
+
 Chart.register(PolarAreaController, ArcElement, RadialLinearScale);
 
 export function drawChart(canvasElement, chartData) {
     if (canvasElement) {
-        loadBackgroundImage().then(renderChart(canvasElement, chartData))
+        renderChart(canvasElement, chartData);
     }
 }
 
-function loadBackgroundImage() {
-    return new Promise((resolve) => {
-        const img = new Image();
+const backgroundImage = new Image();
+backgroundImage.src = carImage;
 
-        const svg =
-            '<svg xmlns="http://www.w3.org/2000/svg" version="1.0" viewBox="0 0 1065 1065"><path d="M497.5 208.6c-48.9 4.8-89.8 18.1-106.7 34.6-9.9 9.8-17.9 24-22.6 40.3-9.3 31.9-12.1 55-12.2 101.2v22.1l-12 .7c-10.7.7-12.5 1.1-16.4 3.5-5.7 3.7-9.6 11.2-9.6 18.8 0 4.6.4 5.8 2.9 8.3l2.9 2.9 14.6.1c8 .1 15.2.2 15.9.3.9.1 1.3 36.5 1.7 177.1l.5 177 2.9 5.9c3.6 7.3 13.6 18 20.9 22.4 23.5 14.1 72.1 24.7 129.7 28.3 61.8 3.8 148.6-9.2 178.3-26.6 13.5-7.9 23.4-20 26.7-32.4.9-3.3 1.1-34.7 1.1-121.5-.1-64.4.2-142.7.5-173.9l.7-56.8 13.1.1c20.5.2 19.5.3 22.7-2.9 5.6-5.7 3.1-16.9-5.6-25-5.4-5-10.3-6.3-21.5-5.9l-8.8.3-.5-38c-.4-27.5-.9-40.2-2-46-5.2-27.5-12.6-51.7-19.7-63.5-8.1-13.7-17.9-22.1-36.5-31.3-19.2-9.5-49.1-16.7-83.4-20.2-18.9-1.9-57.9-1.8-77.6.1zm56.3 29.4c26.7 1.6 63 7.6 79.7 13.3 7.1 2.4 19.4 8.3 22.9 11 1.9 1.4 1.8 1.5-1.8 3.2-3.8 1.8-6.6 6.2-6.6 10.3 0 1 3.1 11.3 6.9 22.9 3.8 11.5 7.9 25.9 9.1 32 2 10.4 4.1 29.3 3.3 30.2-.1.2-5.4-1.2-11.5-3.2-18.8-6-39.5-10.5-64.4-13.9-15.3-2.1-20.5-2.3-55.9-2.2-42.3 0-54.8 1.1-85 7.1-10.8 2.1-36.9 9.2-43.9 11.9-1.8.7-1.8.3-1.2-7.2 1.5-16.8 8.2-45.7 15.1-64.7 3.5-9.9 4.4-17.1 2.5-20.7-.6-1.1-2.8-2.5-5-3.1l-4.1-1.2 6.3-3.4c10.5-5.7 24.7-10.9 36.8-13.7 21-4.7 50.4-8.3 76.5-9.4 1.7-.1 10.8.3 20.3.8zM405 378c4.7 3.4 9.6 6.7 11 7.2l2.5 1-3 1.5c-3.9 2-7.1 4.9-10.5 9.5-2.2 3.1-2.6 4.3-2.1 7.5.4 2.1.3 6.8-.2 10.6-.7 5.2-.4 9.9 1.3 21 3.6 24.5 5.2 42.1 3.7 42.6-5.8 1.9-11.7 15.2-13.8 31.1-1.8 13.6-.6 158.7 1.5 170.5 2 11.7 4.6 19 9.2 26.2 12.7 19.9 22.9 27.6 47.7 36.2 14.1 4.9 25.2 7.3 47.7 10.5 25.1 3.5 31.7 3.9 48 2.6 31.6-2.5 60.1-8.3 80.1-16.2 26.4-10.4 40.3-27.5 46.5-57.3 1.8-8.4 1.9-14.5 1.9-92v-83l-2.9-8.5c-3.5-10.6-5.1-13.7-8.6-17.5l-2.8-3 1.3-11.5c.7-6.3 2.5-18.4 4-26.8 2.1-12.1 2.6-17.8 2.3-26.7-.3-10.7-.5-11.6-3.3-15.6-1.6-2.3-5.1-5.6-7.7-7.3-2.6-1.7-4.7-3.3-4.7-3.6 0-.3 5-3.9 11.2-8 6.2-4.1 14-10.3 17.4-13.8 3.3-3.5 6.3-6 6.5-5.5.2.4 0 22.6-.4 49.3-.4 26.7-.7 112.8-.6 191.5 0 139.6-.1 143.1-2 148.5-4.7 13.4-13.9 28-21.3 33.9-9.1 7.2-20.3 11.6-42.2 16.5-57.3 12.9-125.6 12.3-181.2-1.5-15-3.7-30.4-11-36.6-17.2-5.6-5.6-16-23.9-19.3-33.7l-2.5-7.5-.1-135c0-74.3.3-159.9.6-190.3l.7-55.3 6.1 6.4c3.4 3.6 9.9 9.3 14.6 12.7zm175 20.5c27.4 3.2 45.1 7.7 55.2 14 5.9 3.7 7.3 6 6.9 11-.2 3-4.5 30-10.2 64.5-8.7 52.5-21 106.7-26.8 118.2-3.2 6.3-4.3 7.5-9.8 10.8-11.8 7.1-33.6 11.9-57.8 12.7-17 .6-28.4-.4-41.5-3.7-16.8-4.1-24.3-8.6-29.5-17.5-4.4-7.4-14.7-50.3-20.9-86.6-2-11.2-4-22.9-4.6-25.9-1.2-5.9-5.6-34.9-9.2-60.3-2.7-18.9-2.5-19.4 7.3-24.4 14.1-7.2 35.9-11.8 67.9-14.3 15-1.2 57.1-.3 73 1.5zm-105.4 252c19.6 6.7 53.9 11.1 71.9 9.3 15.6-1.6 44.8-7.9 57.1-12.5.7-.3 2 3.2 3.4 8.9 3.2 13.5 10.7 36.2 14.6 44.3 1.8 3.8 3 7.3 2.6 7.6-3.3 3.1-32.6 10.1-52.3 12.6-18.9 2.3-58 2.3-74.9 0-20.2-2.9-46.1-9.6-49.7-13.1-1-.9-.9-1.8.3-4.1 3.4-6.4 13.3-37.1 15.1-46.5 1.4-8.1 2.1-9.9 3.3-9.4.8.3 4.7 1.6 8.6 2.9z" fill="silver"/></svg>';
-        const source = new Blob([svg], { type: 'image/svg+xml', charset: 'UTF-8' });
-        const url = URL.createObjectURL(source);
-
-        img.onload = function () {
-            URL.revokeObjectURL(url);
-            resolve(img);
-        };
-
-        img.src = url;
-    });
-}
-
-function backgroundImagePlugin(image) {
-    return {
-        id: 'customBackgroundImage',
-        beforeDraw: (chart, _args, _options) => {
+const customBackgroundImagePlugin = {
+    id: 'customCanvasBackgroundImage',
+    beforeDraw: (chart) => {
+        if (backgroundImage.complete) {
             const { ctx } = chart;
-            ctx.save();
-            ctx.globalCompositeOperation = 'destination-over';
-            ctx.drawImage(image, 0, 0, chart.width, chart.height);
-            ctx.restore();
-        },
-    };
-}
+            const { width, height } = chart.chartArea;
+            ctx.drawImage(backgroundImage, 0, 0, width, height);
+        } else {
+            backgroundImage.onload = () => chart.draw();
+        }
+    }
+};
 
 function renderChart(canvasElement, chartData) {
-    return function (backgroundImage) {
-        const chart = new Chart(canvasElement, {
-            type: 'polarArea',
-            data: {
-                datasets: [
-                    {
-                        data: chartData,
-                        backgroundColor: ['#ffb703aa'],
-                    },
-                ],
-            },
-            options: {
-                scales: {
-                    r: {
-                        display: false,
-                    },
+    return new Chart(canvasElement, {
+        type: 'polarArea',
+        data: {
+            datasets: [
+                {
+                    data: chartData,
+                    backgroundColor: ['#ffb703aa'],
+                },
+            ],
+        },
+        options: {
+            scales: {
+                r: {
+                    display: false,
                 },
             },
-            plugins: [backgroundImagePlugin(backgroundImage)],
-        });
-        return chart;
-    }
+        },
+        plugins: [customBackgroundImagePlugin],
+    });
 }

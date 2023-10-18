@@ -1,6 +1,6 @@
 import SunCalc from 'suncalc';
 
-export function computeSunDirectionAggregated(itinerary, tripDate) {
+export function computeSunPositions(itinerary, tripDate) {
     if (tripDate === 'now') tripDate = new Date();
     let durationSumInSeconds = 0;
 

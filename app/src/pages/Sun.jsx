@@ -4,9 +4,16 @@ import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
 import { SunPositionChart } from '../components/SunPositionChart';
+import { getDirections } from '../services/api';
+import { computeSunPositions } from "../services/sun-position";
 
 export function Sun() {
   const [journey, setJourney] = useState();
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+
+  const [itinerary, setItinerary] = useState();
+  const [sunPosition, setSunPosition] = useState();
 
   useEffect(() => {
     const journey = deserializeJourney(location.search);
@@ -15,6 +22,23 @@ export function Sun() {
     }
     setJourney(journey)
   }, []);
+
+  const fetchItinerary = () => {
+    if (!journey) return;
+    setError(undefined);
+    setLoading(true);
+    getDirections(journey)
+      .then(setItinerary, setError)
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(fetchItinerary, [journey]);
+
+  useEffect(() => {
+    if (!itinerary) return;
+    const positions = computeSunPositions(itinerary, journey.startDate)
+    setSunPosition(positions);
+  }, [itinerary]);
 
   return (
     <>
@@ -34,7 +58,22 @@ export function Sun() {
             Itinerary details
           </Text>
         </p>
-        {journey && <SunPositionChart journey={journey} />}
+        {isLoading && (
+          <section>
+            <Text id="fetch.loading">Loading...</Text>
+          </section>
+        )}
+        {error && (
+          <section>
+            <p>
+              <Text id="fetch.error">Error</Text>
+            </p>
+            <a href="#" onClick={fetchItinerary}>
+              <Text id="fetch.retry">Retry</Text>
+            </a>
+          </section>
+        )}
+        {sunPosition && <SunPositionChart positions={sunPosition} />}
       </main>
       {journey && (
         <footer>
@@ -52,7 +91,7 @@ export function Sun() {
 
 function dateFormat(date) {
   if (date instanceof Date) {
-    return 'at ' + new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: 'short'}).format(date);
+    return 'at ' + new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: 'short' }).format(date);
   }
   return date;
 }
