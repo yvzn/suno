@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest'
 
-import { computeLegDates, computeAngleBetween, computeSunPositions } from '../../src/services/sun-position';
+import { computeLegDates, computeAngleBetween, computeSunPositions, bucketize } from '../../src/services/sun-position';
 
 describe(computeSunPositions.name, () => {
     test('compute sun positions bucketed by sector, going east around midday', () => {
-        const tripDate = new Date('2023-08-01T12:00:00.000Z'); 
-        const legs = [{ 
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [{
             start: Greenwich(),
             end: Woolwich(),
             durationInSeconds: 5 * 60
@@ -19,8 +19,8 @@ describe(computeSunPositions.name, () => {
     })
 
     test('compute sun positions bucketed by sector, going west around midday', () => {
-        const tripDate = new Date('2023-08-01T12:00:00.000Z'); 
-        const legs = [{ 
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [{
             start: Woolwich(),
             end: Greenwich(),
             durationInSeconds: 5 * 60
@@ -34,8 +34,8 @@ describe(computeSunPositions.name, () => {
     })
 
     test('compute sun positions bucketed by sector, going south around midday', () => {
-        const tripDate = new Date('2023-08-01T12:00:00.000Z'); 
-        const legs = [{ 
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [{
             start: Greenwich(),
             end: Bromley(),
             durationInSeconds: 5 * 60
@@ -46,7 +46,7 @@ describe(computeSunPositions.name, () => {
         // the itinerary goes west, the sun is south
         // the sun position (with respect to the itinerary) sould be in the topmost buckets
         expect(positions).toEqual([0, 0, 0, 0, 0, 0, 0, 5 * 60]);
-    })      
+    })
 });
 
 describe(computeLegDates.name, () => {
@@ -113,6 +113,75 @@ describe(computeAngleBetween.name, function () {
         expect(result).toBeCloseTo(Math.PI / 4, 4);
     });
 });
+
+describe(bucketize.name, () => {
+    test('should yield the correct number of buckets for duration above DURATION_BUCKET_IN_SECONDS', () => {
+        const leg = {
+            start: Greenwich(),
+            end: Woolwich(),
+            durationInSeconds: 7200 // 2 hours
+        };
+        const legDate = new Date('2023-01-01T12:00:00Z')
+
+        const generator = bucketize(leg, legDate);
+        const buckets = [...generator];
+
+        expect(buckets).toHaveLength(2); // 2 buckets for 2 hours duration
+    });
+
+    test('should yield buckets with correct bucketStart and bucketStartDate values', () => {
+        const leg = {
+            start: Greenwich(),
+            end: Woolwich(),
+            durationInSeconds: 7200 // 2 hours
+        };
+        const legDate = new Date('2023-01-01T12:00:00Z')
+
+        const generator = bucketize(leg, legDate);
+        const buckets = [...generator];
+
+        // Check the values of the first bucket
+        expect(buckets[0].bucketStart).toEqual({ lat: 51.5, lon: 0 });
+        expect(buckets[0].bucketStartDate).toEqual(new Date('2023-01-01T12:00:00Z'));
+        expect(buckets[0].durationInSeconds).toEqual(3600);
+
+        // Check the values of the second bucket
+        expect(buckets[1].bucketStart).toEqual({ lat: 51.5, lon: 0.05 });
+        expect(buckets[1].bucketStartDate).toEqual(new Date('2023-01-01T13:00:00Z'));
+        expect(buckets[1].durationInSeconds).toEqual(3600);
+    });
+
+    test('should yield a single bucket for duration equal to DURATION_BUCKET_IN_SECONDS', () => {
+        const leg = {
+            start: Greenwich(),
+            end: Woolwich(),
+            durationInSeconds: 3600 // 1 hour
+        };
+        const legDate = new Date('2023-01-01T12:00:00Z')
+
+        const generator = bucketize(leg, legDate);
+        const buckets = [...generator];
+
+        // Expecting 1 bucket for 1-hour duration
+        expect(buckets).toHaveLength(1);
+    });
+
+    test('should yield the correct number of buckets for duration below DURATION_BUCKET_IN_SECONDS', () => {
+        const leg = {
+            start: Greenwich(),
+            end: Woolwich(),
+            durationInSeconds: 1800 // 30 minutes
+        };
+        const legDate = new Date('2023-01-01T12:00:00Z')
+
+        const generator = bucketize(leg, legDate);
+        const buckets = [...generator];
+
+        // Expecting 1 bucket for 30 minutes duration
+        expect(buckets).toHaveLength(1);
+    });
+});
+
 
 function Greenwich() {
     return ({

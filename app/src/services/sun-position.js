@@ -18,58 +18,99 @@ const VECTOR_POINTING_SOUTH = { x: 0, y: -1 };
  * @returns {number[]} - An array of total sunlight durations for each compass sector.
  */
 export function computeSunPositions(itinerary, startDate) {
-    if (startDate === 'now') startDate = new Date();
+  if (startDate === 'now') startDate = new Date();
 
-    const { legs } = itinerary;
-    const legDates = computeLegDates(legs, startDate);
+  const legDates = computeLegDates(itinerary.legs, startDate);
 
-    const durationSumPerSectorInSeconds = Array(SECTOR_COUNT).fill(0);
+  const durationSumPerSectorInSeconds = Array(SECTOR_COUNT).fill(0);
 
-    for (const [index, leg] of legs.entries()) {
-        const legDate = legDates[index];
+  for (const [index, leg] of itinerary.legs.entries()) {
+    const { start: legStartDate } = legDates[index];
 
-        const legVector = { x: leg.end.coord.lon - leg.start.coord.lon, y: leg.end.coord.lat - leg.start.coord.lat };
+    for (const bucket of bucketize(leg, legStartDate)) {
+      const { bucketStart, bucketStartDate, durationInSeconds: bucketDurationInSeconds } = bucket;
+
+      const bucketSunPosition = SunCalc.getPosition(bucketStartDate, bucketStart.lat, bucketStart.lon);
+
+      if (bucketSunPosition.altitude >= 0) {
+        const legVector = convertLegToVector(leg);
         const legAngle = computeAngleBetween(VECTOR_POINTING_SOUTH, legVector);
+        const bucketAngle = normalizeAngle(bucketSunPosition.azimuth - legAngle);
+        const bucketSector = convertAngleToSector(bucketAngle);
 
-        const bucketCount = Math.ceil(
-            leg.durationInSeconds / DURATION_BUCKET_IN_SECONDS
-        );
-        const bucketIncrement = {
-            lat: (leg.end.coord.lat - leg.start.coord.lat) / bucketCount,
-            lon: (leg.end.coord.lon - leg.start.coord.lon) / bucketCount,
-            durationInSeconds: leg.durationInSeconds / bucketCount,
-        }; 
-
-        for (let bucket = 0; bucket < bucketCount; ++bucket) {
-            const bucketStart = {
-                lat: leg.start.coord.lat + bucket * bucketIncrement.lat,
-                lon: leg.start.coord.lon + bucket * bucketIncrement.lon,
-            };
-            const bucketDate = new Date(
-                legDate.start.getTime() +
-                bucket * bucketIncrement.durationInSeconds * 1000
-            );
-
-            const bucketSunPosition = SunCalc.getPosition(
-                bucketDate,
-                bucketStart.lat,
-                bucketStart.lon
-            );
-
-            if (bucketSunPosition.altitude < 0) continue;
-
-            let bucketAngle = bucketSunPosition.azimuth - legAngle;
-            while (bucketAngle < 0) bucketAngle += 2 * Math.PI;
-            while (bucketAngle > 2 * Math.PI) bucketAngle -= 2 * Math.PI;
-
-            let bucketSector = Math.floor(bucketAngle / SECTOR_SIZE);
-
-            durationSumPerSectorInSeconds[bucketSector] +=
-                bucketIncrement.durationInSeconds;
-        }
+        durationSumPerSectorInSeconds[bucketSector] += bucketDurationInSeconds;
+      }
     }
+  }
 
-    return durationSumPerSectorInSeconds;
+  return durationSumPerSectorInSeconds;
+}
+
+/**
+ * Generates buckets representing the sub-segments of a journey leg's path, allowing for the computation of sunlight duration within each bucket of DURATION_BUCKET_IN_SECONDS.
+ *
+ * @param {Leg} leg - The journey leg for which to generate sunlight buckets.
+ * @param {Date} legStartDate - The start dates of the journey leg.
+ * @yields {Object} An object representing a sunlight bucket within the journey leg path.
+ * @property {Coordinates} bucketStart - The starting coordinates of the bucket.
+ * @property {Date} bucketStartDate - The start date and time for the bucket.
+ * @property {number} durationInSeconds - The duration of the bucket in seconds.
+ */
+export function* bucketize(leg, legStartDate) {
+  const bucketCount = Math.ceil(leg.durationInSeconds / DURATION_BUCKET_IN_SECONDS) || 1;
+  const bucketIncrement = calculateBucketIncrement(leg, bucketCount);
+
+  for (let bucket = 0; bucket < bucketCount; ++bucket) {
+    const bucketStart = {
+      lat: leg.start.coord.lat + bucket * bucketIncrement.lat,
+      lon: leg.start.coord.lon + bucket * bucketIncrement.lon
+    };
+
+    const bucketStartDate = new Date(legStartDate.getTime() + bucket * bucketIncrement.durationInSeconds * 1000);
+
+    yield { bucketStart, bucketStartDate, durationInSeconds: bucketIncrement.durationInSeconds };
+  }
+}
+
+function calculateBucketIncrement(leg, bucketCount) {
+  return {
+    lat: (leg.end.coord.lat - leg.start.coord.lat) / bucketCount,
+    lon: (leg.end.coord.lon - leg.start.coord.lon) / bucketCount,
+    durationInSeconds: leg.durationInSeconds / bucketCount
+  };
+}
+
+function convertLegToVector(leg) {
+  return {
+    x: leg.end.coord.lon - leg.start.coord.lon,
+    y: leg.end.coord.lat - leg.start.coord.lat
+  };
+}
+
+/**
+ * Normalizes an angle in radians to the range [0, 2π).
+ *
+ * @param {number} angleInRadians - The angle in radians to be normalized.
+ * @returns {number} The normalized angle within the [0, 2π) range.
+ */
+function normalizeAngle(angleInRadians) {
+  var result = angleInRadians;
+  while (result < 0) result += 2 * Math.PI;
+  while (result > 2 * Math.PI) result -= 2 * Math.PI;
+  return result;
+}
+
+/**
+ * Calculates the compass sector based on an angle in radians.
+ *
+ * This function divides the full circle (2 * Math.PI) into compass sectors
+ * (N, NE, E, SE, S, SW, W, NW) and returns the sector index for the given angle.
+ *
+ * @param {number} angleInRadians - The angle in radians to calculate the sector for.
+ * @returns {number} The index of the compass sector (0 to 7) corresponding to the angle.
+ */
+function convertAngleToSector(angleInRadians) {
+  return Math.floor(angleInRadians / SECTOR_SIZE);
 }
 
 /**
@@ -78,22 +119,37 @@ export function computeSunPositions(itinerary, startDate) {
  * @param {Array<Leg>} legs - An array of leg objects, each containing a `durationInSeconds` property.
  * @param {Date} startDate - The start date of the trip.
  *
- * @returns {Array<{ start: Date, end: Date }>} An array of objects with start and end dates for each leg.
+ * @returns {Array<LegDates>} An array of objects with start and end dates for each leg.
  */
 export function computeLegDates(legs, startDate) {
-    let start = startDate.getTime();
+  let start = startDate.getTime();
 
-    return legs.map((leg) => {
-        const end = start + leg.durationInSeconds * 1000;
-        const legDates = { start: new Date(start), end: new Date(end) };
-        start = end;
-        return legDates;
-    });
+  return legs.map((leg) => {
+    const end = start + leg.durationInSeconds * 1000;
+    const legDates = { start: new Date(start), end: new Date(end) };
+    start = end;
+    return legDates;
+  });
 }
 
+/**
+ * Computes the angle in radians between two 2D vectors (u and v).
+ *
+ * This function calculates the angle between two vectors using the arctangent
+ * of the cross product and the dot product of the two vectors.
+ *
+ * @param {Object} u - The first 2D vector with properties x and y.
+ * @param {number} u.x - The x-component of vector u.
+ * @param {number} u.y - The y-component of vector u.
+ * @param {Object} v - The second 2D vector with properties x and y.
+ * @param {number} v.x - The x-component of vector v.
+ * @param {number} v.y - The y-component of vector v.
+ * @returns {number} The angle between the two vectors in radians, in the range [-π, π].
+ *
+ * @see {@link https://www.wikihow.com/Find-the-Angle-Between-Two-Vectors}
+ */
 export function computeAngleBetween(u, v) {
-    // https://www.wikihow.com/Find-the-Angle-Between-Two-Vectors
-    return Math.atan2(u.x * v.y - u.y * v.x, u.x * v.x + u.y * v.y);
+  return Math.atan2(u.x * v.y - u.y * v.x, u.x * v.x + u.y * v.y);
 }
 
 /**
@@ -117,4 +173,10 @@ export function computeAngleBetween(u, v) {
 /**
  * @typedef {Object} Itinerary
  * @property {Leg[]} legs - An array of legs that make up the journey itinerary.
+ */
+
+/**
+ * @typedef {Object} LegDates
+ * @property {Date} start - The start date.
+ * @property {Date} end - The end date.
  */
