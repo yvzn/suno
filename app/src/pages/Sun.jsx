@@ -4,6 +4,8 @@ import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
 import { SunPositionChart } from '../components/SunPositionChart';
+import { LoadingIndicator } from '../components/LoadingIndicator';
+import { ErrorMessage } from '../components/ErrorMessage';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 
@@ -58,21 +60,10 @@ export function Sun() {
             Itinerary details
           </Text>
         </p>
-        {isLoading && (
-          <section>
-            <Text id="fetch.loading">Loading...</Text>
-          </section>
-        )}
-        {error && (
-          <section>
-            <p>
-              <Text id="fetch.error">Error</Text>
-            </p>
-            <a href="#" onClick={fetchItinerary}>
-              <Text id="fetch.retry">Retry</Text>
-            </a>
-          </section>
-        )}
+
+        <LoadingIndicator isLoading={isLoading} />
+        <ErrorMessage error={error} onRetry={fetchItinerary} />
+
         {sunPosition && <SunPositionChart positions={sunPosition} />}
       </main>
       {journey && (

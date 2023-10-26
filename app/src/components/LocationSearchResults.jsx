@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { Text } from 'preact-i18n';
 
 import { findLocations } from '../services/api';
+import { LoadingIndicator } from './LoadingIndicator';
+import { ErrorMessage } from './ErrorMessage';
 
 import './LocationSearchResults.css';
 
@@ -34,21 +36,9 @@ export function LocationSearchResults(props) {
 
   return (
     <>
-      {isLoading && (
-        <section>
-          <Text id="fetch.loading">Loading...</Text>
-        </section>
-      )}
-      {error && (
-        <section>
-          <p>
-            <Text id="fetch.error">Error</Text>
-          </p>
-          <a href="#" onClick={search}>
-            <Text id="fetch.retry">Retry</Text>
-          </a>
-        </section>
-      )}
+      <LoadingIndicator isLoading={isLoading} />
+      <ErrorMessage error={error} onRetry={search} />
+
       {searchResults && searchResults.length > 0 && (
         <section>
           <p>
@@ -86,3 +76,4 @@ export function LocationSearchResults(props) {
     </>
   );
 }
+
