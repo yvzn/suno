@@ -32,6 +32,7 @@
   "directions": {
     "title": "Directions",
     "message": "From {{from}} to {{to}}:",
+    "legDescription": "{{from}} to {{to}}",
     "sun": "Sun position"
   },
   "sun": {

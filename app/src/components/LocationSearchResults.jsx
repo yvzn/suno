@@ -48,7 +48,7 @@ export function LocationSearchResults(props) {
           </p>
           <ul>
             {searchResults.map((result, index) => (
-              <li>
+              <li key={"result-" + index}>
                 <a
                   href="#"
                   onClick={() => props.onSelect(result)}

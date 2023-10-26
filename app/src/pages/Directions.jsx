@@ -3,8 +3,18 @@ import { Text } from 'preact-i18n';
 import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
+import { LoadingIndicator } from '../components/LoadingIndicator';
+import { ErrorMessage } from '../components/ErrorMessage';
+import { getDirections } from '../services/api';
+
+import './Directions.css';
+
 export function Directions() {
   const [journey, setJourney] = useState();
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+
+  const [itinerary, setItinerary] = useState();
 
   useEffect(() => {
     const journey = deserializeJourney(location.search);
@@ -13,6 +23,17 @@ export function Directions() {
     }
     setJourney(journey)
   }, []);
+
+  const fetchItinerary = () => {
+    if (!journey) return;
+    setError(undefined);
+    setLoading(true);
+    getDirections(journey)
+      .then(setItinerary, setError)
+      .finally(() => setLoading(false));
+  }
+
+  useEffect(fetchItinerary, [journey]);
 
   return (
     <>
@@ -31,7 +52,19 @@ export function Directions() {
             Itinerary details
           </Text>
         </p>
-        <p>TODO</p>
+
+        <LoadingIndicator isLoading={isLoading} />
+        <ErrorMessage error={error} onRetry={fetchItinerary} />
+
+        {itinerary && itinerary.legs && (
+          <section>
+            <dl>
+              {itinerary.legs.map(
+                (leg, index) => <ItineraryLeg leg={leg} key={"leg-" + index} />
+              )}
+            </dl>
+          </section>
+        )}
       </main>
       {journey && (
         <footer>
@@ -45,4 +78,32 @@ export function Directions() {
       )}
     </>
   );
+}
+
+function ItineraryLeg(props) {
+  return (<>
+    <dt>
+      <Text
+        id="directions.legDescription"
+        fields={{
+          from: props.leg.start.name,
+          to: props.leg.end.name,
+        }}
+      >
+        Leg description
+      </Text>
+    </dt>
+    <dd>
+      <LegDuration durationInSeconds={props.leg.durationInSeconds} />
+    </dd>
+  </>)
+}
+
+function LegDuration(props) {
+  const durationInMinutes = Math.round(props.durationInSeconds / 60);
+  if (durationInMinutes > 60) {
+    const durationInHours = Math.floor(durationInMinutes / 60)
+    return <>{durationInHours}h {durationInMinutes % 60}min</>
+  }
+  return <>{durationInMinutes}min</>
 }
