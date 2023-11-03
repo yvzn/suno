@@ -9,6 +9,8 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 
+import './Sun.css';
+
 export function Sun() {
   const [journey, setJourney] = useState();
   const [isLoading, setLoading] = useState(false);
@@ -44,7 +46,7 @@ export function Sun() {
 
   return (
     <>
-      <main>
+      <main id="sun">
         <h1>
           <Text id="sun.title">Sun position</Text>
         </h1>
@@ -59,6 +61,12 @@ export function Sun() {
           >
             Itinerary details
           </Text>
+          
+          <Link
+            href={'/journey' + window.location.search}
+          >
+            <Text id="sun.editJourney">Edit</Text>
+          </Link>
         </p>
 
         <LoadingIndicator isLoading={isLoading} />
