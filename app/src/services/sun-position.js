@@ -1,6 +1,7 @@
 import SunCalc from 'suncalc';
 
-// representing the number of compass sectors (N, NE, E, SE, S, SW, W, NW)
+// representing the number of compass sectors on secondary intercardinal direction (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE)
+// https://en.wikipedia.org/wiki/Cardinal_direction
 const SECTOR_COUNT = 8;
 
 // the angular size of each sector in radians
@@ -11,11 +12,11 @@ const DURATION_BUCKET_IN_SECONDS = 60 * 60;
 const VECTOR_POINTING_SOUTH = { x: 0, y: -1 };
 
 /**
- * Computes the total duration of sunlight for each of eight sectors defined by compass directions (N, NE, E, SE, S, SW, W, NW) along a given itinerary's path.
+ * Computes the total duration of sunlight for each of eight sectors defined by compass directions (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE) along a given itinerary's path.
  *
  * @param {Itinerary} itinerary - The itinerary for the journey.
  * @param {Date|string} startDate - The start date of the journey. If set to 'now', the current date and time will be used.
- * @returns {number[]} - An array of total sunlight durations for each compass sector.
+ * @returns {number[]} - An array of total sunlight durations for each compass sector, in seconds.
  */
 export function computeSunPositions(itinerary, startDate) {
   if (startDate === 'now') startDate = new Date();
@@ -30,7 +31,7 @@ export function computeSunPositions(itinerary, startDate) {
     for (const bucket of bucketize(leg, legStartDate)) {
       const { bucketStart, bucketStartDate, durationInSeconds: bucketDurationInSeconds } = bucket;
 
-      const bucketSunPosition = SunCalc.getPosition(bucketStartDate, bucketStart.lat, bucketStart.lon);
+      const bucketSunPosition = getSunPosition(bucketStartDate, bucketStart);
 
       if (bucketSunPosition.altitude >= 0) {
         const legVector = convertLegToVector(leg);
@@ -80,6 +81,21 @@ function calculateBucketIncrement(leg, bucketCount) {
   };
 }
 
+function getSunPosition(timeAndDate, coords) {
+  const { altitude, azimuth } = SunCalc.getPosition(timeAndDate, coords.lat, coords.lon);
+
+  // suncalc.js returns the sun azimuth in radians, (direction along the horizon, measured from south to west)
+  // e.g. 0 is south and Math.PI * 3/4 is northwest
+  // https://github.com/mourner/suncalc#sun-position
+
+  // with azimuth defined as the angle between a line due south and the shadow cast by a vertical rod
+  // the angle is positive if the shadow is west of south and negative if it is east of south
+
+  // our trigonometric computations are typically counterclockwise, so the azimuth value should be inverted
+
+  return { altitude, azimuth: -1 * azimuth };
+}
+
 function convertLegToVector(leg) {
   return {
     x: leg.end.coord.lon - leg.start.coord.lon,
@@ -104,7 +120,7 @@ function normalizeAngle(angleInRadians) {
  * Calculates the compass sector based on an angle in radians.
  *
  * This function divides the full circle (2 * Math.PI) into compass sectors
- * (N, NE, E, SE, S, SW, W, NW) and returns the sector index for the given angle.
+ * (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE) and returns the sector index for the given angle.
  *
  * @param {number} angleInRadians - The angle in radians to calculate the sector for.
  * @returns {number} The index of the compass sector (0 to 7) corresponding to the angle.

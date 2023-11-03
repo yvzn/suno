@@ -15,7 +15,7 @@ describe(computeSunPositions.name, () => {
 
         // the itinerary goes east, the sun is south
         // the sun position (with respect to the itinerary) sould be in the rightmost buckets
-        expect(positions).toEqual([0, 0, 0, 0, 0, 5 * 60, 0, 0]);
+        expect(positions).toEqual([0, 0, 0, 0, 0, 0, 5 * 60, 0]);
     })
 
     test('compute sun positions bucketed by sector, going west around midday', () => {
@@ -30,7 +30,7 @@ describe(computeSunPositions.name, () => {
 
         // the itinerary goes west, the sun is south
         // the sun position (with respect to the itinerary) sould be in the leftmost buckets
-        expect(positions).toEqual([0, 5 * 60, 0, 0, 0, 0, 0, 0]);
+        expect(positions).toEqual([0, 0, 5 * 60, 0, 0, 0, 0, 0]);
     })
 
     test('compute sun positions bucketed by sector, going south around midday', () => {
@@ -45,7 +45,7 @@ describe(computeSunPositions.name, () => {
 
         // the itinerary goes west, the sun is south
         // the sun position (with respect to the itinerary) sould be in the topmost buckets
-        expect(positions).toEqual([0, 0, 0, 0, 0, 0, 0, 5 * 60]);
+        expect(positions).toEqual([5 * 60, 0, 0, 0, 0, 0, 0, 0]);
     })
 });
 

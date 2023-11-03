@@ -6,7 +6,11 @@ Chart.register(PolarAreaController, ArcElement, RadialLinearScale);
 
 export function drawChart(canvasElement, chartData) {
     if (canvasElement) {
-        renderChart(canvasElement, chartData);
+        // chart.js uses a clockwise order for polar charts
+        const polarChartData = chartData.toReversed();
+        const chartDataInMinutes = polarChartData.map(seconds => Math.round(seconds / 60));
+
+        renderChart(canvasElement, chartDataInMinutes);
     }
 }
 
@@ -40,7 +44,7 @@ function renderChart(canvasElement, chartData) {
         options: {
             scales: {
                 r: {
-                    display: false,
+                    display: true,
                 },
             },
         },
