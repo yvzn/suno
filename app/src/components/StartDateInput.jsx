@@ -57,7 +57,7 @@ export function StartDateInput(props) {
                         <input
                             id="start-date"
                             type="date"
-                            value={departureDate.getFullYear() + '-' + (departureDate.getMonth() + 1) + '-' + departureDate.getDate()}
+                            value={departureDate.getFullYear() + '-' + pad(departureDate.getMonth() + 1) + '-' + pad(departureDate.getDate())}
                             onChange={handleDateChange}
                             ref={startDateInputRef}
                         />
