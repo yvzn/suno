@@ -50,7 +50,7 @@ async function getDirectionsApi({ from, to, startDate }) {
   const response = await fetch(`${apiUrl}/directions?${params.toString()}`);
 
   const json = await response.json();
-  return json.results;
+  return json;
 }
 
 function getDirectionsMock(_journey) {
