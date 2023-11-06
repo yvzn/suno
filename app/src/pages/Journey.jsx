@@ -5,10 +5,10 @@ import { Link } from 'preact-router';
 import { LocationInput } from '../components/LocationInput';
 import { LocationSearchResults } from '../components/LocationSearchResults';
 import { StartDateInput } from '../components/StartDateInput';
-import { PageTitle } from '../components/PageTitle';
+import { AppTitle } from '../components/AppTitle';
 import { serializeJourney } from '../services/serialize';
 
-const Title = withText('journey.title')(PageTitle);
+const Title = withText('journey.title')(AppTitle);
 const InputFrom = withText('journey.from.label')(
   withText('journey.from.placeholder')(LocationInput)
 );

@@ -1,15 +1,13 @@
 import { Text, withText } from 'preact-i18n';
 import { Link } from 'preact-router';
 
-import { PageTitle } from '../components/PageTitle';
-
-const Title = withText('app.title')(PageTitle);
+import { AppTitle } from '../components/AppTitle';
 
 export function Home() {
   return (
     <>
       <main>
-        <Title />
+        <AppTitle />
         <p>
           <Text id="app.tagline">Welcome</Text>
         </p>

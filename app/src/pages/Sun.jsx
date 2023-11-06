@@ -6,13 +6,13 @@ import { Link, route } from 'preact-router';
 import { SunPositionChart } from '../components/SunPositionChart';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
-import { PageTitle } from '../components/PageTitle';
+import { AppTitle } from '../components/AppTitle';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 
 import './Sun.css';
 
-const Title = withText('sun.title')(PageTitle);
+const Title = withText('sun.title')(AppTitle);
 
 export function Sun() {
   const [journey, setJourney] = useState();

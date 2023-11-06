@@ -1,9 +1,9 @@
 import { Text, withText } from 'preact-i18n';
 import { Link } from 'preact-router';
 
-import { PageTitle } from '../components/PageTitle';
+import { AppTitle } from '../components/AppTitle';
 
-const Title = withText('cookie.title')(PageTitle);
+const Title = withText('cookie.title')(AppTitle);
 
 export function CookieConsent() {
   return (

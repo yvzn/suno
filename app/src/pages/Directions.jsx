@@ -5,12 +5,12 @@ import { Link, route } from 'preact-router';
 
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
-import { PageTitle } from '../components/PageTitle';
+import { AppTitle } from '../components/AppTitle';
 import { getDirections } from '../services/api';
 
 import './Directions.css';
 
-const Title = withText('directions.title')(PageTitle);
+const Title = withText('directions.title')(AppTitle);
 
 export function Directions() {
   const [journey, setJourney] = useState();
