@@ -49,7 +49,7 @@ export function Sun() {
 
   return (
     <>
-      <main id="sun">
+      <main id="sun" aria-live="polite">
         <Title />
         <p>
           <Text
@@ -62,12 +62,6 @@ export function Sun() {
           >
             Itinerary details
           </Text>
-
-          <Link
-            href={'/journey' + window.location.search}
-          >
-            <Text id="sun.editJourney">Edit</Text>
-          </Link>
         </p>
 
         <LoadingIndicator isLoading={isLoading} />
@@ -75,15 +69,18 @@ export function Sun() {
 
         {sunPosition && <SunPositionChart positions={sunPosition} />}
       </main>
-      {journey && (
-        <footer>
-          <Link
-            href={'/directions' + window.location.search}
-          >
-            <Text id="sun.directions">Directions</Text>
-          </Link>
-        </footer>
-      )}
+      <footer>
+        <Link
+          href={'/journey' + window.location.search}
+        >
+          <Text id="sun.editJourney">Edit</Text>
+        </Link>
+        <Link
+          href={'/directions' + window.location.search}
+        >
+          <Text id="sun.directions">Directions</Text>
+        </Link>
+      </footer>
     </>
   );
 }

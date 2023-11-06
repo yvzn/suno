@@ -39,7 +39,7 @@
     "title": "Sun position",
     "message": "From {{from}} to {{to}}, leave {{startDate}}",
     "directions": "Directions",
-    "editJourney": "[edit]"
+    "editJourney": "Edit journey"
   },
   "fetch": {
     "loading": "Loading...",

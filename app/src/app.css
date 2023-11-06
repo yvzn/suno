@@ -11,3 +11,7 @@
 main > * + * {
   margin-block-start: var(--space-2x);
 }
+
+footer > a + a::before {
+  content: ' • ';
+}

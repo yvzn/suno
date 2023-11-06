@@ -2,6 +2,8 @@ import { useEffect, useRef } from "preact/hooks";
 
 import { drawChart } from '../services/chart';
 
+import './SunPositionChart.css';
+
 export function SunPositionChart(props) {
     const canvasRef = useRef()
 
@@ -9,7 +11,9 @@ export function SunPositionChart(props) {
         drawChart(canvasRef.current, props.positions)
     }, [canvasRef.current])
 
-    return (<>
-        <canvas ref={canvasRef}></canvas>
-    </>)
+    return (
+        <section id="chart-container">
+            <canvas ref={canvasRef}></canvas>
+        </section>
+    )
 }

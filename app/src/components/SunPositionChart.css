@@ -1,0 +1,13 @@
+#chart-container {
+    position: relative;
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@supports (height: 100dvh) {
+    #chart-container {
+        height: 60dvh;
+    }
+}
