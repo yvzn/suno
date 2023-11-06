@@ -8,8 +8,10 @@ const Title = withText('notFound.title')(AppTitle);
 export function NotFound() {
   return (
     <>
-      <main>
+      <header>
         <Title />
+      </header>
+      <main>
         <p>
           <Text id="notFound.message">Not found</Text>
         </p>

@@ -6,8 +6,10 @@ import { AppTitle } from '../components/AppTitle';
 export function Home() {
   return (
     <>
-      <main>
+      <header>
         <AppTitle />
+      </header>
+      <main>
         <p>
           <Text id="app.tagline">Welcome</Text>
         </p>

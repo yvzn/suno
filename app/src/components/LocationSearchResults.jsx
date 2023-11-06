@@ -28,6 +28,11 @@ export function LocationSearchResults(props) {
 
   useEffect(search, [props.query]);
 
+  const selectResult = (result) => (event) => {
+    event.preventDefault();
+    props.onSelect(result);
+  }
+
   return (
     <div aria-live="polite" id="search-results">
       <LoadingIndicator isLoading={isLoading} />
@@ -45,7 +50,7 @@ export function LocationSearchResults(props) {
               <li key={"result-" + index}>
                 <a
                   href="#"
-                  onClick={() => props.onSelect(result)}
+                  onClick={selectResult(result)}
                 >
                   {result.name}
                 </a>

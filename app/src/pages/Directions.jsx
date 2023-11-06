@@ -41,8 +41,10 @@ export function Directions() {
 
   return (
     <>
-      <main id="directions" aria-live="polite">
+      <header>
         <Title />
+      </header>
+      <main id="directions" aria-live="polite">
         <p>
           <Text
             id="directions.message"

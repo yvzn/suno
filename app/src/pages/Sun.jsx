@@ -47,8 +47,10 @@ export function Sun() {
 
   return (
     <>
-      <main id="sun" aria-live="polite">
+      <header>
         <Title />
+      </header>
+      <main id="sun" aria-live="polite">
         <p>
           <Text
             id="sun.message"

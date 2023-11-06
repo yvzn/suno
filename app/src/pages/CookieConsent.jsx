@@ -8,8 +8,10 @@ const Title = withText('cookie.title')(AppTitle);
 export function CookieConsent() {
   return (
     <>
-      <main>
+      <header>
         <Title />
+      </header>
+      <main>
         <p>
           <Text id="cookie.advisory">This website is using cookies</Text>
         </p>

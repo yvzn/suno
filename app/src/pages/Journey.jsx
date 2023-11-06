@@ -17,6 +17,17 @@ const InputTo = withText('journey.to.label')(
 );
 
 export function Journey() {
+  return (
+    <>
+      <header>
+        <Title />
+      </header>
+      <JourneyForm />
+    </>
+  )
+}
+
+function JourneyForm() {
   const [locationFrom, setLocationFrom] = useState({
     name: '',
     coord: undefined,
@@ -52,7 +63,6 @@ export function Journey() {
   return (
     <>
       <main id="journey">
-        <Title />
         <InputFrom
           nameValue={locationFrom.name}
           coordValue={locationFrom.coord}
