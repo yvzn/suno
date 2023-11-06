@@ -39,7 +39,8 @@
     "title": "Sun position",
     "message": "From {{from}} to {{to}}, leave {{startDate}}",
     "directions": "Directions",
-    "editJourney": "Edit journey"
+    "editJourney": "Edit journey",
+    "description": "Cumulative duration of sun position, with respect to car direction"
   },
   "fetch": {
     "loading": "Loading...",

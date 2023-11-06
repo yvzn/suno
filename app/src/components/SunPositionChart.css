@@ -4,10 +4,15 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    padding-block-start: var(--space-2x);
 }
 
 @supports (height: 100dvh) {
     #chart-container {
         height: 60dvh;
     }
+}
+
+figcaption {
+    padding-block-start: var(--space-2x);
 }

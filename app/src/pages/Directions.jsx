@@ -7,6 +7,7 @@ import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { AppTitle } from '../components/AppTitle';
 import { getDirections } from '../services/api';
+import { formatDurationInSeconds } from '../services/duration';
 
 import './Directions.css';
 
@@ -81,6 +82,7 @@ export function Directions() {
 }
 
 function ItineraryLeg(props) {
+  const legDuration = formatDurationInSeconds(props.leg.durationInSeconds)
   return (<>
     <dt>
       <Text
@@ -94,16 +96,8 @@ function ItineraryLeg(props) {
       </Text>
     </dt>
     <dd>
-      <LegDuration durationInSeconds={props.leg.durationInSeconds} />
+      {legDuration}
     </dd>
   </>)
 }
 
-function LegDuration(props) {
-  const durationInMinutes = Math.round(props.durationInSeconds / 60);
-  if (durationInMinutes > 60) {
-    const durationInHours = Math.floor(durationInMinutes / 60)
-    return <>{durationInHours}h {durationInMinutes % 60}min</>
-  }
-  return <>{durationInMinutes}min</>
-}

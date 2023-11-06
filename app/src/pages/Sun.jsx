@@ -10,8 +10,6 @@ import { AppTitle } from '../components/AppTitle';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 
-import './Sun.css';
-
 const Title = withText('sun.title')(AppTitle);
 
 export function Sun() {
