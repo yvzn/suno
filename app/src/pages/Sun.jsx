@@ -78,7 +78,6 @@ export function Sun() {
         <footer>
           <Link
             href={'/directions' + window.location.search}
-            autoFocus={true}
           >
             <Text id="sun.directions">Directions</Text>
           </Link>

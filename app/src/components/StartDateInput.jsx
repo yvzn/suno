@@ -4,12 +4,9 @@ import { Text } from 'preact-i18n';
 export function StartDateInput(props) {
     const [selectedOption, setSelectedOption] = useState(props.value === 'now' ? 'now' : 'at');
     const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date());
-    const startDateInputRef = useRef();
-    const startTimeInputRef = useRef();
 
     const handleOptionChange = (e) => {
         setSelectedOption(e.target.value);
-        if (startDateInputRef.current) startDateInputRef.current.focus();
     };
 
     const handleDateChange = (e) => {
@@ -17,7 +14,6 @@ export function StartDateInput(props) {
         newDate.setHours(departureDate.getHours());
         newDate.setMinutes(departureDate.getMinutes());
         setDepartureDate(newDate);
-        if (startTimeInputRef.current) startTimeInputRef.current.focus();
     };
 
     const handleTimeChange = (e) => {
@@ -59,7 +55,7 @@ export function StartDateInput(props) {
                             type="date"
                             value={departureDate.getFullYear() + '-' + pad(departureDate.getMonth() + 1) + '-' + pad(departureDate.getDate())}
                             onChange={handleDateChange}
-                            ref={startDateInputRef}
+                            required="required"
                         />
                     </span>
                     <label for="start-time">
@@ -71,7 +67,7 @@ export function StartDateInput(props) {
                             type="time"
                             value={pad(departureDate.getHours()) + ':' + pad(departureDate.getMinutes())}
                             onChange={handleTimeChange}
-                            ref={startTimeInputRef}
+                            required="required"
                         />
                     </span>
                 </>

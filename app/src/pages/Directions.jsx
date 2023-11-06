@@ -70,7 +70,6 @@ export function Directions() {
         <footer>
           <Link
             href={'/sun' + window.location.search}
-            autoFocus={true}
           >
             <Text id="directions.sun">Sun position</Text>
           </Link>

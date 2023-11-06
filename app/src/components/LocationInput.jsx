@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { Text } from 'preact-i18n';
 
 import './LocationInput.css';
@@ -6,7 +6,6 @@ import './LocationInput.css';
 export function LocationInput(props) {
   const fieldId = `field-${Math.random()}`;
   const [nameValue, setNameValue] = useState(props.nameValue);
-  const inputRef = useRef();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,16 +25,6 @@ export function LocationInput(props) {
     event.target.select();
   };
 
-  useEffect(
-    () => {
-      if (props.autoFocus && inputRef.current) {
-        inputRef.current.focus();
-        inputRef.current.select();
-      };
-    },
-    [props.autoFocus]
-  );
-
   return (
     <form onSubmit={handleSubmit} className={props.coordValue && 'has-coords'}>
       <label htmlFor={fieldId}>{props.label}</label>
@@ -44,7 +33,6 @@ export function LocationInput(props) {
           placeholder={props.placeholder}
           id={fieldId}
           value={nameValue}
-          ref={inputRef}
           onInput={handleInput}
           onFocus={handleSetFocus}
         />

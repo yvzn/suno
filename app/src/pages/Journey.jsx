@@ -59,13 +59,11 @@ export function Journey() {
           nameValue={locationFrom.name}
           coordValue={locationFrom.coord}
           onChange={onChangeLocationFrom}
-          autoFocus={!locationFrom.coord}
         />
         <InputTo
           nameValue={locationTo.name}
           coord={locationTo.coord}
           onChange={onChangeLocationTo}
-          autoFocus={locationFrom.coord && !locationTo.coord}
         />
         {locationFrom.coord && locationTo.coord && (
           <StartDateInput
@@ -81,7 +79,6 @@ export function Journey() {
         <footer>
           <Link
             href={'/sun?' + serializeJourney({ from: locationFrom, to: locationTo, startDate })}
-            autoFocus={true}
           >
             <Text id="nav.continue">Continue</Text>
           </Link>

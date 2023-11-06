@@ -11,7 +11,6 @@ export function LocationSearchResults(props) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const [searchResults, setSearchResults] = useState();
-  const firstSearchResultRef = useRef();
 
   const search = () => {
     setSearchResults(undefined);
@@ -28,11 +27,6 @@ export function LocationSearchResults(props) {
   };
 
   useEffect(search, [props.query]);
-
-  useEffect(
-    () => firstSearchResultRef.current && firstSearchResultRef.current.focus(),
-    [firstSearchResultRef.current]
-  );
 
   return (
     <>
@@ -52,7 +46,6 @@ export function LocationSearchResults(props) {
                 <a
                   href="#"
                   onClick={() => props.onSelect(result)}
-                  ref={index === 0 ? firstSearchResultRef : undefined}
                 >
                   {result.name}
                 </a>
