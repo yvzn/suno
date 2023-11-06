@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'preact/hooks';
-import { Text } from 'preact-i18n';
+import { Text, withText } from 'preact-i18n';
 import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
 import { SunPositionChart } from '../components/SunPositionChart';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
+import { PageTitle } from '../components/PageTitle';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 
 import './Sun.css';
+
+const Title = withText('sun.title')(PageTitle);
 
 export function Sun() {
   const [journey, setJourney] = useState();
@@ -47,9 +50,7 @@ export function Sun() {
   return (
     <>
       <main id="sun">
-        <h1>
-          <Text id="sun.title">Sun position</Text>
-        </h1>
+        <Title />
         <p>
           <Text
             id="sun.message"
@@ -61,7 +62,7 @@ export function Sun() {
           >
             Itinerary details
           </Text>
-          
+
           <Link
             href={'/journey' + window.location.search}
           >

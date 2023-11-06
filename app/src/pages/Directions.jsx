@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'preact/hooks';
-import { Text } from 'preact-i18n';
+import { Text, withText } from 'preact-i18n';
 import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
+import { PageTitle } from '../components/PageTitle';
 import { getDirections } from '../services/api';
 
 import './Directions.css';
+
+const Title = withText('directions.title')(PageTitle);
 
 export function Directions() {
   const [journey, setJourney] = useState();
@@ -37,10 +40,8 @@ export function Directions() {
 
   return (
     <>
-      <main>
-        <h1>
-          <Text id="directions.title">Directions</Text>
-        </h1>
+      <main id="directions" aria-live="polite">
+        <Title />
         <p>
           <Text
             id="directions.message"

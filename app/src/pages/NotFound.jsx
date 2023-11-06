@@ -1,13 +1,15 @@
-import { Text } from 'preact-i18n';
+import { Text, withText } from 'preact-i18n';
 import { Link } from 'preact-router';
+
+import { PageTitle } from '../components/PageTitle';
+
+const Title = withText('notFound.title')(PageTitle);
 
 export function NotFound() {
   return (
     <>
       <main>
-        <h1>
-          <Text id="notFound.title">Suno</Text>
-        </h1>
+        <Title />
         <p>
           <Text id="notFound.message">Not found</Text>
         </p>

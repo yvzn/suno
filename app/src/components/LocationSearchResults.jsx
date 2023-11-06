@@ -29,7 +29,7 @@ export function LocationSearchResults(props) {
   useEffect(search, [props.query]);
 
   return (
-    <>
+    <div aria-live="polite">
       <LoadingIndicator isLoading={isLoading} />
       <ErrorMessage error={error} onRetry={search} />
 
@@ -66,7 +66,7 @@ export function LocationSearchResults(props) {
           </p>
         </section>
       )}
-    </>
+    </div>
   );
 }
 

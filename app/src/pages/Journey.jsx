@@ -5,10 +5,10 @@ import { Link } from 'preact-router';
 import { LocationInput } from '../components/LocationInput';
 import { LocationSearchResults } from '../components/LocationSearchResults';
 import { StartDateInput } from '../components/StartDateInput';
+import { PageTitle } from '../components/PageTitle';
 import { serializeJourney } from '../services/serialize';
 
-import './Journey.css';
-
+const Title = withText('journey.title')(PageTitle);
 const InputFrom = withText('journey.from.label')(
   withText('journey.from.placeholder')(LocationInput)
 );
@@ -51,10 +51,8 @@ export function Journey() {
 
   return (
     <>
-      <main>
-        <h1>
-          <Text id="journey.title">Directions</Text>
-        </h1>
+      <main id="journey">
+        <Title />
         <InputFrom
           nameValue={locationFrom.name}
           coordValue={locationFrom.coord}

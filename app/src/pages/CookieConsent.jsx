@@ -1,13 +1,15 @@
-import { Text } from 'preact-i18n';
+import { Text, withText } from 'preact-i18n';
 import { Link } from 'preact-router';
+
+import { PageTitle } from '../components/PageTitle';
+
+const Title = withText('cookie.title')(PageTitle);
 
 export function CookieConsent() {
   return (
     <>
       <main>
-        <h1>
-          <Text id="cookie.title">Cookies</Text>
-        </h1>
+        <Title />
         <p>
           <Text id="cookie.advisory">This website is using cookies</Text>
         </p>
