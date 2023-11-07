@@ -69,6 +69,6 @@ public static class Geocoding
 				};
 			}).ToArray();
 
-		return new OkObjectResult(searchResults);
+		return new OkObjectResult(new { results = searchResults });
 	}
 }
