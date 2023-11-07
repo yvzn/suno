@@ -5,9 +5,10 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System.Net.Http;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace suno;
 
@@ -16,6 +17,8 @@ public static class Geocoding
 	private static readonly string azureMapsApiKey = Environment.GetEnvironmentVariable("AZURE_MAPS_API_KEY") ?? throw new Exception("AZURE_MAPS_API_KEY not set");
 
 	private static readonly HttpClient httpClient = new();
+
+	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
 
 	[FunctionName("Geocoding")]
 	public static async Task<IActionResult> Run(
@@ -29,7 +32,6 @@ public static class Geocoding
 			return new BadRequestResult();
 		}
 
-		// Replace with your Azure Maps API subscription key
 		string azureMapsApiEndpoint = $"https://atlas.microsoft.com/geocode?api-version=2023-06-01&query={searchQuery}&subscription-key={azureMapsApiKey}";
 
 		var response = await httpClient.GetAsync(azureMapsApiEndpoint);
@@ -40,22 +42,25 @@ public static class Geocoding
 			return new StatusCodeResult(StatusCodes.Status502BadGateway);
 		}
 
-		var jsonContent = await response.Content.ReadAsStringAsync();
-		var azureMapsResponse = JsonConvert.DeserializeObject<AzureMapsResponse>(jsonContent);
+		var jsonContent = await response.Content.ReadAsStreamAsync();
 
-		if (azureMapsResponse?.features.Count() is not > 0)
+		var azureMapsResponse = await JsonSerializer.DeserializeAsync<AzureMapsGeocodeResponse>(jsonContent, jsonSerializerOptions);
+
+		if (azureMapsResponse?.features.Count is not > 0)
 		{
 			return new NotFoundObjectResult("Location not found.");
 		}
 
 		var searchResults = azureMapsResponse.features
-			.Where(feature => feature?.geometry?.coordinates?.Count() is > 1)
+			.Where(feature => feature.geometry.coordinates.Count is > 1)
+			.OrderBy(feature => feature.properties.confidence)
+			.GroupBy(feature => feature.properties.address.formattedAddress).Select(features => features.First())
 			.Select(feature =>
 			{
-				var coordinates = feature!.geometry!.coordinates;
+				var coordinates = feature.geometry.coordinates;
 				return new Location
 				{
-					name = feature?.properties?.address?.formattedAddress,
+					name = feature.properties.address.formattedAddress,
 					coord = new Coordinates
 					{
 						lat = coordinates.ElementAt(1),
