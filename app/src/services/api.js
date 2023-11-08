@@ -95,7 +95,21 @@ function getDirectionsMock(_journey) {
   return Promise.resolve(results);
 }
 
-// export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
-// export { findLocationsMock as findLocations, getDirectionsMock as getDirections }
+async function healthCheckApi() {
+  const params = new URLSearchParams();
+  params.set("code", apiKey);
 
-export { findLocationsApi as findLocations, getDirectionsApi as getDirections }
+  const response = await fetch(`${apiUrl}/health?${params.toString()}`);
+
+  const json = await response.json();
+  return json;
+}
+
+async function healthCheckMock() {
+  return Promise.resolve({healthy: true, timestamp: new Date().toISOString()})
+}
+
+// export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }
+// export { findLocationsMock as findLocations, getDirectionsMock as getDirections, healthCheckMock as healthCheck }
+
+export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }
