@@ -1,18 +1,19 @@
 import SunCalc from 'suncalc';
 
-// representing the number of compass sectors on secondary intercardinal direction (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE)
-// https://en.wikipedia.org/wiki/Cardinal_direction
+// representing the number of heading sectors
+// the full circle (2 * Math.PI) is divided into SECTOR_COUNT heading sectors
+// representing the direction of the sun with respect to the car direction
 const SECTOR_COUNT = 8;
 
 // the angular size of each sector in radians
 const SECTOR_SIZE = (2 * Math.PI) / SECTOR_COUNT;
 
-const DURATION_BUCKET_IN_SECONDS = 60 * 60;
+const DURATION_BUCKET_IN_SECONDS = 15 * 60;
 
 const VECTOR_POINTING_SOUTH = { x: 0, y: -1 };
 
 /**
- * Computes the total duration of sunlight for each of eight sectors defined by compass directions (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE) along a given itinerary's path.
+ * Computes the total duration of sunlight for each of eight heading sectors along a given itinerary's path.
  *
  * @param {Itinerary} itinerary - The itinerary for the journey.
  * @param {Date|string} startDate - The start date of the journey. If set to 'now', the current date and time will be used.
@@ -117,13 +118,13 @@ function normalizeAngle(angleInRadians) {
 }
 
 /**
- * Calculates the compass sector based on an angle in radians.
+ * Calculates the heading sector based on an angle in radians.
  *
- * This function divides the full circle (2 * Math.PI) into compass sectors
- * (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE) and returns the sector index for the given angle.
+ * This function divides the full circle (2 * Math.PI) into SECTOR_COUNT heading sectors
+ * and returns the sector index for the given angle.
  *
  * @param {number} angleInRadians - The angle in radians to calculate the sector for.
- * @returns {number} The index of the compass sector (0 to 7) corresponding to the angle.
+ * @returns {number} The index of the heading sector (0 to SECTOR_COUNT - 1) corresponding to the angle.
  */
 function convertAngleToSector(angleInRadians) {
   return Math.floor(angleInRadians / SECTOR_SIZE);
