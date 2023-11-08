@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import { Text } from 'preact-i18n';
 
 export function StartDateInput(props) {
@@ -7,6 +7,9 @@ export function StartDateInput(props) {
 
     const handleOptionChange = (e) => {
         setSelectedOption(e.target.value);
+        if (e.target.value === 'now') {
+            setDepartureDate(new Date());
+        }
     };
 
     const handleDateChange = (e) => {
@@ -32,18 +35,22 @@ export function StartDateInput(props) {
         }
     }, [selectedOption, departureDate]);
 
+    const earliestStartDate = toDateString(new Date());
+    const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00';
+
     return (
         <form>
-            <label>
-                <select value={selectedOption} onChange={handleOptionChange}>
-                    <option value="now">
-                        <Text id="journey.leaveNow">Leave now</Text>
-                    </option>
-                    <option value="at">
-                        <Text id="journey.leaveAt">Leave at ...</Text>
-                    </option>
-                </select>
+            <label for="start-at">
+                <Text id="journey.departure">Departure:</Text>
             </label>
+            <select id="start-at" value={selectedOption} onChange={handleOptionChange}>
+                <option value="now">
+                    <Text id="journey.leaveNow">Leave now</Text>
+                </option>
+                <option value="at">
+                    <Text id="journey.leaveAt">Leave at ...</Text>
+                </option>
+            </select>
             {selectedOption === 'at' && (
                 <>
                     <label for="start-date">
@@ -53,7 +60,8 @@ export function StartDateInput(props) {
                         <input
                             id="start-date"
                             type="date"
-                            value={departureDate.getFullYear() + '-' + pad(departureDate.getMonth() + 1) + '-' + pad(departureDate.getDate())}
+                            value={toDateString(departureDate)}
+                            min={earliestStartDate}
                             onChange={handleDateChange}
                             required="required"
                         />
@@ -65,7 +73,8 @@ export function StartDateInput(props) {
                         <input
                             id="start-time"
                             type="time"
-                            value={pad(departureDate.getHours()) + ':' + pad(departureDate.getMinutes())}
+                            value={toTimeString(departureDate)}
+                            min={earliestStartTime}
                             onChange={handleTimeChange}
                             required="required"
                         />
@@ -76,6 +85,21 @@ export function StartDateInput(props) {
     );
 }
 
+function toDateString(someDate) {
+    return someDate.getFullYear() + '-' + pad(someDate.getMonth() + 1) + '-' + pad(someDate.getDate());
+}
+
+function toTimeString(someDate) {
+    return pad(someDate.getHours()) + ':' + pad(someDate.getMinutes());
+}
+
 function pad(value) {
     return String(value).padStart(2, '0')
+}
+
+function isToday(someDate) {
+    const today = new Date();
+    return someDate.getDate() == today.getDate() &&
+        someDate.getMonth() == today.getMonth() &&
+        someDate.getFullYear() == today.getFullYear()
 }

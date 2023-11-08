@@ -23,7 +23,12 @@
     },
     "search": "Search",
     "searchResults": "Choose location for '{{query}}':",
-    "searchResultsEmpty": "No location found for '{{query}}'. Please try another search."
+    "searchResultsEmpty": "No location found for '{{query}}'. Please try another search.",
+    "departure": "Departure:",
+    "leaveNow": "Leave now",
+    "leaveAt": "Leave at ...",
+    "date": "Date:",
+    "time": "Time:"
   },
   "notFound": {
     "title": "Not found",

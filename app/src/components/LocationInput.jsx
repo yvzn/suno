@@ -30,11 +30,15 @@ export function LocationInput(props) {
       <label htmlFor={fieldId}>{props.label}</label>
       <span>
         <input
+          type="text"
           placeholder={props.placeholder}
           id={fieldId}
           value={nameValue}
           onInput={handleInput}
           onFocus={handleSetFocus}
+          enterKeyHint="search"
+          autoComplete="street-address"
+          required="required"
         />
       </span>
       <button type="submit">
