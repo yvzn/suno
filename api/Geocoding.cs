@@ -46,12 +46,7 @@ public static class Geocoding
 
 		var azureMapsResponse = await JsonSerializer.DeserializeAsync<AzureMapsGeocodeResponse>(jsonContent, jsonSerializerOptions);
 
-		if (azureMapsResponse?.features.Count is not > 0)
-		{
-			return new NotFoundObjectResult("Location not found.");
-		}
-
-		var searchResults = azureMapsResponse.features
+		var searchResults = azureMapsResponse?.features
 			.Where(feature => feature.geometry.coordinates.Count is > 1)
 			.OrderBy(feature => feature.properties.confidence)
 			.GroupBy(feature => feature.properties.address.formattedAddress).Select(features => features.First())
@@ -69,6 +64,6 @@ public static class Geocoding
 				};
 			}).ToArray();
 
-		return new OkObjectResult(new { results = searchResults });
+		return new OkObjectResult(new { results = searchResults ?? Array.Empty<object>() });
 	}
 }

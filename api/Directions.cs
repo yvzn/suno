@@ -31,7 +31,12 @@ public static class Directions
 		string toLongitude = req.Query["to"];
 		string startDate = req.Query["d"];
 
-		if (!IsValidCoordinate(fromLatitude, fromLongitude, toLatitude, toLongitude) || !IsValidStartDate(startDate))
+		if (!IsValidCoordinate(fromLatitude, fromLongitude, toLatitude, toLongitude))
+		{
+			return new BadRequestResult();
+		}
+
+		if (!IsValidStartDate(startDate))
 		{
 			return new BadRequestResult();
 		}
