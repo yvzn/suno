@@ -39,9 +39,10 @@ export function LocationInput(props) {
           enterKeyHint="search"
           autoComplete="street-address"
           required="required"
+          disabled={props.disabled}
         />
       </span>
-      <button type="submit">
+      <button type="submit" disabled={props.disabled}>
         <Text id="directions.search">Search</Text>
       </button>
     </form>

@@ -67,11 +67,13 @@ function JourneyForm() {
           nameValue={locationFrom.name}
           coordValue={locationFrom.coord}
           onChange={onChangeLocationFrom}
+          disabled={search.target === 'to'}
         />
         <InputTo
           nameValue={locationTo.name}
-          coord={locationTo.coord}
+          coordValue={locationTo.coord}
           onChange={onChangeLocationTo}
+          disabled={search.target === 'from'}
         />
         {locationFrom.coord && locationTo.coord && (
           <StartDateInput
