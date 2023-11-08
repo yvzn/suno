@@ -9,7 +9,7 @@ Chart.register(PolarAreaController, ArcElement, RadialLinearScale, Tooltip);
 export function drawChart(canvasElement, chartData) {
     if (canvasElement) {
         // chart.js uses a clockwise order for polar charts
-        const polarChartData = chartData.toReversed();
+        const polarChartData = [...chartData].reverse();
         const chartDataInMinutes = polarChartData.map(seconds => Math.round(seconds / 60));
 
         renderChart(canvasElement, chartDataInMinutes);
