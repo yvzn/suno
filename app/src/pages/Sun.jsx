@@ -7,6 +7,7 @@ import { SunPositionChart } from '../components/SunPositionChart';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { AppTitle } from '../components/AppTitle';
+import { ItinerarySummary } from '../components/ItinerarySummary';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 
@@ -51,18 +52,10 @@ export function Sun() {
         <Title />
       </header>
       <main id="sun" aria-live="polite">
-        <p>
-          <Text
-            id="sun.message"
-            fields={{
-              from: journey?.from?.name,
-              to: journey?.to?.name,
-              startDate: dateFormat(journey?.startDate)
-            }}
-          >
-            Itinerary details
-          </Text>
-        </p>
+        <ItinerarySummary
+          from={journey?.from?.name}
+          to={journey?.to?.name}
+          startDate={journey?.startDate} />
 
         <LoadingIndicator isLoading={isLoading} />
         <ErrorMessage error={error} onRetry={fetchItinerary} />
@@ -83,11 +76,4 @@ export function Sun() {
       </footer>
     </>
   );
-}
-
-function dateFormat(date) {
-  if (date instanceof Date) {
-    return 'at ' + new Intl.DateTimeFormat([], { dateStyle: 'short', timeStyle: 'short' }).format(date);
-  }
-  return date;
 }

@@ -36,16 +36,17 @@
   },
   "directions": {
     "title": "Directions",
-    "message": "From {{from}} to {{to}}:",
-    "legDescription": "{{from}} to {{to}}",
-    "sun": "Sun position"
+    "sun": "Sun position",
+    "from": "From {{from}}",
+    "to": "To {{to}}",
+    "leave": "Leave on {{startDate}} at {{startTime}}",
+    "legDescription": "{{from}} to {{to}}"
   },
   "sun": {
     "title": "Sun position",
-    "message": "From {{from}} to {{to}}, leave {{startDate}}",
     "directions": "Directions",
     "editJourney": "Edit journey",
-    "description": "Cumulative duration of sun position, with respect to car direction"
+    "description": "Cumulative duration of sun position, in minutes, with respect to car direction"
   },
   "fetch": {
     "loading": "Loading...",

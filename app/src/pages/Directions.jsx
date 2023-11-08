@@ -6,6 +6,7 @@ import { Link, route } from 'preact-router';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { AppTitle } from '../components/AppTitle';
+import { ItinerarySummary } from '../components/ItinerarySummary';
 import { getDirections } from '../services/api';
 import { formatDurationInSeconds } from '../services/duration';
 
@@ -45,17 +46,9 @@ export function Directions() {
         <Title />
       </header>
       <main id="directions" aria-live="polite">
-        <p>
-          <Text
-            id="directions.message"
-            fields={{
-              from: journey?.from?.name,
-              to: journey?.to?.name,
-            }}
-          >
-            Itinerary details
-          </Text>
-        </p>
+        <ItinerarySummary
+          from={journey?.from?.name}
+          to={journey?.to?.name} />
 
         <LoadingIndicator isLoading={isLoading} />
         <ErrorMessage error={error} onRetry={fetchItinerary} />
