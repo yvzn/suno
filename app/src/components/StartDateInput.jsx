@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'preact/hooks';
 import { Text } from 'preact-i18n';
 
+import './StartDateInput.css'
+
 export function StartDateInput(props) {
     const [selectedOption, setSelectedOption] = useState(props.value === 'now' ? 'now' : 'at');
     const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date());
@@ -39,7 +41,7 @@ export function StartDateInput(props) {
     const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00';
 
     return (
-        <form>
+        <form id="start-date-input">
             <label for="start-at">
                 <Text id="journey.departure">Departure:</Text>
             </label>
