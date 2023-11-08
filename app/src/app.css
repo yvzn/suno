@@ -1,15 +1,15 @@
 #app {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  height: 100vh;
+  height: 100%;
 }
 
 #app > * {
-  margin: 0 var(--space-4x) var(--space-4x) var(--space-4x);
+  padding: 0 var(--space-4x) var(--space-4x) var(--space-4x);
 }
 
 #app > *:first-child {
-  margin: var(--space-4x);
+  padding: var(--space-4x);
 }
 
 main > * + * {
