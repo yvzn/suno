@@ -46,7 +46,8 @@
     "title": "Sun position",
     "directions": "Directions",
     "editJourney": "Edit journey",
-    "description": "Cumulative duration of sun position, in minutes, with respect to car direction"
+    "description": "Cumulative duration of sun position, in minutes, with respect to car direction",
+    "altText": "Chart displaying the total number of sun minutes in each direction"
   },
   "fetch": {
     "loading": "Loading...",

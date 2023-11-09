@@ -15,7 +15,9 @@ export function SunPositionChart(props) {
     return (
         <figure>
             <section id="chart-container">
-                <canvas ref={canvasRef}></canvas>
+                <canvas ref={canvasRef} tabIndex={0}>
+                    <Text id="sun.altText">Sun position chart</Text>    
+                </canvas>
             </section>
             <figcaption>
                 <Text id="sun.description">Sun position in minutes</Text>
