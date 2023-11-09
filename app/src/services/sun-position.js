@@ -8,7 +8,7 @@ const SECTOR_COUNT = 8;
 // the angular size of each sector in radians
 const SECTOR_SIZE = (2 * Math.PI) / SECTOR_COUNT;
 
-const DURATION_BUCKET_IN_SECONDS = 15 * 60;
+const MAX_BUCKET_DURATION_IN_SECONDS = 15 * 60;
 
 const VECTOR_POINTING_SOUTH = { x: 0, y: -1 };
 
@@ -49,17 +49,17 @@ export function computeSunPositions(itinerary, startDate) {
 }
 
 /**
- * Generates buckets representing the sub-segments of a journey leg's path, allowing for the computation of sunlight duration within each bucket of DURATION_BUCKET_IN_SECONDS.
+ * Generates buckets representing the sub-segments of a journey leg's path, allowing for the computation of sunlight duration within each bucket of MAX_BUCKET_DURATION_IN_SECONDS.
  *
  * @param {Leg} leg - The journey leg for which to generate sunlight buckets.
  * @param {Date} legStartDate - The start dates of the journey leg.
  * @yields {Object} An object representing a sunlight bucket within the journey leg path.
  * @property {Coordinates} bucketStart - The starting coordinates of the bucket.
  * @property {Date} bucketStartDate - The start date and time for the bucket.
- * @property {number} durationInSeconds - The duration of the bucket in seconds.
+ * @property {number} durationInSeconds - The actual duration of the bucket in seconds.
  */
-export function* bucketize(leg, legStartDate) {
-  const bucketCount = Math.ceil(leg.durationInSeconds / DURATION_BUCKET_IN_SECONDS) || 1;
+export function* bucketize(leg, legStartDate, maxBucketDurationInSeconds = MAX_BUCKET_DURATION_IN_SECONDS) {
+  const bucketCount = Math.ceil(leg.durationInSeconds / maxBucketDurationInSeconds) || 1;
   const bucketIncrement = calculateBucketIncrement(leg, bucketCount);
 
   for (let bucket = 0; bucket < bucketCount; ++bucket) {

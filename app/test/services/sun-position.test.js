@@ -115,7 +115,7 @@ describe(computeAngleBetween.name, function () {
 });
 
 describe(bucketize.name, () => {
-    test('should yield the correct number of buckets for duration above DURATION_BUCKET_IN_SECONDS', () => {
+    test('should yield the correct number of buckets for duration above MAX_BUCKET_DURATION_IN_SECONDS', () => {
         const leg = {
             start: Greenwich(),
             end: Woolwich(),
@@ -123,7 +123,7 @@ describe(bucketize.name, () => {
         };
         const legDate = new Date('2023-01-01T12:00:00Z')
 
-        const generator = bucketize(leg, legDate);
+        const generator = bucketize(leg, legDate, 60 * 60);
         const buckets = [...generator];
 
         expect(buckets).toHaveLength(2); // 2 buckets for 2 hours duration
@@ -137,7 +137,7 @@ describe(bucketize.name, () => {
         };
         const legDate = new Date('2023-01-01T12:00:00Z')
 
-        const generator = bucketize(leg, legDate);
+        const generator = bucketize(leg, legDate, 60 * 60);
         const buckets = [...generator];
 
         // Check the values of the first bucket
@@ -151,7 +151,7 @@ describe(bucketize.name, () => {
         expect(buckets[1].durationInSeconds).toEqual(3600);
     });
 
-    test('should yield a single bucket for duration equal to DURATION_BUCKET_IN_SECONDS', () => {
+    test('should yield a single bucket for duration equal to MAX_BUCKET_DURATION_IN_SECONDS', () => {
         const leg = {
             start: Greenwich(),
             end: Woolwich(),
@@ -159,14 +159,14 @@ describe(bucketize.name, () => {
         };
         const legDate = new Date('2023-01-01T12:00:00Z')
 
-        const generator = bucketize(leg, legDate);
+        const generator = bucketize(leg, legDate, 60 * 60);
         const buckets = [...generator];
 
         // Expecting 1 bucket for 1-hour duration
         expect(buckets).toHaveLength(1);
     });
 
-    test('should yield the correct number of buckets for duration below DURATION_BUCKET_IN_SECONDS', () => {
+    test('should yield the correct number of buckets for duration below MAX_BUCKET_DURATION_IN_SECONDS', () => {
         const leg = {
             start: Greenwich(),
             end: Woolwich(),
@@ -174,7 +174,7 @@ describe(bucketize.name, () => {
         };
         const legDate = new Date('2023-01-01T12:00:00Z')
 
-        const generator = bucketize(leg, legDate);
+        const generator = bucketize(leg, legDate, 60 * 60);
         const buckets = [...generator];
 
         // Expecting 1 bucket for 30 minutes duration
