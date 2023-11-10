@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace suno;
 
@@ -51,9 +52,7 @@ public static class Directions
 		string requestUrl = $"{azureMapsApiEndpoint}?" +
 			$"api-version=1.0&subscription-key={azureMapsApiKey}&" +
 			$"query={fromLatitude},{fromLongitude}:{toLatitude},{toLongitude}&" +
-			$"departAt={startDate}&"
-			// TODO instead of legs use guidance : instructionsType=coded
-			;
+			$"departAt={startDate}&instructionsType=coded";
 
 		var response = await httpClient.GetAsync(requestUrl);
 
@@ -72,14 +71,16 @@ public static class Directions
 			return new NotFoundObjectResult("Route not found.");
 		}
 
-		var legs = azureMapsResponse.routes
-				.First().legs
-				.Select(MapLeg)
-				.ToList();
+		var instructions = azureMapsResponse.routes.First().guidance.instructions;
+
+		if (instructions.Count < 1)
+		{
+			return new NotFoundObjectResult("Route not found.");
+		}
 
 		var trip = new Trip
 		{
-			legs = legs
+			legs = MapInstructions(instructions).ToList()
 		};
 
 		return new OkObjectResult(trip);
@@ -92,30 +93,40 @@ public static class Directions
 		static bool IsAnumber(string maybeAnumber) => decimal.TryParse(maybeAnumber, out _);
 	}
 
-	private static bool IsValidStartDate(string startDate) =>
-		"now".Equals(startDate, StringComparison.InvariantCulture)
-		|| DateTimeOffset.TryParse(startDate, out _);
+	private static bool IsValidStartDate(string startDate)
+		=> "now".Equals(startDate, StringComparison.InvariantCulture)
+			|| DateTimeOffset.TryParse(startDate, out _);
 
-	internal static Leg MapLeg(AzureMapsLeg azureMapsLeg)
+	internal static IEnumerable<Leg> MapInstructions(IEnumerable<AzureMapsGuidanceInstruction> instructions)
 	{
-		return new Leg
+		AzureMapsGuidanceInstruction? previousInstruction = default;
+		foreach (var currentInstruction in instructions)
 		{
-			start = MapCoordinates(azureMapsLeg.points.First()),
-			end = MapCoordinates(azureMapsLeg.points.Last()),
-			durationInSeconds = azureMapsLeg.summary.travelTimeInSeconds
-		};
-	}
-
-	internal static Location MapCoordinates(AzureMapsPoint azureMapsPoint)
-	{
-		return new Location
-		{
-			name = "?",
-			coord = new Coordinates
+			if (previousInstruction is not null)
 			{
-				lat = azureMapsPoint.latitude,
-				lon = azureMapsPoint.longitude
+				yield return new()
+				{
+					start = MapInstruction(previousInstruction),
+					end = MapInstruction(currentInstruction),
+					durationInSeconds = currentInstruction.travelTimeInSeconds - previousInstruction.travelTimeInSeconds,
+				};
 			}
-		};
+
+			previousInstruction = currentInstruction;
+		}
 	}
+
+	private static Location MapInstruction(AzureMapsGuidanceInstruction instruction)
+		=> new()
+		{
+			name = instruction.street,
+			coord = MapCoordinates(instruction.point)
+		};
+
+	internal static Coordinates MapCoordinates(AzureMapsPoint azureMapsPoint)
+		=> new()
+		{
+			lat = azureMapsPoint.latitude,
+			lon = azureMapsPoint.longitude
+		};
 }

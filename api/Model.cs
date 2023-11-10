@@ -24,5 +24,5 @@ internal record Leg
 
 internal record Trip
 {
-	public IEnumerable<Leg> legs { get; set; } = Array.Empty<Leg>();
+	public ICollection<Leg> legs { get; set; } = Array.Empty<Leg>();
 }
