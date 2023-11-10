@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "chart.js": "^4.4.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "preact": "^10.15.1",
     "preact-i18n": "^2.4.0-preactx",
     "preact-router": "^4.1.1",

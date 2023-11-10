@@ -1,10 +1,11 @@
 import { Chart, PolarAreaController, ArcElement, RadialLinearScale, Tooltip } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { formatDurationInMinutes } from './duration';
 
 import carImage from '/car.svg';
 
-Chart.register(PolarAreaController, ArcElement, RadialLinearScale, Tooltip);
+Chart.register(PolarAreaController, ArcElement, RadialLinearScale, Tooltip, ChartDataLabels);
 
 export function drawChart(canvasElement, chartData) {
     if (canvasElement) {
@@ -47,17 +48,27 @@ function renderChart(canvasElement, chartData) {
         options: {
             scales: {
                 r: {
-                    display: true
+                    display: true,
+                    ticks: {
+                        callback: function (value, _index, _ticks) {
+                            return value + "min";
+                        }
+                    }
                 },
             },
             plugins: {
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             const label = context.dataset.label || '';
                             const value = context.dataset.data[context.dataIndex];
-                            return `${label}: ${formatDurationInMinutes(value)}`;
+                            return ` ${label}: ${formatDurationInMinutes(value)}`;
                         }
+                    }
+                },
+                datalabels: {
+                    formatter: function (value, _context) {
+                        return value ? formatDurationInMinutes(value) : "";
                     }
                 }
             }
