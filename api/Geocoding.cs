@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace suno;
 
@@ -49,7 +50,7 @@ public static class Geocoding
 		var searchResults = azureMapsResponse?.features
 			.Where(feature => feature.geometry.coordinates.Count is > 1)
 			.OrderBy(feature => feature.properties.confidence)
-			.GroupBy(feature => feature.properties.address.formattedAddress).Select(features => features.First())
+			.DistinctBy(feature => feature.properties.address.formattedAddress)
 			.Select(feature =>
 			{
 				var coordinates = feature.geometry.coordinates;
@@ -65,5 +66,21 @@ public static class Geocoding
 			}).ToArray();
 
 		return new OkObjectResult(new { results = searchResults ?? Array.Empty<object>() });
+	}
+}
+
+internal static class LinqExtensions
+{
+	public static IEnumerable<TSource> DistinctBy<TSource, TKey>
+		(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+	{
+		HashSet<TKey> seenKeys = new();
+		foreach (TSource element in source)
+		{
+			if (seenKeys.Add(keySelector(element)))
+			{
+				yield return element;
+			}
+		}
 	}
 }
