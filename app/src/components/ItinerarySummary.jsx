@@ -2,7 +2,7 @@ import { Text } from "preact-i18n";
 
 export function ItinerarySummary(props) {
     return (
-        <>
+        <section>
             <p>
                 <Text
                     id="directions.from"
@@ -36,7 +36,7 @@ export function ItinerarySummary(props) {
                     </Text>
                 </p>
             )}
-        </>
+        </section>
     );
 }
 

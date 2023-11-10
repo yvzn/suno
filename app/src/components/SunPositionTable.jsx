@@ -20,39 +20,49 @@ const directionByHeading = [
 ]
 
 export function SunPositionTable(props) {
-    return props.positions.some(durationInSeconds => durationInSeconds > 0) && (
-        <table>
-            <caption>
-                <Text id="sun.position.description">Duration per direction</Text>
-            </caption>
-            <tr>
-                <td></td>
-                <th><Text id="sun.position.direction">Direction</Text></th>
-                <th><Text id="sun.position.duration">Duration</Text></th>
-            </tr>
-            {props.positions.map((durationInSeconds, index) => {
-                if (durationInSeconds > 0)
-                    return (
-                        <tr key={"position-" + index}>
-                            <td>
-                                <svg
-                                    viewBox="0 0 32 32"
-                                    style={{ '--heading-rotation': rotationByHeading[index] }}
-                                    role="presentation"
-                                    aria-labelledby={'direction-' + index}>
-                                    <title></title>
-                                    <circle r="16" cx="16" cy="16" />
-                                </svg>
-                            </td>
-                            <td id={'direction-' + index}>
-                                {directionByHeading[index]}
-                            </td>
-                            <td>
-                                {formatDurationInMinutes(Math.ceil(durationInSeconds / 60))}
-                            </td>
-                        </tr>
-                    )
-            })}
-        </table>
+    const hasValues = props.positions.some(durationInSeconds => durationInSeconds > 0);
+    return (
+        <section id="position-table">
+            {hasValues && (
+                <table>
+                    <caption>
+                        <Text id="sun.position.description">Duration per direction</Text>
+                    </caption>
+                    <tr>
+                        <td></td>
+                        <th><Text id="sun.position.direction">Direction</Text></th>
+                        <th><Text id="sun.position.duration">Duration</Text></th>
+                    </tr>
+                    {props.positions.map((durationInSeconds, index) => {
+                        if (durationInSeconds > 0)
+                            return (
+                                <tr key={"position-" + index}>
+                                    <td>
+                                        <svg
+                                            viewBox="0 0 32 32"
+                                            style={{ '--heading-rotation': rotationByHeading[index] }}
+                                            role="presentation"
+                                            aria-labelledby={'direction-' + index}>
+                                            <title></title>
+                                            <circle r="16" cx="16" cy="16" />
+                                        </svg>
+                                    </td>
+                                    <td id={'direction-' + index}>
+                                        {directionByHeading[index]}
+                                    </td>
+                                    <td>
+                                        {formatDurationInMinutes(Math.ceil(durationInSeconds / 60))}
+                                    </td>
+                                </tr>
+                            )
+                    })}
+                </table>
+            )}
+            {!hasValues && (
+                <p>
+                    <Text id="sun.positionsEmpty">No sun</Text>
+                </p>
+            )}
+        </section>
     )
 }

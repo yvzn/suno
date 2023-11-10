@@ -35,3 +35,7 @@ circle {
     stroke-dasharray: 12.5 100;
     /* for 38% */
 }
+
+#position-table p {
+    text-align: center;
+}

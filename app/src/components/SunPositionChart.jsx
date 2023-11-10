@@ -13,15 +13,17 @@ export function SunPositionChart(props) {
     }, [canvasRef.current])
 
     return (
-        <figure>
-            <figcaption>
-                <Text id="sun.description">Sun position in minutes</Text>
-            </figcaption>
-            <section id="chart-container">
-                <canvas ref={canvasRef} tabIndex={0}>
-                    <Text id="sun.altText">Sun position chart</Text>    
-                </canvas>
-            </section>
-        </figure>
+        <section>
+            <figure>
+                <figcaption>
+                    <Text id="sun.description">Sun position in minutes</Text>
+                </figcaption>
+                <div id="chart-container">
+                    <canvas ref={canvasRef} tabIndex={0}>
+                        <Text id="sun.altText">Sun position chart</Text>
+                    </canvas>
+                </div>
+            </figure>
+        </section>
     )
 }

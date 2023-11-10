@@ -48,6 +48,7 @@
     "editJourney": "Edit journey",
     "description": "Cumulative duration of sun position, in minutes, with respect to car direction",
     "altText": "Chart displaying the number of minutes for each direction",
+    "positionsEmpty": "No sun on itinerary at given date and time 🌃",
     "position": {
       "heading0": "Front Left",
       "heading1": "Left Front",
