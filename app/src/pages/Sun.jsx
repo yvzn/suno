@@ -4,6 +4,7 @@ import { deserializeJourney } from '../services/serialize';
 import { Link, route } from 'preact-router';
 
 import { SunPositionChart } from '../components/SunPositionChart';
+import { SunPositionTable } from '../components/SunPositionTable';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { AppTitle } from '../components/AppTitle';
@@ -19,7 +20,7 @@ export function Sun() {
   const [error, setError] = useState(undefined);
 
   const [itinerary, setItinerary] = useState();
-  const [sunPosition, setSunPosition] = useState();
+  const [sunPositions, setSunPositions] = useState();
 
   useEffect(() => {
     const journey = deserializeJourney(location.search);
@@ -43,7 +44,7 @@ export function Sun() {
   useEffect(() => {
     if (!itinerary) return;
     const positions = computeSunPositions(itinerary, journey.startDate)
-    setSunPosition(positions);
+    setSunPositions(positions);
   }, [itinerary]);
 
   return (
@@ -60,7 +61,8 @@ export function Sun() {
         <LoadingIndicator isLoading={isLoading} />
         <ErrorMessage error={error} onRetry={fetchItinerary} />
 
-        {sunPosition && <SunPositionChart positions={sunPosition} />}
+        {sunPositions && <SunPositionChart positions={sunPositions} />}
+        {sunPositions && <SunPositionTable positions={sunPositions} />}
       </main>
       <footer>
         <Link

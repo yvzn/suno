@@ -3,7 +3,7 @@
     max-height: 60vh;
     display: flex;
     justify-content: center;
-    padding-block-start: var(--space-2x);
+    padding: var(--space-4x) 0;
 }
 
 @supports (height: 100dvh) {
