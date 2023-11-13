@@ -10,12 +10,27 @@
 </head>
 
 <body>
-  <noscript>
-    <p>JavaScript has been disabled within your browser, the functionality of the web page can be
-      unavailable. <a href="https://www.wikihow.com/Enable-JavaScript">Instructions to enable JavaScript</a>. </p>
-  </noscript>
-  <div id="app"></div>
-  <script type="module" src="/src/main.jsx"></script>
+  <div id="app">
+    <header>
+      <h1>Suno</h1>
+    </header>
+    <main>
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 h-6">
+          <title>Waiting for the sun...</title>
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+        Loading...
+      </p>
+      <noscript>
+        <p>JavaScript has been disabled within your browser, the functionality of the web page can be
+          unavailable. <a href="https://www.wikihow.com/Enable-JavaScript">Instructions to enable JavaScript</a>. </p>
+      </noscript>
+    </main>
+  </div>
+  <script type="module" src="/src/main.jsx" defer></script>
 </body>
 
 </html>

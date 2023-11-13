@@ -19,7 +19,7 @@ table td {
 }
 
 /* https://www.smashingmagazine.com/2015/07/designing-simple-pie-charts-with-css/#svg-solution */
-svg {
+#sun-position-table svg {
     width: 48px;
     height: 48px;
     transform: rotate(var(--heading-rotation));
@@ -28,7 +28,7 @@ svg {
     border: solid 1px #ccc;
 }
 
-circle {
+#sun-position-table circle {
     fill: transparent;
     stroke: #ffb703aa;
     stroke-width: 32;

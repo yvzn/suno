@@ -30,9 +30,8 @@ select {
   padding: var(--space-1x);
 }
 
-noscript {
-  display: grid;
-  align-items: center;
-  padding: var(--space-4x);
-  height: 100%;
+svg {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
 }
