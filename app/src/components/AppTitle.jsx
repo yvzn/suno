@@ -18,7 +18,7 @@ export function AppTitle(props) {
 
     return (
         <>
-            <h1 ref={headingRef} tabIndex={-1}>
+            <h1 ref={headingRef} tabIndex={-1} aria-live="polite">
                 {props.title || (
                     <Text id="app.title"></Text>
                 )}

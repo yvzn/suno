@@ -1,15 +1,15 @@
 {
   "app": {
     "title": "Suno",
-    "tagline": "Position of the sun during car trips"
+    "tagline": "Position of the sun during car journeys"
   },
   "nav": {
     "continue": "Continue"
   },
   "cookie": {
     "title": "Cookie consent",
-    "advisory": "Legal advisory",
-    "accept": "Accept"
+    "advisory": "No cookies yet on this website 😉",
+    "accept": "Continue"
   },
   "journey": {
     "title": "Journey",

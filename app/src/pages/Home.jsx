@@ -1,9 +1,9 @@
-import { Text, withText } from 'preact-i18n';
+import { Text } from 'preact-i18n';
 import { Link } from 'preact-router';
 
 import { AppTitle } from '../components/AppTitle';
 
-export function Home() {
+export function Home(props) {
   return (
     <>
       <header>
@@ -13,6 +13,7 @@ export function Home() {
         <p>
           <Text id="app.tagline"></Text>
         </p>
+        {props.children}
       </main>
       <footer>
         <Link href="/cookie-consent"><Text id="nav.continue"></Text></Link>
