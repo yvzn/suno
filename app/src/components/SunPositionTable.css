@@ -10,7 +10,7 @@ table caption {
 
 table th,
 table td {
-    padding: var(--space-1x);
+    padding: var(--space-1x) var(--space-2x) var(--space-1x) var(--space-2x);
     border-bottom: solid 1px #ccc;
 }
 
@@ -36,6 +36,6 @@ circle {
     /* for 38% */
 }
 
-#position-table p {
+#sun-position-table p {
     text-align: center;
 }

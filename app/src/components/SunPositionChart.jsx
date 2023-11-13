@@ -13,10 +13,10 @@ export function SunPositionChart(props) {
     }, [canvasRef.current])
 
     return (
-        <section>
+        <section id="sun-position-chart">
             <figure>
                 <figcaption>
-                    <Text id="sun.description">Sun position in minutes</Text>
+                    <Text id="sun.description">Sun position</Text>
                 </figcaption>
                 <div id="chart-container">
                     <canvas ref={canvasRef} tabIndex={0}>

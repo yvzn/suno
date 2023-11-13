@@ -22,7 +22,7 @@ const directionByHeading = [
 export function SunPositionTable(props) {
     const hasValues = props.positions.some(durationInSeconds => durationInSeconds > 0);
     return (
-        <section id="position-table">
+        <section id="sun-position-table">
             {hasValues && (
                 <table>
                     <caption>

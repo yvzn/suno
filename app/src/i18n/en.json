@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Suno",
-    "tagline": "Direction of the sun during car trips"
+    "tagline": "Position of the sun during car trips"
   },
   "nav": {
     "continue": "Continue"
@@ -46,8 +46,8 @@
     "title": "Sun position",
     "directions": "Directions",
     "editJourney": "Edit journey",
-    "description": "Cumulative duration of sun position, in minutes, with respect to car direction",
-    "altText": "Chart displaying the number of minutes for each direction",
+    "description": "Cumulative duration of sun position with respect to car direction along itinerary",
+    "altText": "Chart displaying the total duration for each sun position",
     "positionsEmpty": "No sun on itinerary at given date and time 🌃",
     "position": {
       "heading0": "Front Left",
@@ -58,8 +58,8 @@
       "heading5": "Right Rear",
       "heading6": "Right Front",
       "heading7": "Front Right",
-      "description": "Duration detail for each direction",
-      "direction": "Direction",
+      "description": "Duration detail for each position",
+      "direction": "Sun position",
       "duration": "Duration"
     }
   },

@@ -12,6 +12,7 @@
     }
 }
 
-figcaption {
+#sun-position-chart figcaption {
     padding-block-start: var(--space-2x);
+    text-align: center;
 }
