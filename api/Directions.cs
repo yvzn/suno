@@ -121,9 +121,21 @@ public static class Directions
 	private static Location MapInstruction(AzureMapsGuidanceInstruction instruction)
 		=> new()
 		{
-			name = instruction.street,
+			name = MapStreetOrRoad(instruction),
 			coord = MapCoordinates(instruction.point)
 		};
+
+	private static string MapStreetOrRoad(AzureMapsGuidanceInstruction instruction)
+	{
+		if (string.IsNullOrWhiteSpace(instruction.street))
+		{
+			return string.Join('/', instruction.roadNumbers);
+		}
+		else
+		{
+			return instruction.street;
+		}
+	}
 
 	internal static Coordinates MapCoordinates(AzureMapsPoint azureMapsPoint)
 		=> new()

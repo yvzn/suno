@@ -41,6 +41,7 @@ public class AzureMapsGuidanceInstruction
     public int pointIndex { get; set; }
     public string? instructionType { get; set; }
     public string? street { get; set; }
+    public ICollection<string> roadNumbers { get; set; } = Array.Empty<string>();
     public bool possibleCombineWithNext { get; set; }
     public string? drivingSide { get; set; }
     public string? junctionType { get; set; }
