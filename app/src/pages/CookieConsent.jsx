@@ -13,11 +13,11 @@ export function CookieConsent() {
       </header>
       <main>
         <p>
-          <Text id="cookie.advisory">This website is using cookies</Text>
+          <Text id="cookie.advisory"></Text>
         </p>
       </main>
       <footer>
-        <Link href="/journey"><Text id="cookie.accept">Accept</Text></Link>
+        <Link href="/journey"><Text id="cookie.accept"></Text></Link>
       </footer>
     </>
   );

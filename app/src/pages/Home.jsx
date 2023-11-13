@@ -11,11 +11,11 @@ export function Home() {
       </header>
       <main>
         <p>
-          <Text id="app.tagline">Welcome</Text>
+          <Text id="app.tagline"></Text>
         </p>
       </main>
       <footer>
-        <Link href="/cookie-consent"><Text id="nav.continue">Continue</Text></Link>
+        <Link href="/cookie-consent"><Text id="nav.continue"></Text></Link>
       </footer>
     </>
   );

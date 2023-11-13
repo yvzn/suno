@@ -43,7 +43,7 @@ export function LocationInput(props) {
         />
       </span>
       <button type="submit" disabled={props.disabled}>
-        <Text id="directions.search">Search</Text>
+        <Text id="directions.search"></Text>
       </button>
     </form>
   );

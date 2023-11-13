@@ -9,14 +9,14 @@ const rotationByHeading = [...Array(8)].map((_, i) => (-45 * i - 135) % 360 + 'd
 
 // defines the direction label for every heading from 0 to SECTOR_COUNT
 const directionByHeading = [
-    <Text id="sun.position.heading0">Front Left</Text>,
-    <Text id="sun.position.heading1">Left Front</Text>,
-    <Text id="sun.position.heading2">Left Rear</Text>,
-    <Text id="sun.position.heading3">Rear Left</Text>,
-    <Text id="sun.position.heading4">Rear Right</Text>,
-    <Text id="sun.position.heading5">Right Rear</Text>,
-    <Text id="sun.position.heading6">Right Front</Text>,
-    <Text id="sun.position.heading7">Front Right</Text>,
+    <Text id="sun.position.heading0"></Text>,
+    <Text id="sun.position.heading1"></Text>,
+    <Text id="sun.position.heading2"></Text>,
+    <Text id="sun.position.heading3"></Text>,
+    <Text id="sun.position.heading4"></Text>,
+    <Text id="sun.position.heading5"></Text>,
+    <Text id="sun.position.heading6"></Text>,
+    <Text id="sun.position.heading7"></Text>,
 ]
 
 export function SunPositionTable(props) {
@@ -26,12 +26,12 @@ export function SunPositionTable(props) {
             {hasValues && (
                 <table>
                     <caption>
-                        <Text id="sun.position.description">Duration per direction</Text>
+                        <Text id="sun.position.description"></Text>
                     </caption>
                     <tr>
                         <td></td>
-                        <th><Text id="sun.position.direction">Direction</Text></th>
-                        <th><Text id="sun.position.duration">Duration</Text></th>
+                        <th><Text id="sun.position.direction"></Text></th>
+                        <th><Text id="sun.position.duration"></Text></th>
                     </tr>
                     {props.positions.map((durationInSeconds, index) => {
                         if (durationInSeconds > 0)
@@ -60,7 +60,7 @@ export function SunPositionTable(props) {
             )}
             {!hasValues && (
                 <p>
-                    <Text id="sun.positionsEmpty">No sun</Text>
+                    <Text id="sun.positionsEmpty"></Text>
                 </p>
             )}
         </section>

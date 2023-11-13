@@ -16,11 +16,11 @@ export function SunPositionChart(props) {
         <section id="sun-position-chart">
             <figure>
                 <figcaption>
-                    <Text id="sun.description">Sun position</Text>
+                    <Text id="sun.description"></Text>
                 </figcaption>
                 <div id="chart-container">
                     <canvas ref={canvasRef} tabIndex={0}>
-                        <Text id="sun.altText">Sun position chart</Text>
+                        <Text id="sun.altText"></Text>
                     </canvas>
                 </div>
             </figure>

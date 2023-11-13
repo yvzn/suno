@@ -20,19 +20,19 @@ export function AppTitle(props) {
         <>
             <h1 ref={headingRef} tabIndex={-1}>
                 {props.title || (
-                    <Text id="app.title">Suno</Text>
+                    <Text id="app.title"></Text>
                 )}
             </h1>
             <h2 ref={docTitleRef} aria-hidden="true">
                 {props.title && (
                     <>
-                        <Text id="app.title">Suno</Text>
+                        <Text id="app.title"></Text>
                         {' : '}
                         {props.title}
                     </>
                 )}
                 {!props.title && (
-                    <Text id="app.title">Suno</Text>
+                    <Text id="app.title"></Text>
                 )}
             </h2>
         </>

@@ -68,7 +68,7 @@ export function Sun() {
         <Link
           href={'/directions' + window.location.search}
         >
-          <Text id="sun.directions">Directions</Text>
+          <Text id="sun.directions"></Text>
         </Link>
       </footer>
     </>

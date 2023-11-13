@@ -10,10 +10,10 @@ export function ErrorMessage(props) {
     {props.error && (
       <section>
         <p>
-          <Text id="fetch.error">Error</Text>
+          <Text id="fetch.error"></Text>
         </p>
         <a href="#" onClick={handleRetryClick}>
-          <Text id="fetch.retry">Retry</Text>
+          <Text id="fetch.retry"></Text>
         </a>
       </section>
     )}

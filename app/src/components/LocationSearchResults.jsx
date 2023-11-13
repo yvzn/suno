@@ -65,9 +65,7 @@ export function LocationSearchResults(props) {
             <Text
               id="journey.searchResultsEmpty"
               fields={{ query: props.query }}
-            >
-              No locations
-            </Text>
+            ></Text>
           </p>
         </section>
       )}

@@ -43,20 +43,20 @@ export function StartDateInput(props) {
     return (
         <form id="start-date-input">
             <label for="start-at">
-                <Text id="journey.departure">Departure:</Text>
+                <Text id="journey.departure"></Text>
             </label>
             <select id="start-at" value={selectedOption} onChange={handleOptionChange}>
                 <option value="now">
-                    <Text id="journey.leaveNow">Leave now</Text>
+                    <Text id="journey.leaveNow"></Text>
                 </option>
                 <option value="at">
-                    <Text id="journey.leaveAt">Leave at ...</Text>
+                    <Text id="journey.leaveAt"></Text>
                 </option>
             </select>
             {selectedOption === 'at' && (
                 <>
                     <label for="start-date">
-                        <Text id="journey.date">Date:</Text>
+                        <Text id="journey.date"></Text>
                     </label>
                     <span>
                         <input
@@ -69,7 +69,7 @@ export function StartDateInput(props) {
                         />
                     </span>
                     <label for="start-time">
-                        <Text id="journey.time">Time:</Text>
+                        <Text id="journey.time"></Text>
                     </label>
                     <span>
                         <input

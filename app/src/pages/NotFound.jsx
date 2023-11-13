@@ -13,11 +13,11 @@ export function NotFound() {
       </header>
       <main>
         <p>
-          <Text id="notFound.message">Not found</Text>
+          <Text id="notFound.message"></Text>
         </p>
       </main>
       <footer>
-        <Link href="/"><Text id="nav.home">Home page</Text></Link>
+        <Link href="/"><Text id="nav.home"></Text></Link>
       </footer>
     </>
   );

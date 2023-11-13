@@ -13,9 +13,7 @@ export function ItinerarySummary(props) {
                         fields={{
                             from: props.from,
                         }}
-                    >
-                        Itinerary from
-                    </Text>
+                    ></Text>
                 </p>
                 <p>
                     <Text
@@ -23,9 +21,7 @@ export function ItinerarySummary(props) {
                         fields={{
                             to: props.to,
                         }}
-                    >
-                        to
-                    </Text>
+                    ></Text>
                 </p>
                 {props.startDate && props.startDate !== "now" && (
                     <p>
@@ -35,9 +31,7 @@ export function ItinerarySummary(props) {
                                 startDate: toDateString(props.startDate),
                                 startTime: toTimeString(props.startDate),
                             }}
-                        >
-                            leaving at
-                        </Text>
+                        ></Text>
                     </p>
                 )}
             </div>
@@ -45,7 +39,7 @@ export function ItinerarySummary(props) {
                 <Link
                     href={'/journey' + window.location.search}
                 >
-                    <Text id="sun.editJourney">Edit</Text>
+                    <Text id="sun.editJourney"></Text>
                 </Link>
             </div>
         </section>

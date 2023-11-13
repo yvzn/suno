@@ -68,7 +68,7 @@ export function Directions() {
           <Link
             href={'/sun' + window.location.search}
           >
-            <Text id="directions.sun">Sun position</Text>
+            <Text id="directions.sun"></Text>
           </Link>
         </footer>
       )}
@@ -86,9 +86,7 @@ function ItineraryLeg(props) {
           from: props.leg.start.name,
           to: props.leg.end.name,
         }}
-      >
-        Leg description
-      </Text>
+      ></Text>
     </dt>
     <dd>
       {legDuration}
