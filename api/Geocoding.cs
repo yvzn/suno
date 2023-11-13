@@ -65,6 +65,8 @@ public static class Geocoding
 				};
 			}).ToArray();
 
+		req.HttpContext.Response.Headers.Add("Cache-Control", "private, max-age=3600");
+
 		return new OkObjectResult(new { results = searchResults ?? Array.Empty<object>() });
 	}
 }

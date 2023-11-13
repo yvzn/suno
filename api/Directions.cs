@@ -83,6 +83,8 @@ public static class Directions
 			legs = MapInstructions(instructions).ToList()
 		};
 
+		req.HttpContext.Response.Headers.Add("Cache-Control", "private, max-age=3600");
+
 		return new OkObjectResult(trip);
 	}
 
