@@ -64,12 +64,7 @@ export function Sun() {
         {sunPositions && <SunPositionChart positions={sunPositions} />}
         {sunPositions && <SunPositionTable positions={sunPositions} />}
       </main>
-      <footer>
-        <Link
-          href={'/journey' + window.location.search}
-        >
-          <Text id="sun.editJourney">Edit</Text>
-        </Link>
+      <footer>       
         <Link
           href={'/directions' + window.location.search}
         >

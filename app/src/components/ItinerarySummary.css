@@ -1,0 +1,7 @@
+#itinerary-summary {
+    display: flex;
+}
+
+#itinerary-summary div:first-child{
+    flex-grow: 1;
+}
