@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace suno;
 
@@ -125,16 +126,24 @@ public static class Directions
 			coord = MapCoordinates(instruction.point)
 		};
 
-	private static string MapStreetOrRoad(AzureMapsGuidanceInstruction instruction)
+	private static string? MapStreetOrRoad(AzureMapsGuidanceInstruction instruction)
 	{
-		if (string.IsNullOrWhiteSpace(instruction.street))
-		{
-			return string.Join('/', instruction.roadNumbers);
-		}
-		else
+		if (!string.IsNullOrWhiteSpace(instruction.street))
 		{
 			return instruction.street;
 		}
+
+		if (instruction.roadNumbers.Count > 0)
+		{
+			return string.Join('/', instruction.roadNumbers);
+		}
+
+		if (!string.IsNullOrWhiteSpace(instruction.signpostText) && "TAKE_EXIT".Equals(instruction.maneuver))
+		{
+			return "exit: " + CultureInfo.InvariantCulture.TextInfo.ToTitleCase(instruction.signpostText.ToLowerInvariant());
+		}
+
+		return default;
 	}
 
 	internal static Coordinates MapCoordinates(AzureMapsPoint azureMapsPoint)
