@@ -51,7 +51,7 @@ export function SunPositionTable(props) {
                                         {directionByHeading[index]}
                                     </td>
                                     <td>
-                                        {formatDurationInMinutes(Math.ceil(durationInSeconds / 60))}
+                                        {formatDurationInMinutes(Math.round(durationInSeconds / 60))}
                                     </td>
                                 </tr>
                             )
