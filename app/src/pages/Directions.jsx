@@ -9,6 +9,7 @@ import { AppTitle } from '../components/AppTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
 import { getDirections } from '../services/api';
 import { formatDurationInSeconds } from '../services/duration';
+import { aggregateLegs } from '../services/directions';
 
 import './Directions.css';
 
@@ -56,7 +57,7 @@ export function Directions() {
         {itinerary && itinerary.legs && (
           <section>
             <dl>
-              {itinerary.legs.map(
+              {aggregateLegs(itinerary.legs).map(
                 (leg, index) => <ItineraryLeg leg={leg} key={"leg-" + index} />
               )}
             </dl>
