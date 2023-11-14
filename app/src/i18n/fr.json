@@ -1,55 +1,61 @@
 {
   "app": {
-    "title": "Suno",
-    "tagline": "Position du soleil pendant les trajets en voiture"
-  },
-  "nav": {
-    "continue": "Continuer"
+    "tagline": "Position du soleil pendant les trajets en voiture",
+    "title": "Suno"
   },
   "cookie": {
-    "title": "Consentement cookies",
+    "accept": "Continuer",
     "advisory": "Il n'y a pas encore de cookies sur ce site 😉",
-    "accept": "Continuer"
+    "title": "Consentement cookies"
+  },
+  "directions": {
+    "from": "De {{from}}",
+    "leave": "Partir le {{startDate}} à {{startTime}}",
+    "legDescription": "De {{from}} à {{to}}",
+    "search": "Chercher",
+    "sun": "Position du soleil",
+    "title": "Itinéraire",
+    "to": "À {{to}}"
+  },
+  "fetch": {
+    "error": "Impossible de charger les résultats. Êtes-vous connecté au réseau ?",
+    "loading": "Chargement...",
+    "retry": "Réessayer"
   },
   "journey": {
-    "title": "Trajet",
+    "date": "Date:",
+    "departure": "Départ:",
     "from": {
       "label": "De",
       "placeholder": "Choisir le point de départ..."
     },
+    "leaveAt": "Partir à ...",
+    "leaveNow": "Partir maintenant",
+    "searchResults": "Choisissez un lieu pour '{{query}}':",
+    "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
+    "time": "Heure:",
+    "title": "Trajet",
     "to": {
       "label": "À",
       "placeholder": "Choisir la destination..."
-    },
-    "search": "Chercher",
-    "searchResults": "Choisissez un lieu pour '{{query}}':",
-    "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
-    "departure": "Départ:",
-    "leaveNow": "Partir maintenant",
-    "leaveAt": "Partir à ...",
-    "date": "Date:",
-    "time": "Heure:"
+    }
+  },
+  "nav": {
+    "continue": "Continuer"
   },
   "notFound": {
-    "title": "Page non trouvée",
-    "message": "Le contenu demandé a été déplacé ou supprimé. Désolé pour la gêne occasionnée."
-  },
-  "directions": {
-    "title": "Itinéraire",
-    "sun": "Position du soleil",
-    "from": "De {{from}}",
-    "to": "À {{to}}",
-    "leave": "Partir le {{startDate}} à {{startTime}}",
-    "legDescription": "De {{from}} à {{to}}"
+    "message": "Le contenu demandé a été déplacé ou supprimé. Désolé pour la gêne occasionnée.",
+    "title": "Page non trouvée"
   },
   "sun": {
-    "title": "Position du soleil",
+    "altText": "Graphique affichant la durée totale pour chaque position du soleil",
+    "description": "Position du soleil (durée cumulée) par rapport à la direction de la voiture, le long de l'itinéraire",
     "directions": "Itinéraire",
     "editJourney": "Editer itinéraire",
-    "description": "Position du soleil (durée cumulée) par rapport à la direction de la voiture, le long de l'itinéraire",
-    "altText": "Graphique affichant la durée totale pour chaque position du soleil",
-    "positionsEmpty": "Pas de soleil sur cet itinéraire à la date et heure fournies 🌃",
     "position": {
+      "description": "Détail des durées pour chaque position",
+      "direction": "Position du soleil",
+      "duration": "Durée",
       "heading0": "Avant Gauche",
       "heading1": "Gauche Devant",
       "heading2": "Gauche Derrière",
@@ -57,15 +63,9 @@
       "heading4": "Arrière Droit",
       "heading5": "Droit Derrière",
       "heading6": "Droit Devant",
-      "heading7": "Avant Droit",
-      "description": "Détail des durées pour chaque position",
-      "direction": "Position du soleil",
-      "duration": "Durée"
-    }
-  },
-  "fetch": {
-    "loading": "Chargement...",
-    "retry": "Réessayer",
-    "error": "Impossible de charger les résultats. Êtes-vous connecté au réseau ?"
+      "heading7": "Avant Droit"
+    },
+    "positionsEmpty": "Pas de soleil sur cet itinéraire à la date et heure fournies 🌃",
+    "title": "Position du soleil"
   }
 }

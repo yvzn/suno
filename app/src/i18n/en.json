@@ -1,55 +1,61 @@
 {
   "app": {
-    "title": "Suno",
-    "tagline": "Position of the sun during car journeys"
-  },
-  "nav": {
-    "continue": "Continue"
+    "tagline": "Position of the sun during car journeys",
+    "title": "Suno"
   },
   "cookie": {
-    "title": "Cookie consent",
+    "accept": "Continue",
     "advisory": "No cookies yet on this website 😉",
-    "accept": "Continue"
+    "title": "Cookie consent"
+  },
+  "directions": {
+    "from": "From {{from}}",
+    "leave": "Leave on {{startDate}} at {{startTime}}",
+    "legDescription": "{{from}} to {{to}}",
+    "search": "Search",
+    "sun": "Sun position",
+    "title": "Directions",
+    "to": "To {{to}}"
+  },
+  "fetch": {
+    "error": "Failed to load results. Are you online ?",
+    "loading": "Loading...",
+    "retry": "Retry"
   },
   "journey": {
-    "title": "Journey",
+    "date": "Date:",
+    "departure": "Departure:",
     "from": {
       "label": "From",
       "placeholder": "Choose starting point..."
     },
+    "leaveAt": "Leave at ...",
+    "leaveNow": "Leave now",
+    "searchResults": "Choose location for '{{query}}':",
+    "searchResultsEmpty": "No location found for '{{query}}'. Please try another search.",
+    "time": "Time:",
+    "title": "Journey",
     "to": {
       "label": "To",
       "placeholder": "Choose destination..."
-    },
-    "search": "Search",
-    "searchResults": "Choose location for '{{query}}':",
-    "searchResultsEmpty": "No location found for '{{query}}'. Please try another search.",
-    "departure": "Departure:",
-    "leaveNow": "Leave now",
-    "leaveAt": "Leave at ...",
-    "date": "Date:",
-    "time": "Time:"
+    }
+  },
+  "nav": {
+    "continue": "Continue"
   },
   "notFound": {
-    "title": "Not found",
-    "message": "The requested content is either deleted or has been moved. Sorry for inconvenience."
-  },
-  "directions": {
-    "title": "Directions",
-    "sun": "Sun position",
-    "from": "From {{from}}",
-    "to": "To {{to}}",
-    "leave": "Leave on {{startDate}} at {{startTime}}",
-    "legDescription": "{{from}} to {{to}}"
+    "message": "The requested content is either deleted or has been moved. Sorry for inconvenience.",
+    "title": "Not found"
   },
   "sun": {
-    "title": "Sun position",
+    "altText": "Chart displaying the total duration for each sun position",
+    "description": "Cumulative duration of sun position with respect to car direction along itinerary",
     "directions": "Directions",
     "editJourney": "Edit journey",
-    "description": "Cumulative duration of sun position with respect to car direction along itinerary",
-    "altText": "Chart displaying the total duration for each sun position",
-    "positionsEmpty": "No sun on itinerary at given date and time 🌃",
     "position": {
+      "description": "Duration detail for each position",
+      "direction": "Sun position",
+      "duration": "Duration",
       "heading0": "Front Left",
       "heading1": "Left Front",
       "heading2": "Left Rear",
@@ -57,15 +63,9 @@
       "heading4": "Rear Right",
       "heading5": "Right Rear",
       "heading6": "Right Front",
-      "heading7": "Front Right",
-      "description": "Duration detail for each position",
-      "direction": "Sun position",
-      "duration": "Duration"
-    }
-  },
-  "fetch": {
-    "loading": "Loading...",
-    "retry": "Retry",
-    "error": "Failed to load results. Are you online ?"
+      "heading7": "Front Right"
+    },
+    "positionsEmpty": "No sun on itinerary at given date and time 🌃",
+    "title": "Sun position"
   }
 }
