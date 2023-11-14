@@ -67,8 +67,8 @@ function renderChart(canvasElement, chartData) {
                     }
                 },
                 datalabels: {
-                    formatter: function (value, _context) {
-                        return value ? formatDurationInMinutes(value) : "";
+                    formatter: function (value, context) {
+                        return value && (value > Math.max(...context.dataset.data) * .1) ? formatDurationInMinutes(value) : "";
                     }
                 }
             }
