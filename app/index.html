@@ -15,7 +15,7 @@
       <h1>Suno</h1>
     </header>
     <main>
-      <p>
+      <p id="loading" style="display: none;">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="w-6 h-6">
           <title>Waiting for the sun...</title>
@@ -31,9 +31,17 @@
     </main>
   </div>
   <script type="module" src="/src/main.jsx" defer></script>
+
   <style>
+    /* inline critical CSS */
     @import './src/index.css';
   </style>
+  <script>
+    /* inline critical JS */
+    var lp = document.getElementById('loading')
+    if (lp)
+      lp.style.display = 'block';
+  </script>
 </body>
 
 </html>
