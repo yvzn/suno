@@ -12,11 +12,6 @@
   --space-4x: calc(4 * var(--space-1x));
 }
 
-html,
-body {
-  height: 100vh;
-}
-
 @supports (height: 100dvh) {
   html,
   body {
