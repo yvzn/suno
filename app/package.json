@@ -4,8 +4,13 @@
   "version": "0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "npm run dev:en",
+    "dev:en": "npm run index:en && vite",
+    "dev:fr": "npm run index:fr && vite",
+    "index:en": "node -e \"require('fs').copyFileSync('index.en.html', 'index.html')\"",
+    "index:fr": "node -e \"require('fs').copyFileSync('index.fr.html', 'index.html')\"",
+
+    "build": "npm run index:en && vite build",
     "preview": "vite preview",
     "test": "vitest"
   },

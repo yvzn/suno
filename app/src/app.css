@@ -4,14 +4,6 @@
   height: 100%;
 }
 
-#app > * {
-  padding: 0 var(--space-4x) var(--space-4x) var(--space-4x);
-}
-
-#app > *:first-child {
-  padding: var(--space-4x);
-}
-
 main > * + * {
   margin-block-start: var(--space-2x);
 }
