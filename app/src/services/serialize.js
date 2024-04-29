@@ -1,21 +1,21 @@
 export function serializeJourney({ from, to, startDate }) {
-  let params = new URLSearchParams();
+  let params = new URLSearchParams()
 
-  params.set('f', from.name);
-  params.set('fa', from.coord.lat);
-  params.set('fo', from.coord.lon);
+  params.set('f', from.name)
+  params.set('fa', from.coord.lat)
+  params.set('fo', from.coord.lon)
 
-  params.set('t', to.name);
-  params.set('ta', to.coord.lat);
-  params.set('to', to.coord.lon);
+  params.set('t', to.name)
+  params.set('ta', to.coord.lat)
+  params.set('to', to.coord.lon)
 
-  params.set('d', (startDate instanceof Date ? startDate.toISOString() : startDate));
+  params.set('d', serializeDate(startDate))
 
-  return params;
+  return params
 }
 
 export function deserializeJourney(searchParams) {
-  const params = new URLSearchParams(searchParams);
+  const params = new URLSearchParams(searchParams)
 
   return {
     from: {
@@ -33,13 +33,23 @@ export function deserializeJourney(searchParams) {
       },
     },
     startDate: deserializeDate(params.get('d'))
-  };
+  }
+}
+
+function serializeDate(maybeSomeDate) {
+  try {
+    if (maybeSomeDate instanceof Date && !isNaN(maybeSomeDate)) {
+      return maybeSomeDate.toISOString()
+    }
+  } catch (_) {
+  }
+  return maybeSomeDate
 }
 
 function deserializeDate(maybeSomeDate) {
   try {
-    const d = new Date(maybeSomeDate);
-    if (!isNaN(d)) return d;
+    const d = new Date(maybeSomeDate)
+    if (!isNaN(d)) return d
   } catch (_) {
   }
   return 'now'

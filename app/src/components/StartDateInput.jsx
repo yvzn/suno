@@ -1,44 +1,45 @@
-import { useEffect, useState } from 'preact/hooks';
-import { Text } from 'preact-i18n';
+import { useEffect, useState } from 'preact/hooks'
+import { Text } from 'preact-i18n'
 
 import './StartDateInput.css'
 
 export function StartDateInput(props) {
-    const [selectedOption, setSelectedOption] = useState(props.value === 'now' ? 'now' : 'at');
-    const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date());
+    const [selectedOption, setSelectedOption] = useState(props.value === 'now' ? 'now' : 'at')
+    const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date())
 
     const handleOptionChange = (e) => {
-        setSelectedOption(e.target.value);
+        setSelectedOption(e.target.value)
         if (e.target.value === 'now') {
-            setDepartureDate(new Date());
+            setDepartureDate(new Date())
         }
-    };
+    }
 
     const handleDateChange = (e) => {
-        const newDate = new Date(e.target.value);
-        newDate.setHours(departureDate.getHours());
-        newDate.setMinutes(departureDate.getMinutes());
-        setDepartureDate(newDate);
-    };
+        const newDate = new Date(e.target.value)
+        if (isNaN(newDate)) return
+        newDate.setHours(departureDate.getHours())
+        newDate.setMinutes(departureDate.getMinutes())
+        setDepartureDate(newDate)
+    }
 
     const handleTimeChange = (e) => {
-        const selectedTime = e.target.value;
-        const [hours, minutes] = selectedTime.split(':');
-        departureDate.setHours(parseInt(hours));
-        departureDate.setMinutes(parseInt(minutes));
-        setDepartureDate(new Date(departureDate));
-    };
+        const selectedTime = e.target.value
+        const [hours, minutes] = selectedTime.split(':')
+        departureDate.setHours(parseInt(hours))
+        departureDate.setMinutes(parseInt(minutes))
+        setDepartureDate(new Date(departureDate))
+    }
 
     useEffect(() => {
         if (selectedOption === 'now') {
-            props.onChange('now');
+            props.onChange('now')
         } else {
-            props.onChange(departureDate);
+            props.onChange(departureDate)
         }
-    }, [selectedOption, departureDate]);
+    }, [selectedOption, departureDate])
 
-    const earliestStartDate = toDateString(new Date());
-    const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00';
+    const earliestStartDate = toDateString(new Date())
+    const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00'
 
     return (
         <form id="start-date-input">
@@ -64,7 +65,7 @@ export function StartDateInput(props) {
                             type="date"
                             value={toDateString(departureDate)}
                             min={earliestStartDate}
-                            onChange={handleDateChange}
+                            onBlur={handleDateChange}
                             required="required"
                         />
                     </span>
@@ -77,22 +78,22 @@ export function StartDateInput(props) {
                             type="time"
                             value={toTimeString(departureDate)}
                             min={earliestStartTime}
-                            onChange={handleTimeChange}
+                            onBlur={handleTimeChange}
                             required="required"
                         />
                     </span>
                 </>
             )}
         </form>
-    );
+    )
 }
 
 function toDateString(someDate) {
-    return someDate.getFullYear() + '-' + pad(someDate.getMonth() + 1) + '-' + pad(someDate.getDate());
+    return someDate.getFullYear() + '-' + pad(someDate.getMonth() + 1) + '-' + pad(someDate.getDate())
 }
 
 function toTimeString(someDate) {
-    return pad(someDate.getHours()) + ':' + pad(someDate.getMinutes());
+    return pad(someDate.getHours()) + ':' + pad(someDate.getMinutes())
 }
 
 function pad(value) {
@@ -100,7 +101,7 @@ function pad(value) {
 }
 
 function isToday(someDate) {
-    const today = new Date();
+    const today = new Date()
     return someDate.getDate() == today.getDate() &&
         someDate.getMonth() == today.getMonth() &&
         someDate.getFullYear() == today.getFullYear()
