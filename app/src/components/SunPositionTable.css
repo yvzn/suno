@@ -32,8 +32,7 @@ table td {
     fill: transparent;
     stroke: #ffb703aa;
     stroke-width: 32;
-    stroke-dasharray: 12.5 100;
-    /* for 38% */
+    stroke-dasharray: 25 100; /* for 25% */
 }
 
 #sun-position-table p {

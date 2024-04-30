@@ -48,17 +48,13 @@
     "directions": "Directions",
     "editJourney": "Edit journey",
     "position": {
-      "description": "Duration detail for each position",
+      "description": "Duration summary",
       "direction": "Sun position",
       "duration": "Duration",
-      "heading0": "Front Left",
-      "heading1": "Left Front",
-      "heading2": "Left Rear",
-      "heading3": "Rear Left",
-      "heading4": "Rear Right",
-      "heading5": "Right Rear",
-      "heading6": "Right Front",
-      "heading7": "Front Right"
+      "heading0": "Mostly front",
+      "heading1": "Mostly left",
+      "heading2": "Mostly rear",
+      "heading3": "Mostly right"
     },
     "positionsEmpty": "No sun on itinerary at given date and time 🌃",
     "title": "Sun position"

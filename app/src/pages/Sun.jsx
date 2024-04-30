@@ -11,6 +11,7 @@ import { AppTitle } from '../components/AppTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
+import { aggregateSunPositions } from '../services/table';
 
 const Title = withText('sun.title')(AppTitle);
 
@@ -62,7 +63,7 @@ export function Sun() {
         <ErrorMessage error={error} onRetry={fetchItinerary} />
 
         {sunPositions && <SunPositionChart positions={sunPositions} />}
-        {sunPositions && <SunPositionTable positions={sunPositions} />}
+        {sunPositions && <SunPositionTable positions={aggregateSunPositions(sunPositions)} />}
       </main>
       <footer>       
         <Link

@@ -48,17 +48,13 @@
     "directions": "Itinéraire",
     "editJourney": "Editer itinéraire",
     "position": {
-      "description": "Détail des durées pour chaque position",
+      "description": "Résulé des durées",
       "direction": "Position du soleil",
       "duration": "Durée",
-      "heading0": "Avant Gauche",
-      "heading1": "Gauche Devant",
-      "heading2": "Gauche Derrière",
-      "heading3": "Arrière Gauche",
-      "heading4": "Arrière Droit",
-      "heading5": "Droit Derrière",
-      "heading6": "Droit Devant",
-      "heading7": "Avant Droit"
+      "heading0": "Surtout devant",
+      "heading1": "Surtout à gauche",
+      "heading2": "Surtout derrière",
+      "heading3": "Surtout à droite"
     },
     "positionsEmpty": "Pas de soleil sur cet itinéraire à la date et heure fournies 🌃",
     "title": "Position du soleil"
