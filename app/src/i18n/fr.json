@@ -3,11 +3,6 @@
     "tagline": "Position du soleil pendant les trajets en voiture",
     "title": "Direction Soleil"
   },
-  "cookie": {
-    "accept": "Continuer",
-    "advisory": "Il n'y a pas encore de cookies sur ce site 😉",
-    "title": "Consentement cookies"
-  },
   "directions": {
     "from": "De {{from}}",
     "leave": "Partir le {{startDate}} à {{startTime}}",

@@ -16,7 +16,7 @@ export function Home(props) {
         {props.children}
       </main>
       <footer>
-        <Link href="/cookie-consent"><Text id="nav.continue"></Text></Link>
+        <Link href="/journey"><Text id="nav.continue"></Text></Link>
       </footer>
     </>
   );

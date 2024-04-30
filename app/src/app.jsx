@@ -3,7 +3,6 @@ import { Router, route } from 'preact-router'
 import { useEffect, useState } from 'preact/hooks'
 
 import { Home } from './pages/Home'
-import { CookieConsent } from './pages/CookieConsent'
 import { Journey } from './pages/Journey'
 import { Sun } from './pages/Sun'
 import { Directions } from './pages/Directions'
@@ -33,7 +32,6 @@ export function App(props) {
           <Home path="/">
             <LanguagePicker onChange={handleLanguageChange} />
           </Home>
-          <CookieConsent path="/cookie-consent" />
           <Journey path="/journey" />
           <Sun path="/sun" />
           <Directions path="/directions" />

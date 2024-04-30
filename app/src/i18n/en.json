@@ -3,11 +3,6 @@
     "tagline": "Position of the sun during car journeys",
     "title": "Suno"
   },
-  "cookie": {
-    "accept": "Continue",
-    "advisory": "No cookies yet on this website 😉",
-    "title": "Cookie consent"
-  },
   "directions": {
     "from": "From {{from}}",
     "leave": "Leave on {{startDate}} at {{startTime}}",
