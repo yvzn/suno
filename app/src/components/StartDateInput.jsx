@@ -6,6 +6,11 @@ import './StartDateInput.css'
 export function StartDateInput(props) {
     const [selectedOption, setSelectedOption] = useState(props.value === 'now' ? 'now' : 'at')
     const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date())
+    const [startDateString, setStartDateString] = useState(toDateString(departureDate))
+    const [startTimeString, setStartTimeString] = useState(toTimeString(departureDate))
+
+    const earliestStartDate = toDateString(new Date())
+    const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00'
 
     const handleOptionChange = (e) => {
         setSelectedOption(e.target.value)
@@ -15,20 +20,38 @@ export function StartDateInput(props) {
     }
 
     const handleDateChange = (e) => {
-        const newDate = new Date(e.target.value)
-        if (isNaN(newDate)) return
-        newDate.setHours(departureDate.getHours())
-        newDate.setMinutes(departureDate.getMinutes())
-        setDepartureDate(newDate)
+        const selectedDate = e.target.value
+        setStartDateString(selectedDate)
     }
 
     const handleTimeChange = (e) => {
         const selectedTime = e.target.value
-        const [hours, minutes] = selectedTime.split(':')
-        departureDate.setHours(parseInt(hours))
-        departureDate.setMinutes(parseInt(minutes))
-        setDepartureDate(new Date(departureDate))
+        setStartTimeString(selectedTime)
     }
+
+    useEffect(() => {
+        const newDate = new Date(startDateString)
+        if (isNaN(newDate)) return
+
+        const [startHourString, startMinuteString] = startTimeString.split(':')
+
+        const newHours = parseInt(startHourString)
+        if (isNaN(newHours)) return;
+
+        newDate.setHours(newHours)
+
+        const newMinutes = parseInt(startMinuteString)
+        if (isNaN(newMinutes)) return;
+
+        newDate.setMinutes(newMinutes)
+
+        const isAfterEarliestStartDate = startDateString > earliestStartDate
+        const isAfterEarliestStartTime = startTimeString >= earliestStartTime
+        const isAfterEarliestStart = isAfterEarliestStartDate || isToday(newDate) && isAfterEarliestStartTime
+        if (isAfterEarliestStart) {
+            setDepartureDate(newDate)
+        }
+    }, [startDateString, startTimeString])
 
     useEffect(() => {
         if (selectedOption === 'now') {
@@ -38,8 +61,7 @@ export function StartDateInput(props) {
         }
     }, [selectedOption, departureDate])
 
-    const earliestStartDate = toDateString(new Date())
-    const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00'
+    const handleValidity = (e) => e.target.reportValidity()
 
     return (
         <form id="start-date-input">
@@ -63,9 +85,10 @@ export function StartDateInput(props) {
                         <input
                             id="start-date"
                             type="date"
-                            value={toDateString(departureDate)}
+                            value={startDateString}
                             min={earliestStartDate}
-                            onBlur={handleDateChange}
+                            onChange={handleDateChange}
+                            onBlur={handleValidity}
                             required="required"
                         />
                     </span>
@@ -76,9 +99,10 @@ export function StartDateInput(props) {
                         <input
                             id="start-time"
                             type="time"
-                            value={toTimeString(departureDate)}
+                            value={startTimeString}
                             min={earliestStartTime}
-                            onBlur={handleTimeChange}
+                            onChange={handleTimeChange}
+                            onBlur={handleValidity}
                             required="required"
                         />
                     </span>
