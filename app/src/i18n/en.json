@@ -1,6 +1,5 @@
 {
   "app": {
-    "tagline": "Position of the sun during car journeys",
     "title": "Suno"
   },
   "directions": {
@@ -17,29 +16,34 @@
     "loading": "Loading...",
     "retry": "Retry"
   },
+  "home": {
+    "content": "<p>Position of the sun during car journeys</p>",
+    "continue": "Continue",
+    "title": "Welcome"
+  },
   "journey": {
     "date": "Date:",
     "departure": "Departure:",
     "from": {
       "label": "From",
-      "placeholder": "Choose starting point..."
+      "placeholder": "Choose starting city or address..."
     },
     "leaveAt": "Leave at ...",
     "leaveNow": "Leave now",
-    "searchResults": "Choose location for '{{query}}':",
-    "searchResultsEmpty": "No location found for '{{query}}'. Please try another search.",
+    "searchResults": "Choose corresponding location for '{{query}}':",
+    "searchResultsEmpty": "No corresponding location found for '{{query}}'. Please try another search.",
     "time": "Time:",
     "title": "Journey",
     "to": {
       "label": "To",
-      "placeholder": "Choose destination..."
+      "placeholder": "Choose destination city or address..."
     }
   },
   "nav": {
     "continue": "Continue"
   },
   "notFound": {
-    "message": "The requested content is either deleted or has been moved. Sorry for inconvenience.",
+    "message": "The requested content is either deleted or has been moved. Apologies for the inconvenience.",
     "title": "Not found"
   },
   "sun": {
@@ -48,7 +52,7 @@
     "directions": "Directions",
     "editJourney": "Edit journey",
     "position": {
-      "description": "Duration summary",
+      "description": "Cumulative durations summary",
       "direction": "Sun position",
       "duration": "Duration",
       "heading0": "Mostly front",

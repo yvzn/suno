@@ -2,7 +2,7 @@
   padding-block-start: var(--space-2x);
 }
 
-li {
+#search-results li {
   list-style-type: '\1F4CD';
   list-style-position: inside;
   margin-block-start: var(--space-2x);

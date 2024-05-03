@@ -5,20 +5,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Direction Soleil</title>
-  <meta name="description" content="Position du soleil pendant les trajets en voiture" />
+  <meta name="description"
+    content="Prévoyez votre trajet en toute tranquillité avec cette application gratuite de position du soleil. Maximisez votre confort au volant ainsi que celui de vos passagers." />
   <link rel="icon" href="/car.svg" type="image/svg+xml">
 </head>
 
 <body>
-  <div id="app">
+  <div id="app" aria-live="polite">
     <header>
-      <h1>Direction Soleil</h1>
+      <h1>Bienvenue</h1>
     </header>
-    <main>
+    <main id="home">
+      <div>
+        <p>Planifiez vos trajets en toute sérénité. Découvrez la position du soleil en direct le long de votre
+          itinéraire&nbsp;:</p>
+        <ul>
+          <li>Où sera le soleil : dans les yeux, derrière ? À gauche, à droite ?</li>
+          <li>Trouvez le meilleur siège pour rester à l'ombre.</li>
+          <li>Sécurisez vos enfants en choisissant leur côté.</li>
+          <li>Déterminez la position du pare-soleil en voiture pour un voyage sans souci.</li>
+          <li>Prévoyez l'équipement moto adéquat et évitez l'éblouissement.</li>
+        </ul>
+        <p>Cet outil interactif gratuit vous guide pour un voyage confortable et sécurisé. Anticipez l'orientation du
+          soleil en fonction de l'heure et profitez pleinement de chaque kilomètre.</p>
+      </div>
       <p id="loading" style="display: none;">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="w-6 h-6">
-          <title>Attendons le soleil...</title>
+          class="w-6 h-6" role="presentation">
+          <title></title>
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
         </svg>
@@ -40,7 +54,7 @@
     /* inline critical JS */
     var lp = document.getElementById('loading')
     if (lp)
-      lp.style.display = 'block';
+      lp.style.display = 'block'
   </script>
 </body>
 
