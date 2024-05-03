@@ -2,6 +2,11 @@
     display: flex;
 }
 
+#itinerary-summary div {
+    text-align: right;
+}
+
 #itinerary-summary div:first-child{
     flex-grow: 1;
+    text-align: left;
 }
