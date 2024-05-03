@@ -3,8 +3,6 @@ import { Link } from 'preact-router';
 
 import { AppTitle } from '../components/AppTitle';
 
-import './Home.css';
-
 const Title = withText('home.title')(AppTitle);
 
 export function Home(props) {

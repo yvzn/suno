@@ -38,3 +38,19 @@ svg {
 #app > *:first-child {
   padding: var(--space-4x);
 }
+
+main > * + * {
+  margin-block-start: var(--space-2x);
+}
+
+#home>div>*+* {
+  margin-block-start: var(--space-2x);
+}
+
+#home li {
+  margin: var(--space-1x) var(--space-1x) 0 var(--space-1x);
+}
+
+noscript p {
+  margin-block-start: var(--space-2x);
+}

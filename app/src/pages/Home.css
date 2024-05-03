@@ -1,3 +1,0 @@
-#home > div > * + * {
-    margin-block-start: var(--space-2x);
-}

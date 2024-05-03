@@ -17,8 +17,8 @@
     "retry": "Retry"
   },
   "home": {
-    "content": "<p>Position of the sun during car journeys</p>",
-    "continue": "Continue",
+    "content": "<p>Discover the sun's position in real-time along your route:</p><ul><li>Where will the sun be: in your eyes? behind you? on the left? on the right?</li><li>Find the best seat to stay in the shade</li><li>Ensure your children's safety by choosing their side</li><li>Determine the position of the sunshade in the car for a hassle-free journey</li><li>Prepare the appropriate motorcycle gear and avoid glare</li></ul><p>This free interactive tool guides you for a comfortable and safe journey.</p><p>Anticipate the sun's orientation based on the time of day and plan your trips with peace of mind.</p>",
+    "continue": "Start",
     "title": "Welcome"
   },
   "journey": {
