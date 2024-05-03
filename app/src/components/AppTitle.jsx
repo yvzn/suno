@@ -26,9 +26,9 @@ export function AppTitle(props) {
             <h2 ref={docTitleRef} aria-hidden="true">
                 {props.title && (
                     <>
-                        <Text id="app.title"></Text>
-                        {' : '}
                         {props.title}
+                        {' - '}
+                        <Text id="app.title"></Text>
                     </>
                 )}
                 {!props.title && (
