@@ -1,0 +1,28 @@
+{
+  "name": "suno-website-fr",
+  "version": "1.0.0",
+  "description": "Homepage for directionsoleil.fr",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
+    "vite": "^5.0.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yvzn/suno.git"
+  },
+  "author": "Yvan Razafindramanana",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yvzn/suno/issues"
+  },
+  "homepage": "https://github.com/yvzn/suno#readme"
+}
