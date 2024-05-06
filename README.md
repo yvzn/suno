@@ -5,7 +5,7 @@ The front-end is a [Preact](https://preactjs.com/) website packaged with [ViteJS
 
 The back-end is a serverless [Azure Function app](https://docs.microsoft.com/en-us/azure/azure-functions/).
 
-See [demo website](https://suno.azureedge.net/).
+See [demo website](https://app.directionsoleil.fr/).
 
 ## Run locally
 
