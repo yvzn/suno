@@ -16,6 +16,8 @@ public static class Health
 		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "health")] HttpRequest req,
 		ILogger log)
 	{
+		req.HttpContext.Response.Headers.Add("Cache-Control", "no-store");
+
 		return new OkObjectResult(new { healthy = true, timestamp = DateTime.UtcNow });
 	}
 }
