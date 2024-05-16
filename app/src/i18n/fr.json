@@ -19,24 +19,28 @@
   "home": {
     "content": "<p>Découvrez la position du soleil en direct, le long de votre itinéraire.</p><p>Anticipez l'orientation du soleil en fonction de l'heure et planifiez vos trajets en toute sérénité.</p>",
     "continue": "Commencer",
-    "title": "Bienvenue"
+    "title": "Bienvenue",
+    "titleLong": "Bienvenue sur l'application"
   },
   "journey": {
     "date": "Date:",
-    "departure": "Départ:",
+    "departure": "Horaire:",
     "from": {
-      "label": "De",
-      "placeholder": "Choisir la ville ou l'adresse de départ..."
+      "label": "Départ:",
+      "placeholder": "par exemple: Nantes ou rue Hector Berlioz",
+      "tooltip": "Nom de ville ou adresse"
     },
     "leaveAt": "Partir à ...",
     "leaveNow": "Partir maintenant",
     "searchResults": "Choisissez le lieu correspondant à '{{query}}':",
     "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
     "time": "Heure:",
-    "title": "Trajet",
+    "tagline": "Renseignez les détails de votre itinéraire.",
+    "title": "Saisie du trajet",
     "to": {
-      "label": "À",
-      "placeholder": "Choisir la ville ou l'adresse de destination..."
+      "label": "Arrivée:",
+      "placeholder": "par exemple: Toulouse ou rue Saint-Saëns",
+      "tooltip": "Nom de ville ou adresse"
     }
   },
   "nav": {

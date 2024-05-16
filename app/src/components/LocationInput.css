@@ -1,23 +1,31 @@
-form {
+.location-input {
   align-items: center;
-  display: flex;
-  gap: var(--space-1x);
-}
-
-span {
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  position: relative;
+  display: grid;
+  column-gap: var(--space-1x);
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto;
 }
 
 input {
+  position: relative;
   width: 100%;
 }
 
-.has-coords span::after {
-  content: '\A0\2714';
+.location-input [role='tooltip'] {
+  display: none;
+  grid-row-start: 2;
+  grid-column-start: 2;
+  padding: var(--space-1x) var(--space-1x) 0 var(--space-1x);
+}
+
+.location-input input:focus+[role='tooltip'] {
+  display: block;
+}
+
+.has-coords input::after {
   color: green;
+  content: '\A0\2714';
   position: absolute;
   right: var(--space-1x);
+  top: 0;
 }

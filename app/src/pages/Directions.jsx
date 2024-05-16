@@ -5,15 +5,18 @@ import { Link, route } from 'preact-router';
 
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
-import { AppTitle } from '../components/AppTitle';
+import { PageTitle } from '../components/PageTitle';
+import { DocumentTitle } from '../components/DocumentTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
+
 import { getDirections } from '../services/api';
 import { formatDurationInSeconds } from '../services/duration';
 import { aggregateLegs } from '../services/directions';
 
 import './Directions.css';
 
-const Title = withText('directions.title')(AppTitle);
+const Title = withText('directions.title')(PageTitle);
+const SetDocumentTitle = withText('directions.title')(DocumentTitle);
 
 export function Directions() {
   const [journey, setJourney] = useState();
@@ -45,6 +48,7 @@ export function Directions() {
     <>
       <header>
         <Title />
+        <SetDocumentTitle />
       </header>
       <main id="directions" aria-live="polite">
         <ItinerarySummary

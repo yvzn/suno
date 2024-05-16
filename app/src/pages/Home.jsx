@@ -1,15 +1,16 @@
 import { MarkupText, Text, withText } from 'preact-i18n';
 import { Link } from 'preact-router';
 
-import { AppTitle } from '../components/AppTitle';
+import { DocumentTitle } from '../components/DocumentTitle';
 
-const Title = withText('home.title')(AppTitle);
+const SetDocumentTitle = withText('home.title')(DocumentTitle);
 
 export function Home(props) {
   return (
     <>
       <header>
-        <Title />
+        <h1><Text id="home.titleLong"/></h1>
+        <SetDocumentTitle />
       </header>
       <main id="home">
         <MarkupText id="home.content"></MarkupText>

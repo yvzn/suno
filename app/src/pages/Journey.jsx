@@ -5,15 +5,22 @@ import { Link } from 'preact-router';
 import { LocationInput } from '../components/LocationInput';
 import { LocationSearchResults } from '../components/LocationSearchResults';
 import { StartDateInput } from '../components/StartDateInput';
-import { AppTitle } from '../components/AppTitle';
+import { PageTitle } from '../components/PageTitle';
+import { DocumentTitle } from '../components/DocumentTitle';
+
 import { serializeJourney } from '../services/serialize';
 
-const Title = withText('journey.title')(AppTitle);
+const Title = withText('journey.title')(PageTitle);
+const SetDocumentTitle = withText('journey.title')(DocumentTitle);
 const InputFrom = withText('journey.from.label')(
-  withText('journey.from.placeholder')(LocationInput)
+  withText('journey.from.placeholder')(
+    withText('journey.from.tooltip')(LocationInput)
+  )
 );
 const InputTo = withText('journey.to.label')(
-  withText('journey.to.placeholder')(LocationInput)
+  withText('journey.to.placeholder')(
+    withText('journey.to.tooltip')(LocationInput)
+  )
 );
 
 export function Journey() {
@@ -21,6 +28,7 @@ export function Journey() {
     <>
       <header>
         <Title />
+        <SetDocumentTitle />
       </header>
       <JourneyForm />
     </>
@@ -63,6 +71,9 @@ function JourneyForm() {
   return (
     <>
       <main id="journey">
+        <section>
+          <p><Text id="journey.tagline"></Text></p>
+        </section>
         <InputFrom
           nameValue={locationFrom.name}
           coordValue={locationFrom.coord}

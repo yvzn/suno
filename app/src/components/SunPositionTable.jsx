@@ -45,8 +45,7 @@ export function SunPositionTable(props) {
                                     <svg
                                         viewBox="0 0 32 32"
                                         style={{ '--heading-rotation': rotationByHeading[index] }}
-                                        role="presentation"
-                                        aria-labelledby={'direction-' + index}>
+                                        role="presentation">
                                         <title></title>
                                         <circle r="16" cx="16" cy="16" />
                                     </svg>

@@ -5,6 +5,7 @@ import './LocationInput.css';
 
 export function LocationInput(props) {
   const fieldId = `field-${Math.random()}`;
+  const tooltipId = `tooltip-${Math.random()}`;
   const [nameValue, setNameValue] = useState(props.nameValue);
 
   const handleSubmit = (event) => {
@@ -26,22 +27,25 @@ export function LocationInput(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={props.coordValue && 'has-coords'}>
+    <form onSubmit={handleSubmit} className={'location-input ' + (props.coordValue && 'has-coords')}>
       <label htmlFor={fieldId}>{props.label}</label>
-      <span>
-        <input
-          type="text"
-          placeholder={props.placeholder}
-          id={fieldId}
-          value={nameValue}
-          onInput={handleInput}
-          onFocus={handleSetFocus}
-          enterKeyHint="search"
-          autoComplete="street-address"
-          required="required"
-          disabled={props.disabled}
-        />
-      </span>
+      <input
+        type="text"
+        placeholder={props.placeholder}
+        id={fieldId}
+        value={nameValue}
+        onInput={handleInput}
+        onFocus={handleSetFocus}
+        enterKeyHint="search"
+        autoComplete="street-address"
+        required="required"
+        spellCheck={false}
+        disabled={props.disabled}
+        aria-describedby={tooltipId}
+      />
+      <div id={tooltipId} role="tooltip">
+        {props.tooltip}
+      </div>
       <button type="submit" disabled={props.disabled}>
         <Text id="directions.search"></Text>
       </button>

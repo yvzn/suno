@@ -7,13 +7,16 @@ import { SunPositionChart } from '../components/SunPositionChart';
 import { SunPositionTable } from '../components/SunPositionTable';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
-import { AppTitle } from '../components/AppTitle';
+import { PageTitle } from '../components/PageTitle';
+import { DocumentTitle } from '../components/DocumentTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
+
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 import { aggregateSunPositions } from '../services/table';
 
-const Title = withText('sun.title')(AppTitle);
+const Title = withText('sun.title')(PageTitle);
+const SetDocumentTitle = withText('sun.title')(DocumentTitle);
 
 export function Sun() {
   const [journey, setJourney] = useState();
@@ -52,6 +55,7 @@ export function Sun() {
     <>
       <header>
         <Title />
+        <SetDocumentTitle />
       </header>
       <main id="sun" aria-live="polite">
         <ItinerarySummary

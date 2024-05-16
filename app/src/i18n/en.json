@@ -17,26 +17,30 @@
     "retry": "Retry"
   },
   "home": {
-    "content": "<p>Discover the sun's position in real-time along your route:</p><ul><li>Where will the sun be: in your eyes? behind you? on the left? on the right?</li><li>Find the best seat to stay in the shade</li><li>Ensure your children's safety by choosing their side</li><li>Determine the position of the sunshade in the car for a hassle-free journey</li><li>Prepare the appropriate motorcycle gear and avoid glare</li></ul><p>This free interactive tool guides you for a comfortable and safe journey.</p><p>Anticipate the sun's orientation based on the time of day and plan your trips with peace of mind.</p>",
+    "content": "<p>Discover the sun's position in real-time along your route.</p><p>Anticipate the sun's orientation based on the time of day and plan your trips with peace of mind.</p>",
     "continue": "Start",
-    "title": "Welcome"
+    "title": "Welcome",
+    "titleLong": "Welcome to Suno app"
   },
   "journey": {
     "date": "Date:",
     "departure": "Departure:",
     "from": {
-      "label": "From",
-      "placeholder": "Choose starting city or address..."
+      "label": "Start:",
+      "placeholder": "example: London or Abbey Road",
+      "tooltip": "City, address or location"
     },
     "leaveAt": "Leave at ...",
     "leaveNow": "Leave now",
     "searchResults": "Choose corresponding location for '{{query}}':",
     "searchResultsEmpty": "No corresponding location found for '{{query}}'. Please try another search.",
     "time": "Time:",
-    "title": "Journey",
+    "tagline": "Choose the details of your itinerary.",
+    "title": "Route entry",
     "to": {
-      "label": "To",
-      "placeholder": "Choose destination city or address..."
+      "label": "Destination:",
+      "placeholder": "example: Glasgow or Buchanan Street",
+      "tooltip": "City, address or location"
     }
   },
   "nav": {
