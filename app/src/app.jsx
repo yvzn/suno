@@ -30,7 +30,7 @@ export function App(props) {
       <IntlProvider definition={translations}>
         <Router>
           <Home path="/">
-            <LanguagePicker onChange={handleLanguageChange} />
+            <LanguagePicker value={props.language} onChange={handleLanguageChange} />
           </Home>
           <Journey path="/journey" />
           <Sun path="/sun" />

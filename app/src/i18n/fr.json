@@ -18,6 +18,7 @@
   "home": {
     "content": "<p>Découvrez la position du soleil en direct, le long de votre itinéraire.</p><p>Anticipez l'orientation du soleil en fonction de l'heure et planifiez vos trajets en toute sérénité.</p>",
     "continue": "Commencer",
+    "language": "Langue:",
     "title": "Bienvenue",
     "titleLong": "Bienvenue sur l'application"
   },
