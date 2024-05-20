@@ -6,13 +6,12 @@
     "from": "De {{from}}",
     "leave": "Partir le {{startDate}} à {{startTime}}",
     "legDescription": "De {{from}} à {{to}}",
-    "search": "Chercher",
     "sun": "Position du soleil",
     "title": "Itinéraire",
     "to": "À {{to}}"
   },
   "fetch": {
-    "error": "Impossible de charger les résultats. Êtes-vous connecté au réseau ?",
+    "error": "Impossible de charger les résultats. Êtes-vous connecté au réseau ? Vous pouvez utiliser le bouton réessayer ci-après.",
     "loading": "Chargement...",
     "retry": "Réessayer"
   },
@@ -27,20 +26,21 @@
     "departure": "Horaire:",
     "from": {
       "label": "Départ:",
-      "placeholder": "par exemple: Nantes ou rue Hector Berlioz",
-      "tooltip": "Nom de ville ou adresse"
+      "placeholder": "par exemple: Nantes ou rue Hector Berlioz"
     },
     "leaveAt": "Partir à ...",
     "leaveNow": "Partir maintenant",
-    "searchResults": "Choisissez le lieu correspondant à '{{query}}':",
+    "locationTooltip": "Nom de ville ou adresse.",
+    "search": "Chercher",
+    "searchResults": "Choisissez le lieu correspondant à '{{query}}' parmi ces options :",
     "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
-    "time": "Heure:",
+    "selectSearchResult": "Valider",
     "tagline": "Renseignez les détails de votre itinéraire.",
+    "time": "Heure:",
     "title": "Saisie du trajet",
     "to": {
       "label": "Arrivée:",
-      "placeholder": "par exemple: Toulouse ou rue Saint-Saëns",
-      "tooltip": "Nom de ville ou adresse"
+      "placeholder": "par exemple: Toulouse ou rue Saint-Saëns"
     }
   },
   "nav": {
@@ -51,8 +51,8 @@
     "title": "Page non trouvée"
   },
   "sun": {
-    "altText": "Graphique affichant la durée totale pour chaque position du soleil",
-    "description": "Position du soleil (durée cumulée) par rapport à la direction de la voiture, le long de l'itinéraire",
+    "altText": "Graphique des durées, un tableau donne le résumé ci-après.",
+    "description": "Durées cumulées par rapport à la direction de la voiture, le long de l'itinéraire",
     "directions": "Itinéraire",
     "editJourney": "Editer itinéraire",
     "position": {

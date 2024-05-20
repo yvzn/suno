@@ -57,7 +57,7 @@ export function Sun() {
         <Title />
         <SetDocumentTitle />
       </header>
-      <main id="sun" aria-live="polite">
+      <main id="sun">
         <ItinerarySummary
           from={journey?.from?.name}
           to={journey?.to?.name}

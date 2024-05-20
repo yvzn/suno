@@ -1,9 +1,7 @@
 import { Text } from 'preact-i18n';
 
 export function LoadingIndicator(props) {
-  return <>{props.isLoading && (
-    <section>
+  return <section role="status">{props.isLoading && (
       <Text id="fetch.loading"></Text>
-    </section>
-  )}</>;
+  )}</section>;
 }

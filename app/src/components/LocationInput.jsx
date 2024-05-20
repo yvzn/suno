@@ -27,7 +27,7 @@ export function LocationInput(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={'location-input ' + (props.coordValue && 'has-coords')}>
+    <form onSubmit={handleSubmit} className={'location-input ' + (props.coordValue && 'has-coords')} tabIndex={-1} ref={props.forwardRef}>
       <label htmlFor={fieldId}>{props.label}</label>
       <input
         type="text"
@@ -44,10 +44,10 @@ export function LocationInput(props) {
         aria-describedby={tooltipId}
       />
       <div id={tooltipId} role="tooltip">
-        {props.tooltip}
+        <Text id="journey.locationTooltip"></Text>        
       </div>
       <button type="submit" disabled={props.disabled}>
-        <Text id="directions.search"></Text>
+        <Text id="journey.search"></Text>
       </button>
     </form>
   );

@@ -6,8 +6,7 @@
   grid-template-rows: auto auto;
 }
 
-input {
-  position: relative;
+.location-input input {
   width: 100%;
 }
 
@@ -22,10 +21,7 @@ input {
   display: block;
 }
 
-.has-coords input::after {
+.has-coords label::after {
   color: green;
   content: '\A0\2714';
-  position: absolute;
-  right: var(--space-1x);
-  top: 0;
 }

@@ -6,13 +6,12 @@
     "from": "From {{from}}",
     "leave": "Leave on {{startDate}} at {{startTime}}",
     "legDescription": "{{from}} to {{to}}",
-    "search": "Search",
     "sun": "Sun position",
     "title": "Directions",
     "to": "To {{to}}"
   },
   "fetch": {
-    "error": "Failed to load results. Are you online ?",
+    "error": "Failed to load results. Are you online ? You can use the retry button below.",
     "loading": "Loading...",
     "retry": "Retry"
   },
@@ -27,20 +26,21 @@
     "departure": "Departure:",
     "from": {
       "label": "Start:",
-      "placeholder": "example: London or Abbey Road",
-      "tooltip": "City, address or location"
+      "placeholder": "example: London or Abbey Road"
     },
     "leaveAt": "Leave at ...",
     "leaveNow": "Leave now",
-    "searchResults": "Choose corresponding location for '{{query}}':",
+    "locationTooltip": "City, address or location.",
+    "search": "Search",
+    "searchResults": "Choose the corresponding location for '{{query}}' among these options:",
     "searchResultsEmpty": "No corresponding location found for '{{query}}'. Please try another search.",
-    "time": "Time:",
+    "selectSearchResult": "Submit",
     "tagline": "Choose the details of your itinerary.",
+    "time": "Time:",
     "title": "Route entry",
     "to": {
       "label": "Destination:",
-      "placeholder": "example: Glasgow or Buchanan Street",
-      "tooltip": "City, address or location"
+      "placeholder": "example: Glasgow or Buchanan Street"
     }
   },
   "nav": {
@@ -51,7 +51,7 @@
     "title": "Not found"
   },
   "sun": {
-    "altText": "Chart displaying the total duration for each sun position",
+    "altText": "Duration chart. A  summary table is available below.",
     "description": "Cumulative duration of sun position with respect to car direction along itinerary",
     "directions": "Directions",
     "editJourney": "Edit journey",

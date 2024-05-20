@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { Text } from 'preact-i18n'
 
 import './StartDateInput.css'
@@ -8,6 +8,8 @@ export function StartDateInput(props) {
     const [departureDate, setDepartureDate] = useState(props.value instanceof Date ? props.value : new Date())
     const [startDateString, setStartDateString] = useState(toDateString(departureDate))
     const [startTimeString, setStartTimeString] = useState(toTimeString(departureDate))
+
+    const formRef = useRef()
 
     const earliestStartDate = toDateString(new Date())
     const earliestStartTime = isToday(departureDate) ? toTimeString(departureDate) : '00:00'
@@ -61,10 +63,15 @@ export function StartDateInput(props) {
         }
     }, [selectedOption, departureDate])
 
+    useEffect(() => {
+        if (!formRef.current) return;
+        formRef.current.focus()
+    }, [formRef.current])
+
     const handleValidity = (e) => e.target.reportValidity()
 
     return (
-        <form id="start-date-input">
+        <form id="start-date-input" tabIndex={-1} ref={formRef}>
             <label for="start-at">
                 <Text id="journey.departure"></Text>
             </label>

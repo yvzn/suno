@@ -9,3 +9,7 @@
     flex-grow: 1;
     position: relative;
 }
+
+#start-date-input input {
+    width: 100%;
+}

@@ -1,10 +1,14 @@
-#search-results section {
+#search-results  {
   padding-block-start: var(--space-2x);
 }
 
-#search-results li {
-  list-style-type: '\1F4CD';
-  list-style-position: inside;
+#search-results div {
+  cursor: pointer;
   margin-block-start: var(--space-2x);
   margin-block-end: var(--space-2x);
+}
+
+#search-results input {
+  cursor: pointer;
+  margin-inline-end: var(--space-1x);
 }

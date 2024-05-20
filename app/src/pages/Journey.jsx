@@ -1,33 +1,29 @@
-import { Text, withText } from 'preact-i18n';
-import { useState } from 'preact/hooks';
-import { Link } from 'preact-router';
+import { Text, withText } from 'preact-i18n'
+import { useRef, useState } from 'preact/hooks'
+import { Link } from 'preact-router'
 
-import { LocationInput } from '../components/LocationInput';
-import { LocationSearchResults } from '../components/LocationSearchResults';
-import { StartDateInput } from '../components/StartDateInput';
-import { PageTitle } from '../components/PageTitle';
-import { DocumentTitle } from '../components/DocumentTitle';
+import { LocationInput } from '../components/LocationInput'
+import { LocationSearchResults } from '../components/LocationSearchResults'
+import { StartDateInput } from '../components/StartDateInput'
+import { PageTitle } from '../components/PageTitle'
+import { DocumentTitle } from '../components/DocumentTitle'
 
-import { serializeJourney } from '../services/serialize';
+import { serializeJourney } from '../services/serialize'
 
-const Title = withText('journey.title')(PageTitle);
-const SetDocumentTitle = withText('journey.title')(DocumentTitle);
+const Title = withText('journey.title')(PageTitle)
+const SetDocumentTitle = withText('journey.title')(DocumentTitle)
 const InputFrom = withText('journey.from.label')(
-  withText('journey.from.placeholder')(
-    withText('journey.from.tooltip')(LocationInput)
-  )
-);
+  withText('journey.from.placeholder')(LocationInput)
+)
 const InputTo = withText('journey.to.label')(
-  withText('journey.to.placeholder')(
-    withText('journey.to.tooltip')(LocationInput)
-  )
-);
+  withText('journey.to.placeholder')(LocationInput)
+)
 
 export function Journey() {
   return (
     <>
       <header>
-        <Title />
+        <Title aria-describedby="journey-tagline" />
         <SetDocumentTitle />
       </header>
       <JourneyForm />
@@ -39,39 +35,42 @@ function JourneyForm() {
   const [locationFrom, setLocationFrom] = useState({
     name: '',
     coord: undefined,
-  });
-  const [locationTo, setLocationTo] = useState({ name: '', coord: undefined });
-  const [search, setSearch] = useState({});
-  const [startDate, setStartDate] = useState('now');
+  })
+  const [locationTo, setLocationTo] = useState({ name: '', coord: undefined })
+  const [search, setSearch] = useState({ sid: Math.random() })
+  const [startDate, setStartDate] = useState('now')
+
+  const inputToRef = useRef()
 
   const onChangeLocationFrom = (value) => {
-    setLocationFrom({ name: value, coord: undefined });
-    setSearch({ query: value, target: 'from' });
-  };
+    setLocationFrom({ name: value, coord: undefined })
+    setSearch({ sid: Math.random(), query: value, target: 'from' })
+  }
 
   const onChangeLocationTo = (value) => {
-    setLocationTo({ name: value, coord: undefined });
-    setSearch({ query: value, target: 'to' });
-  };
+    setLocationTo({ name: value, coord: undefined })
+    setSearch({ sid: Math.random(), query: value, target: 'to' })
+  }
 
   const onSelectLocation = (value) => {
     if (search.target === 'from') {
-      setLocationFrom(value);
+      setLocationFrom(value)
+      inputToRef.current && inputToRef.current.focus()
     }
     if (search.target === 'to') {
-      setLocationTo(value);
+      setLocationTo(value)
     }
-    setSearch({});
-  };
+    setSearch({ sid: Math.random() })
+  }
 
   const onChangeStartDate = (value) => {
-    setStartDate(value);
+    setStartDate(value)
   }
 
   return (
     <>
       <main id="journey">
-        <section>
+        <section id="journey-tagline">
           <p><Text id="journey.tagline"></Text></p>
         </section>
         <InputFrom
@@ -85,6 +84,7 @@ function JourneyForm() {
           coordValue={locationTo.coord}
           onChange={onChangeLocationTo}
           disabled={search.target === 'from'}
+          forwardRef={inputToRef}
         />
         {locationFrom.coord && locationTo.coord && (
           <StartDateInput
@@ -93,6 +93,7 @@ function JourneyForm() {
         )}
         <LocationSearchResults
           query={search.query}
+          sid={search.sid}
           onSelect={onSelectLocation}
         />
       </main>
@@ -106,5 +107,5 @@ function JourneyForm() {
         </footer>
       )}
     </>
-  );
+  )
 }

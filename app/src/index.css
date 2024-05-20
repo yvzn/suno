@@ -20,9 +20,12 @@
 }
 
 input,
-button,
 select {
   padding: var(--space-1x);
+}
+
+button {
+  padding: var(--space-1x) var(--space-2x);
 }
 
 svg {

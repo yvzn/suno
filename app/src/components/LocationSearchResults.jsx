@@ -1,66 +1,77 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
-import { Text } from 'preact-i18n';
+import { useEffect, useRef, useState } from 'preact/hooks'
+import { Text } from 'preact-i18n'
 
-import { findLocations } from '../services/api';
-import { LoadingIndicator } from './LoadingIndicator';
-import { ErrorMessage } from './ErrorMessage';
+import { findLocations } from '../services/api'
+import { LoadingIndicator } from './LoadingIndicator'
+import { ErrorMessage } from './ErrorMessage'
 
-import './LocationSearchResults.css';
+import './LocationSearchResults.css'
 
 export function LocationSearchResults(props) {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(undefined);
-  const [searchResults, setSearchResults] = useState();
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(undefined)
+  const [searchResults, setSearchResults] = useState()
+  const displayedResultsRef = useRef()
 
   const search = () => {
-    setSearchResults(undefined);
-    setError(undefined);
+    setSearchResults(undefined)
+    setError(undefined)
 
     if (!props.query) {
-      return;
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
     findLocations(props.query)
       .then(setSearchResults, setError)
-      .finally(() => setLoading(false));
-  };
+      .finally(() => setLoading(false))
+  }
 
-  useEffect(search, [props.query]);
+  useEffect(search, [props.query, props.sid])
 
-  const selectResult = (result) => (event) => {
-    event.preventDefault();
-    props.onSelect(result);
+  useEffect(() => {
+    if (!displayedResultsRef.current) return
+    displayedResultsRef.current.focus()
+  }, [displayedResultsRef.current])
+
+  const selectResult = (event) => {
+    event.preventDefault()
+
+    const form = event.target
+    if (!form.checkValidity()) return
+
+    const selectedResult = document.querySelector('input[name="selected-result"]:checked')
+    if (!selectedResult) return
+
+    const result = searchResults[Number(selectedResult.value)]
+    props.onSelect(result)
   }
 
   return (
-    <div aria-live="polite" id="search-results">
+    <div id="search-results">
       <LoadingIndicator isLoading={isLoading} />
       <ErrorMessage error={error} onRetry={search} />
 
       {searchResults && searchResults.length > 0 && (
-        <section>
+        <section ref={displayedResultsRef} tabIndex={-1}>
           <p>
-            <Text id="journey.searchResults" fields={{ query: props.query }}>
-              Matching locations
-            </Text>
+            <Text id="journey.searchResults" fields={{ query: props.query }}></Text>
           </p>
-          <ul>
+          <form onSubmit={selectResult}>
             {searchResults.map((result, index) => (
-              <li key={"result-" + index}>
-                <a
-                  href="#"
-                  onClick={selectResult(result)}
-                >
-                  {result.name}
-                </a>
-              </li>
+              <div key={"result-" + index}>
+                <input type="radio" id={"result-choice-" + index} value={index} name="selected-result" required checked={false} />
+                <label for={"result-choice-" + index}>{result.name}</label>
+              </div>
             ))}
-          </ul>
+            <button type="submit" >
+              <Text id="journey.selectSearchResult"></Text>
+            </button>
+          </form>
         </section>
       )}
       {searchResults && searchResults.length < 1 && (
-        <section>
+        <section ref={displayedResultsRef} tabIndex={-1}>
           <p>
             <Text
               id="journey.searchResultsEmpty"
@@ -70,6 +81,6 @@ export function LocationSearchResults(props) {
         </section>
       )}
     </div>
-  );
+  )
 }
 

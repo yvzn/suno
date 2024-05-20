@@ -50,7 +50,7 @@ export function Directions() {
         <Title />
         <SetDocumentTitle />
       </header>
-      <main id="directions" aria-live="polite">
+      <main id="directions">
         <ItinerarySummary
           from={journey?.from?.name}
           to={journey?.to?.name} />
@@ -58,15 +58,15 @@ export function Directions() {
         <LoadingIndicator isLoading={isLoading} />
         <ErrorMessage error={error} onRetry={fetchItinerary} />
 
-        {itinerary && itinerary.legs && (
-          <section>
+        <section aria-live="polite">
+          {itinerary && itinerary.legs && (
             <dl>
               {aggregateLegs(itinerary.legs).map(
                 (leg, index) => <ItineraryLeg leg={leg} key={"leg-" + index} />
               )}
             </dl>
-          </section>
-        )}
+          )}
+        </section>
       </main>
       {journey && (
         <footer>
