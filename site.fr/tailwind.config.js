@@ -7,20 +7,19 @@ export default {
 		colors: {
 			transparent: 'transparent',
 			current: 'currentColor',
+			'white': '#FCFDFF',
+			'black': '#0D1B2A',
+			'blue': {
+				DEFAULT: '#007ea7',
+				700: '#006B8F',
+				800: '#005C7A',
+				900: '#002E3D'
+			},
+			'silver': '#F6F5F4',
+			'yellow': '#FFCF57',
 			'gray': {
-				100: '#f3f4f6',
-				700: '#374151',
-				900: '#111827'
-			},
-			'silver': '#f1f1f1',
-			'white': '#FDFFFC',
-			'black': '#020100',
-			'blue': '#235789',
-			'yellow': {
-				'400': '#FFCB47',
-				DEFAULT: '#FFB703'
-			},
-			'cyan': '#06AED5'
+				700: '#21201C'
+			} 	
 		}
 	},
 };
