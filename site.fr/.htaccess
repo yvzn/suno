@@ -1,0 +1,20 @@
+RewriteEngine On
+RewriteCond %{ENV:HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# BEGIN Cache-Control Headers
+<ifmodule mod_headers.c>
+ <filesmatch "\\.(png|svg)$">
+ Header set Cache-Control "max-age=31536000, public"
+ </filesmatch>
+ <filesmatch "\\.(css)$">
+ Header set Cache-Control "max-age=31536000, public"
+ </filesmatch>
+ <filesmatch "\\.(js)$">
+ Header set Cache-Control "max-age=31536000, private"
+ </filesmatch>
+ <filesmatch "\\.(html)$">
+ Header set Cache-Control "max-age=7200, public"
+ </filesmatch>
+</ifmodule>
+# END Cache-Control Headers
