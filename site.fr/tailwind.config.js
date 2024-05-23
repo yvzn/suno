@@ -16,10 +16,17 @@ export default {
 				900: '#002E3D'
 			},
 			'silver': '#F6F5F4',
-			'yellow': '#FFCF57',
+			'yellow': {
+				DEFAULT: '#FFCF57',
+				900: '#3D2C00'
+			},
 			'gray': {
+				600: '#4C4A42',
 				700: '#21201C'
 			} 	
+		},
+		fontFamily: {
+			'sans': 'Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans", source-sans-pro, sans-serif'
 		}
 	},
 };
