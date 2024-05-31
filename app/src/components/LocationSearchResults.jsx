@@ -53,25 +53,25 @@ export function LocationSearchResults(props) {
       <ErrorMessage error={error} onRetry={search} />
 
       {searchResults && searchResults.length > 0 && (
-        <section ref={displayedResultsRef} tabIndex={-1}>
+        <section class="search-results-list" ref={displayedResultsRef} tabIndex={-1}>
           <p>
             <Text id="journey.searchResults" fields={{ query: props.query }}></Text>
           </p>
           <form onSubmit={selectResult}>
             {searchResults.map((result, index) => (
-              <div key={"result-" + index}>
-                <input type="radio" id={"result-choice-" + index} value={index} name="selected-result" required checked={false} />
-                <label for={"result-choice-" + index}>{result.name}</label>
-              </div>
+              <label key={"result-" + index}>
+                <input type="radio" value={index} name="selected-result" required checked={false} />
+                {result.name}
+              </label>
             ))}
-            <button type="submit" >
+            <button type="submit" className="btn-primary">
               <Text id="journey.selectSearchResult"></Text>
             </button>
           </form>
         </section>
       )}
       {searchResults && searchResults.length < 1 && (
-        <section ref={displayedResultsRef} tabIndex={-1}>
+        <section class="search-results-list" ref={displayedResultsRef} tabIndex={-1}>
           <p>
             <Text
               id="journey.searchResultsEmpty"

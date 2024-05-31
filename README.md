@@ -48,3 +48,8 @@ This project uses open-source, third party software:
 This project uses graphics under Creative Commons licence:
 
 - Icons by [Simple Icons](https://github.com/simple-icons/simple-icons): CC0 1.0 Universal
+- Icons by [Remixicon](https://remixicon.com/) - Apache License 2.0
+- Phone Mockups by [Flowbite](https://flowbite.com/docs/components/device-mockups/)
+
+The website is a derivative of [Laurent Begey](https://github.com/lbegey/tw-app-tpl/)'s work.
+

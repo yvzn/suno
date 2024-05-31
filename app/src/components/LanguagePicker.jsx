@@ -18,12 +18,16 @@ export function LanguagePicker(props) {
                 <Text id="home.language"></Text>
             </div>
             <div>
-                <input type="radio" name="language" id="language-en" onChange={selectLanguage} value="en" required checked={language=='en'} />
-                <label for="language-en" lang="en">English</label>
+                <label for="language-en" lang="en">
+                    <input type="radio" name="language" id="language-en" onChange={selectLanguage} value="en" required checked={language == 'en'} />
+                    English
+                </label>
             </div>
             <div>
-                <input type="radio" name="language" id="language-fr" onChange={selectLanguage} value="fr" required checked={language=='fr'}/>
-                <label for="language-fr" lang="fr">Français</label>
+                <label for="language-fr" lang="fr">
+                    <input type="radio" name="language" id="language-fr" onChange={selectLanguage} value="fr" required checked={language == 'fr'} />
+                    Français
+                </label>
             </div>
         </form>
     )

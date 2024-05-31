@@ -1,0 +1,8 @@
+#journey search {
+    margin-block-start: var(--space-4x);
+}
+
+#journey search + search,
+#journey search + form {
+    margin-block-start: var(--space-2x);
+}

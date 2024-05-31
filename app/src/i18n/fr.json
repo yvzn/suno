@@ -54,8 +54,8 @@
   "sun": {
     "altText": "Graphique des durées, un tableau donne le résumé ci-après.",
     "description": "Durées cumulées par rapport à la direction de la voiture, le long de l'itinéraire",
-    "directions": "Itinéraire",
-    "editJourney": "Editer itinéraire",
+    "directions": "Étapes de l'itinéraire",
+    "editJourney": "Editer trajet",
     "position": {
       "description": "Résumé des durées cumulées",
       "direction": "Position du soleil",

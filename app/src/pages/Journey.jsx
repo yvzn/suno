@@ -10,6 +10,8 @@ import { DocumentTitle } from '../components/DocumentTitle'
 
 import { serializeJourney } from '../services/serialize'
 
+import './Journey.css'
+
 const Title = withText('journey.title')(PageTitle)
 const SetDocumentTitle = withText('journey.title')(DocumentTitle)
 const InputFrom = withText('journey.from.label')(
@@ -78,6 +80,7 @@ function JourneyForm() {
           coordValue={locationFrom.coord}
           onChange={onChangeLocationFrom}
           disabled={search.target === 'to'}
+          primary={!locationFrom.coord && !search.target}
         />
         <InputTo
           nameValue={locationTo.name}
@@ -85,6 +88,7 @@ function JourneyForm() {
           onChange={onChangeLocationTo}
           disabled={search.target === 'from'}
           forwardRef={inputToRef}
+          primary={locationFrom.coord && !locationTo.coord && !search.target}
         />
         {locationFrom.coord && locationTo.coord && (
           <StartDateInput
@@ -101,6 +105,7 @@ function JourneyForm() {
         <footer>
           <Link
             href={'/sun?' + serializeJourney({ from: locationFrom, to: locationTo, startDate })}
+            className="btn-primary"
           >
             <Text id="nav.continue"></Text>
           </Link>

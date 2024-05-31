@@ -1,8 +1,8 @@
 .location-input {
   align-items: center;
-  display: grid;
   column-gap: var(--space-1x);
-  grid-template-columns: auto 1fr auto;
+  display: grid;
+  grid-template-columns: var(--form-label-width) 1fr auto;
   grid-template-rows: auto auto;
 }
 
@@ -12,8 +12,8 @@
 
 .location-input [role='tooltip'] {
   display: none;
-  grid-row-start: 2;
   grid-column-start: 2;
+  grid-row-start: 2;
   padding: var(--space-1x) var(--space-1x) 0 var(--space-1x);
 }
 
@@ -21,7 +21,6 @@
   display: block;
 }
 
-.has-coords label::after {
-  color: green;
-  content: '\A0\2714';
+.has-coords input[type='search'] {
+  border-color: var(--color-info);
 }

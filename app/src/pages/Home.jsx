@@ -9,7 +9,7 @@ export function Home(props) {
   return (
     <>
       <header>
-        <h1><Text id="home.titleLong"/></h1>
+        <h1><Text id="home.titleLong" /></h1>
         <SetDocumentTitle />
       </header>
       <main id="home">
@@ -17,7 +17,7 @@ export function Home(props) {
         {props.children}
       </main>
       <footer>
-        <Link href="/journey"><Text id="home.continue"></Text></Link>
+        <Link href="/journey" className="btn-primary pulse"><Text id="home.continue"></Text></Link>
       </footer>
     </>
   );

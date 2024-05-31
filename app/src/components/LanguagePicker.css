@@ -6,3 +6,7 @@
 #language-picker input {
     margin-inline: var(--space-1x)
 }
+
+#language-picker label {
+    cursor: pointer;
+}

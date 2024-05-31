@@ -1,7 +1,7 @@
 table {
+    border-spacing: 0;
     margin-left: auto;
     margin-right: auto;
-    border-spacing: 0;
 }
 
 table caption {
@@ -10,8 +10,8 @@ table caption {
 
 table th,
 table td {
-    padding: var(--space-1x) var(--space-2x) var(--space-1x) var(--space-2x);
     border-bottom: solid 1px #ccc;
+    padding: var(--space-1x) var(--space-2x) var(--space-1x) var(--space-2x);
 }
 
 table td {
@@ -20,19 +20,19 @@ table td {
 
 /* https://www.smashingmagazine.com/2015/07/designing-simple-pie-charts-with-css/#svg-solution */
 #sun-position-table svg {
-    width: 48px;
-    height: 48px;
-    transform: rotate(var(--heading-rotation));
     background: transparent;
     border-radius: 50%;
     border: solid 1px #ccc;
+    height: 48px;
+    transform: rotate(var(--heading-rotation));
+    width: 48px;
 }
 
 #sun-position-table circle {
     fill: transparent;
-    stroke: #ffb703aa;
+    stroke-dasharray: 25 100; /* 25 / 100 === 25% */
     stroke-width: 32;
-    stroke-dasharray: 25 100; /* for 25% */
+    stroke: #ffb703aa;
 }
 
 #sun-position-table p {

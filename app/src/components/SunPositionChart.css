@@ -1,9 +1,9 @@
 #chart-container {
-    position: relative;
-    max-height: 60vh;
     display: flex;
     justify-content: center;
+    max-height: 60vh;
     padding: var(--space-4x) 0;
+    position: relative;
 }
 
 @supports (height: 100dvh) {

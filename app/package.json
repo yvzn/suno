@@ -9,10 +9,11 @@
     "dev:fr": "npm run index:fr && vite",
     "index:en": "node -e \"require('fs').copyFileSync('index.en.html', 'index.html')\"",
     "index:fr": "node -e \"require('fs').copyFileSync('index.fr.html', 'index.html')\"",
-
     "build": "npm run index:en && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "npm run lint:css",
+    "lint:css": "stylelint src/**/*.css"
   },
   "dependencies": {
     "chart.js": "^4.4.0",
@@ -24,6 +25,9 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
+    "stylelint": "^16.5.0",
+    "stylelint-config-standard": "^36.0.0",
+    "stylelint-order": "^6.0.4",
     "vite": "^5.2.10",
     "vitest": "^1.5.1"
   }

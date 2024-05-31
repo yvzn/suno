@@ -1,0 +1,17 @@
+{
+	"$schema": "http://json.schemastore.org/stylelintrc.json",
+	"extends": [
+		"stylelint-config-standard"
+	],
+	"ignoreFiles": [
+		"node_modules",
+		"dist",
+		"dist-ssr"
+	],
+	"plugins": [
+		"stylelint-order"
+	],
+	"rules": {
+		"order/properties-alphabetical-order": true
+	}
+}

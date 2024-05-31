@@ -13,3 +13,7 @@
 #start-date-input input {
     width: 100%;
 }
+
+#start-date-input [for="start-at"] {
+    width: var(--form-label-width);
+}

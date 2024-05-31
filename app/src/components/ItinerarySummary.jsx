@@ -38,6 +38,7 @@ export function ItinerarySummary(props) {
             <div>
                 <Link
                     href={'/journey' + window.location.search}
+                    className="btn-secondary"
                 >
                     <Text id="sun.editJourney"></Text>
                 </Link>

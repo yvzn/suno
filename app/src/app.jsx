@@ -10,8 +10,6 @@ import { NotFound } from './pages/NotFound'
 import { healthCheck } from './services/api'
 import { LanguagePicker } from './components/LanguagePicker'
 
-import './app.css'
-
 export function App(props) {
   const [translations, setTranslations] = useState(definitions(props.language))
 
