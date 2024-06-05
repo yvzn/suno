@@ -20,7 +20,7 @@ export function NotFound() {
         </p>
       </main>
       <footer>
-        <Link href="/" className="btn-primary"><Text id="nav.home"></Text></Link>
+        <Link href="/" className="btn btn-primary"><Text id="nav.home"></Text></Link>
       </footer>
     </>
   );

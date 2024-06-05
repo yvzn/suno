@@ -17,7 +17,7 @@ export function Home(props) {
         {props.children}
       </main>
       <footer>
-        <Link href="/journey" className="btn-primary pulse"><Text id="home.continue"></Text></Link>
+        <Link href="/journey" className="btn btn-primary pulse"><Text id="home.continue"></Text></Link>
       </footer>
     </>
   );

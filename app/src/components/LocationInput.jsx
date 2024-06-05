@@ -47,7 +47,7 @@ export function LocationInput(props) {
         <div id={tooltipId} role="tooltip">
           <Text id="journey.locationTooltip"></Text>
         </div>
-        <button type="submit" disabled={props.disabled} className={props.primary ? 'btn-primary' : 'btn-secondary'}>
+        <button type="submit" disabled={props.disabled} className={props.primary ? 'btn btn-primary' : 'btn btn-secondary'}>
           <Text id="journey.search"></Text>
         </button>
       </form>

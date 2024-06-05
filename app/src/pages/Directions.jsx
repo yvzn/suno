@@ -72,7 +72,7 @@ export function Directions() {
         <footer>
           <Link
             href={'/sun' + window.location.search}
-            className="btn-primary"
+            className="btn btn-primary"
           >
             <Text id="directions.sun"></Text>
           </Link>

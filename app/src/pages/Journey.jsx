@@ -105,7 +105,7 @@ function JourneyForm() {
         <footer>
           <Link
             href={'/sun?' + serializeJourney({ from: locationFrom, to: locationTo, startDate })}
-            className="btn-primary"
+            className="btn btn-primary"
           >
             <Text id="nav.continue"></Text>
           </Link>

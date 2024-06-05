@@ -64,7 +64,7 @@ export function LocationSearchResults(props) {
                 {result.name}
               </label>
             ))}
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="btn btn-primary">
               <Text id="journey.selectSearchResult"></Text>
             </button>
           </form>
