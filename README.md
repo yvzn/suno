@@ -53,3 +53,6 @@ This project uses graphics under Creative Commons licence:
 
 The website is a derivative of [Laurent Begey](https://github.com/lbegey/tw-app-tpl/)'s work.
 
+Additional tooling:
+
+- Favicons: [RealFaviconGenerator](https://realfavicongenerator.net/) and [Maskable​.app](https://maskable.app/)
