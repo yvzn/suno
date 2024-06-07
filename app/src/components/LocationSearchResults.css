@@ -23,5 +23,5 @@
 
 #search-results input {
   cursor: pointer;
-  margin-inline-end: var(--space-1x);
+  margin-right: var(--space-1x);
 }

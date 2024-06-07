@@ -52,8 +52,10 @@
     "title": "Not found"
   },
   "sun": {
-    "altText": "Duration chart. A  summary table is available below.",
-    "description": "Cumulative duration of sun position with respect to car direction along itinerary",
+    "chart": {
+      "altText": "A summary table for this chart is available below.",
+      "description": "Cumulative durations chart"
+    },
     "directions": "Directions",
     "editJourney": "Edit journey",
     "position": {
@@ -66,6 +68,7 @@
       "heading3": "Mostly right"
     },
     "positionsEmpty": "No sun on itinerary at given date and time 🌃",
+    "tagline": "Cumulative duration of sun position with respect to car direction along itinerary",
     "title": "Sun position"
   }
 }

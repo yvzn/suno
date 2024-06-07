@@ -54,10 +54,14 @@ export function Sun() {
   return (
     <>
       <header>
-        <Title />
+        <Title aria-describedby="sun-tagline" />
         <SetDocumentTitle />
       </header>
       <main id="sun">
+        <section id="sun-tagline">
+          <p><Text id="sun.tagline"></Text></p>
+        </section>
+
         <ItinerarySummary
           from={journey?.from?.name}
           to={journey?.to?.name}
@@ -69,7 +73,7 @@ export function Sun() {
         {sunPositions && <SunPositionChart positions={sunPositions} />}
         {sunPositions && <SunPositionTable positions={aggregateSunPositions(sunPositions)} />}
       </main>
-      <footer>       
+      <footer>
         <Link
           href={'/directions' + window.location.search}
           className="btn btn-secondary"

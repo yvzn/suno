@@ -18,6 +18,9 @@
   --space-4x: calc(4 * var(--space-1x));
   --round-radius: 6px;
   --form-label-width: 6.5ch;
+  --button-width: auto;
+  --button-padding-x: 1em;
+  --button-padding-y: .5em;
 
   /*
   https://coolors.co/ffcf57-c97064-fcfdff-007ea7-68a357
@@ -28,6 +31,7 @@
   --color-sunglow-900: #3D2C00;
   --color-indianred: #c97064;
   --color-white: #fcfdff;
+  --color-white-50: #fff;
   --color-cerulean: #007ea7;
   --color-cerulean-900: #006B8F;
   --color-cerulean-transparent: #007ea700;
@@ -44,6 +48,7 @@
   --color-interactive-text: var(--color-white);
   --color-interactive-transparent: var(--color-cerulean-transparent);
   --color-heading: var(--color-sunglow-900);
+  --color-heading-bg: var(--color-white-50);
   --color-accent: var(--color-sunglow);
   --color-accent-bg: var(--color-sunglow-700);
   --color-border: var(--color-dimgray);
@@ -59,7 +64,7 @@
   }
 }
 
-@media (width >= 360px) {
+@media (width > 360px) {
   :root {
     --round-radius: 8px;
   }
@@ -112,18 +117,19 @@ h1 {
 }
 
 main>* {
-  margin-block-start: var(--space-2x);
+  margin-top: var(--space-2x);
 }
 
 main>*:first-child {
-  margin-block-start: 0;
+  margin-top: 0;
 }
 
-footer {
-  align-items: flex-end;
-  display: flex;
-  flex-direction: column;
+header {
+  background-color: var(--color-heading-bg);
+  border-bottom: solid 2px var(--color-accent);
+  margin-bottom: var(--space-4x);
 }
+
 
 /* || UTILITIES */
 
@@ -174,7 +180,7 @@ footer {
   padding: var(--space-2x);
 }
 
-@media (width >= 360px) {
+@media (width > 360px) {
   #app>* {
     padding: 0 var(--space-4x) var(--space-4x) var(--space-4x);
   }
@@ -189,7 +195,7 @@ footer {
   border-radius: var(--round-radius);
   cursor: pointer;
   display: inline-block;
-  padding: .5em 1em;
+  padding: var(--button-padding-y) var(--button-padding-x);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -231,11 +237,11 @@ footer {
 /* || HOME PAGE */
 
 #home .markup>* {
-  margin-block-start: var(--space-2x);
+  margin-top: var(--space-2x);
 }
 
 #home .markup>*:first-child {
-  margin-block-start: 0;
+  margin-top: 0;
 }
 
 #home .markup li {
@@ -243,5 +249,5 @@ footer {
 }
 
 noscript p {
-  margin-block-start: var(--space-2x);
+  margin-top: var(--space-2x);
 }

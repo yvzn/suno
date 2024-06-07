@@ -2,7 +2,7 @@
   align-items: center;
   column-gap: var(--space-1x);
   display: grid;
-  grid-template-columns: var(--form-label-width) 1fr auto;
+  grid-template-columns: var(--form-label-width) 1fr var(--button-width);
   grid-template-rows: auto auto;
 }
 

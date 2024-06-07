@@ -1,8 +1,12 @@
-#journey-tagline {
-    margin-block-end: var(--space-4x);
+#journey {
+    --button-width: 6em;
 }
 
-#journey search {
-    margin-block-end: var(--space-2x);
+html[lang="en"] #journey {
+    --button-width: 5em;
 }
 
+#journey input[type='search'] {
+    /* same padding as button, to align */
+    padding: var(--button-padding-y); 
+}

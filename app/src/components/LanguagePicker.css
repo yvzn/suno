@@ -5,7 +5,8 @@
 }
 
 #language-picker input {
-    margin-inline: var(--space-1x)
+    margin-left: var(--space-1x);
+    margin-right: var(--space-1x);
 }
 
 #language-picker label {

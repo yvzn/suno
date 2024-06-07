@@ -1,27 +1,27 @@
-import { serializeJourney } from "./serialize";
+import { serializeJourney } from "./serialize"
 
-const apiUrl = import.meta.env.VITE_API_URL;
-const apiKey = import.meta.env.VITE_API_KEY || localStorage.getItem('apiKey');
+const apiUrl = import.meta.env.VITE_API_URL
+const apiKey = import.meta.env.VITE_API_KEY || localStorage.getItem('apiKey')
 
 async function findLocationsApi(searchQuery) {
-  const params = new URLSearchParams();
-  params.set("code", apiKey);
-  params.set("q", searchQuery);
+  const params = new URLSearchParams()
+  params.set("code", apiKey)
+  params.set("q", searchQuery)
 
-  const response = await fetch(`${apiUrl}/geocoding?${params.toString()}`);
+  const response = await fetch(`${apiUrl}/geocoding?${params.toString()}`)
 
-  const json = await response.json();
-  return json.results;
+  const json = await response.json()
+  return json.results
 }
 
-function findLocationsMock(_searchQuery) {
+function findLocationsMock(searchQuery) {
   const Nantes = {
     name: 'Nantes',
     coord: {
       lat: 47.2292,
       lon: -1.547,
     },
-  };
+  }
 
   const Angers = {
     name: 'Angers',
@@ -29,7 +29,7 @@ function findLocationsMock(_searchQuery) {
       lat: 47.4736,
       lon: -0.5548,
     },
-  };
+  }
 
   const Paris = {
     name: 'Paris',
@@ -37,20 +37,29 @@ function findLocationsMock(_searchQuery) {
       lat: 48.8566,
       lon: 2.3511,
     },
-  };
+  }
 
-  const results = [Nantes, Angers, Paris];
-  return Promise.resolve(results);
+  const results = [Nantes, Angers, Paris]
+
+  if (searchQuery && searchQuery.indexOf("slow") > -1) {
+    return new Promise((resolve, _reject) => {
+      setTimeout(() => {
+        resolve(results)
+      }, 2_000)
+    })
+  }
+
+  return Promise.resolve(results)
 }
 
 async function getDirectionsApi({ from, to, startDate }) {
-  const params = serializeJourney({ from, to, startDate });
-  params.set("code", apiKey);
+  const params = serializeJourney({ from, to, startDate })
+  params.set("code", apiKey)
 
-  const response = await fetch(`${apiUrl}/directions?${params.toString()}`);
+  const response = await fetch(`${apiUrl}/directions?${params.toString()}`)
 
-  const json = await response.json();
-  return json;
+  const json = await response.json()
+  return json
 }
 
 function getDirectionsMock(_journey) {
@@ -60,7 +69,7 @@ function getDirectionsMock(_journey) {
       lat: 47.2292,
       lon: -1.547,
     },
-  };
+  }
 
   const Angers = {
     name: 'Angers',
@@ -68,7 +77,7 @@ function getDirectionsMock(_journey) {
       lat: 47.4736,
       lon: -0.5548,
     },
-  };
+  }
 
   const Paris = {
     name: 'Paris',
@@ -76,7 +85,7 @@ function getDirectionsMock(_journey) {
       lat: 48.8566,
       lon: 2.3511,
     },
-  };
+  }
 
   const results = {
     legs: [
@@ -92,17 +101,17 @@ function getDirectionsMock(_journey) {
       }
     ]
   }
-  return Promise.resolve(results);
+  return Promise.resolve(results)
 }
 
 async function healthCheckApi() {
-  const params = new URLSearchParams();
-  params.set("code", apiKey);
+  const params = new URLSearchParams()
+  params.set("code", apiKey)
 
-  const response = await fetch(`${apiUrl}/health?${params.toString()}`);
+  const response = await fetch(`${apiUrl}/health?${params.toString()}`)
 
-  const json = await response.json();
-  return json;
+  const json = await response.json()
+  return json
 }
 
 async function healthCheckMock() {

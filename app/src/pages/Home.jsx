@@ -9,7 +9,9 @@ export function Home(props) {
   return (
     <>
       <header>
-        <h1><Text id="home.titleLong" /></h1>
+        <h1>
+          <Text id="home.titleLong" />
+        </h1>
         <SetDocumentTitle />
       </header>
       <main id="home">
