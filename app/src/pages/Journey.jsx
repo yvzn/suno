@@ -1,5 +1,5 @@
 import { Text, withText } from 'preact-i18n'
-import { useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { Link } from 'preact-router'
 
 import { LocationInput } from '../components/LocationInput'
@@ -8,7 +8,7 @@ import { StartDateInput } from '../components/StartDateInput'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 
-import { serializeJourney } from '../services/serialize'
+import { deserializeJourney, serializeJourney } from '../services/serialize'
 
 import './Journey.css'
 
@@ -43,6 +43,19 @@ function JourneyForm() {
   const [startDate, setStartDate] = useState('now')
 
   const inputToRef = useRef()
+
+  useEffect(() => {
+    const journey = deserializeJourney(location.search)
+    if (journey.from.name && journey.from.coord) {
+      setLocationFrom(journey.from)
+    }
+    if (journey.to.name && journey.to.coord) {
+      setLocationTo(journey.to)
+    }
+    if (journey.startDate) {
+      setStartDate(journey.startDate)
+    }
+  }, [])
 
   const onChangeLocationFrom = (value) => {
     setLocationFrom({ name: value, coord: undefined })
