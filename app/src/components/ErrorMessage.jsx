@@ -15,7 +15,7 @@ export function ErrorMessage(props) {
       )}
     </p>
     {props.error && (
-      <button onClick={handleRetryClick}>
+      <button class="btn btn-primary" onClick={handleRetryClick}>
         <Text id="fetch.retry"></Text>
       </button>
     )}

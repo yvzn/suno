@@ -5,3 +5,7 @@
 #error-message > *:first-child {
     margin-top: 0;
 }
+
+#error-message p {
+    color: var(--color-error);
+}

@@ -1,48 +1,49 @@
-import { useEffect, useState } from 'preact/hooks';
-import { Text, withText } from 'preact-i18n';
-import { deserializeJourney } from '../services/serialize';
-import { Link, route } from 'preact-router';
+import { useEffect, useState } from 'preact/hooks'
+import { Text, withText } from 'preact-i18n'
+import { deserializeJourney } from '../services/serialize'
+import { Link, route } from 'preact-router'
 
-import { LoadingIndicator } from '../components/LoadingIndicator';
-import { ErrorMessage } from '../components/ErrorMessage';
-import { PageTitle } from '../components/PageTitle';
-import { DocumentTitle } from '../components/DocumentTitle';
-import { ItinerarySummary } from '../components/ItinerarySummary';
+import { LoadingIndicator } from '../components/LoadingIndicator'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { PageTitle } from '../components/PageTitle'
+import { DocumentTitle } from '../components/DocumentTitle'
+import { ItinerarySummary } from '../components/ItinerarySummary'
 
-import { getDirections } from '../services/api';
-import { formatDurationInSeconds } from '../services/duration';
-import { aggregateLegs } from '../services/directions';
+import { getDirections } from '../services/api'
+import { formatDurationInSeconds } from '../services/duration'
+import { aggregateLegs } from '../services/directions'
 
-import './Directions.css';
+import './Directions.css'
 
-const Title = withText('directions.title')(PageTitle);
-const SetDocumentTitle = withText('directions.title')(DocumentTitle);
+const Title = withText('directions.title')(PageTitle)
+const SetDocumentTitle = withText('directions.title')(DocumentTitle)
 
 export function Directions() {
-  const [journey, setJourney] = useState();
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState(undefined);
+  const [journey, setJourney] = useState()
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(undefined)
 
-  const [itinerary, setItinerary] = useState();
+  const [itinerary, setItinerary] = useState()
 
   useEffect(() => {
-    const journey = deserializeJourney(location.search);
+    const journey = deserializeJourney(location.search)
     if (!journey.from || !journey.to || !journey.startDate) {
-      route('/journey');
+      route('/journey')
     }
     setJourney(journey)
-  }, []);
+  }, [])
 
   const fetchItinerary = () => {
-    if (!journey) return;
-    setError(undefined);
-    setLoading(true);
+    if (!journey) return
+    setError(undefined)
+    setItinerary(undefined)
+    setLoading(true)
     getDirections(journey)
       .then(setItinerary, setError)
-      .finally(() => setLoading(false));
+      .finally(() => setLoading(false))
   }
 
-  useEffect(fetchItinerary, [journey]);
+  useEffect(fetchItinerary, [journey])
 
   return (
     <>
@@ -79,7 +80,7 @@ export function Directions() {
         </footer>
       )}
     </>
-  );
+  )
 }
 
 function ItineraryLeg(props) {

@@ -30,6 +30,7 @@
   --color-sunglow-700: #B88400;
   --color-sunglow-900: #3D2C00;
   --color-indianred: #c97064;
+  --color-indianred-600: #B54D40;
   --color-white: #fcfdff;
   --color-white-50: #fff;
   --color-cerulean: #007ea7;
@@ -55,6 +56,7 @@
   --color-disabled: var(--color-dimgray-200);
   --color-disabled-txt: var(--color-dimgray-200);
   --color-info: var(--color-asparagus);
+  --color-error: var(--color-indianred-600);
 }
 
 @supports (height: 100dvh) {

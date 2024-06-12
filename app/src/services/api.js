@@ -8,7 +8,7 @@ async function findLocationsApi(searchQuery) {
   params.set("code", apiKey)
   params.set("q", searchQuery)
 
-  const response = await fetch(`${apiUrl}/geocoding?${params.toString()}`)
+  const response = await httpGet(`${apiUrl}/geocoding?${params.toString()}`)
 
   const json = await response.json()
   return json.results
@@ -56,7 +56,7 @@ async function getDirectionsApi({ from, to, startDate }) {
   const params = serializeJourney({ from, to, startDate })
   params.set("code", apiKey)
 
-  const response = await fetch(`${apiUrl}/directions?${params.toString()}`)
+  const response = await httpGet(`${apiUrl}/directions?${params.toString()}`)
 
   const json = await response.json()
   return json
@@ -108,7 +108,7 @@ async function healthCheckApi() {
   const params = new URLSearchParams()
   params.set("code", apiKey)
 
-  const response = await fetch(`${apiUrl}/health?${params.toString()}`)
+  const response = await httpGet(`${apiUrl}/health?${params.toString()}`)
 
   const json = await response.json()
   return json
@@ -117,6 +117,16 @@ async function healthCheckApi() {
 async function healthCheckMock() {
   return Promise.resolve({healthy: true, timestamp: new Date().toISOString()})
 }
+
+function httpGet(url, timeoutInMilliseconds = TEN_SECONDS) {
+  return fetch(url, { 
+    // https://codedrivendevelopment.com/posts/everything-about-abort-signal-timeout
+    signal: AbortSignal.timeout(timeoutInMilliseconds)
+  })
+}
+
+// https://www.nngroup.com/articles/website-response-times/
+const TEN_SECONDS = 10_000
 
 // export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }
 // export { findLocationsMock as findLocations, getDirectionsMock as getDirections, healthCheckMock as healthCheck }
