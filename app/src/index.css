@@ -166,6 +166,49 @@ header {
   }
 }
 
+.visually-hidden.on-small-device:not(:focus, :active) {
+  /* https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html */
+  clip: rect(0 0 0 0); 
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap; 
+  width: 1px;
+}
+
+.visually-hidden.on-large-device:not(:focus, :active) {
+  clip: unset;
+  clip-path: unset;
+  height: unset;
+  overflow: unset;
+  position: unset;
+  white-space: unset;
+  width: unset;
+}
+
+@media (width > 360px) {
+  .visually-hidden.on-small-device:not(:focus, :active) {
+    clip: unset;
+    clip-path: unset;
+    height: unset;
+    overflow: unset;
+    position: unset;
+    white-space: unset;
+    width: unset;
+  }
+  
+  .visually-hidden.on-large-device:not(:focus, :active) {
+    clip: rect(0 0 0 0); 
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap; 
+    width: 1px;
+  }
+}
+
 /* || SITEWIDE */
 
 #app {
@@ -222,6 +265,12 @@ header {
   border: solid 1px var(--color-disabled);
   color: var(--color-disabled-txt);
   text-decoration: none;
+}
+
+.btn svg {
+  height: 16px;
+  vertical-align: middle;
+  width: 16px;
 }
 
 .loading-indicator {

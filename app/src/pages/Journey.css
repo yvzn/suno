@@ -1,9 +1,23 @@
 #journey {
-    --button-width: 6em;
+    --button-width: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2x);
 }
 
-html[lang="en"] #journey {
-    --button-width: 5em;
+@media (width > 360px) {
+    #journey {
+        --button-width: 6em;
+    }
+
+    html[lang="en"] #journey {
+        --button-width: 5em;
+    }
+}
+
+#journey > * {
+    margin-top: 0;
 }
 
 #journey input[type='search'] {

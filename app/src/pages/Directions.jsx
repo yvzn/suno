@@ -68,7 +68,7 @@ export function Directions() {
           )}
         </section>
       </main>
-      {journey && (
+      {journey && itinerary && (
         <footer>
           <Link
             href={'/sun' + window.location.search}
