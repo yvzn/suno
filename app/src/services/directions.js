@@ -14,9 +14,8 @@ export function aggregateLegs(legs) {
         const currentLeg = legs[i];
         const previousLeg = result[result.length - 1];
 
-        // Check if legs are similar based on start and end names
+        // Check if legs are similar (the end name only is enough)
         if (
-            currentLeg.start.name === previousLeg.start.name &&
             currentLeg.end.name === previousLeg.end.name
         ) {
             // Update durationInSeconds and end location
