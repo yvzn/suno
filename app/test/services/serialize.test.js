@@ -28,6 +28,26 @@ describe(deserializeJourney.name, () => {
             }
         )
     });
+
+    test('deserialize empty journey', () => {
+        const journey = '';
+
+        const actual = deserializeJourney(journey);
+
+        expect(actual).toEqual(
+            {
+                from: {
+                    name: null,
+                    coord: null
+                },
+                to: {
+                    name: null,
+                    coord: null
+                },
+                startDate: 'now'
+            }
+        )
+    });
 });
 
 function LeCroisic() {

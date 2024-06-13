@@ -73,14 +73,16 @@ export function Sun() {
         {sunPositions && <SunPositionChart positions={sunPositions} />}
         {sunPositions && <SunPositionTable positions={aggregateSunPositions(sunPositions)} />}
       </main>
-      <footer>
-        <Link
-          href={'/directions' + window.location.search}
-          className="btn btn-secondary"
-        >
-          <Text id="sun.directions"></Text>
-        </Link>
-      </footer>
+      {journey && itinerary && (
+        <footer>
+          <Link
+            href={'/directions' + window.location.search}
+            className="btn btn-secondary"
+          >
+            <Text id="sun.directions"></Text>
+          </Link>
+        </footer>
+      )}
     </>
   );
 }

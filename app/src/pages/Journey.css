@@ -6,7 +6,7 @@
     gap: var(--space-2x);
 }
 
-@media (width > 360px) {
+@media (width > 400px) {
     #journey {
         --button-width: 6em;
     }
