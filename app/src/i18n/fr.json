@@ -33,7 +33,7 @@
     "leaveNow": "Partir maintenant",
     "locationTooltip": "Nom de ville ou adresse.",
     "search": "Chercher",
-    "searchResults": "Choisissez le lieu correspondant à '{{query}}' parmi ces options :",
+    "searchResults": "Choisissez le lieu correspondant à '{{query}}' parmi ces options :",
     "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
     "selectSearchResult": "Valider",
     "tagline": "Renseignez les détails de votre itinéraire.",

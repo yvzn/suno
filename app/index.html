@@ -37,13 +37,18 @@
         </svg>
         Chargement...
       </p>
+      <div id="loading-error" style="display: none;">
+        <p role="alert">Impossible de charger l'application. Êtes-vous connecté au réseau ? Vous pouvez utiliser le bouton réessayer
+          ci-après.</p>
+        <button class="btn btn-primary" onClick={reload}>Réessayer</button>
+      </div>
       <noscript>
         <p>JavaScript a été désactivé dans votre navigateur, les fonctionnalités du site sont indisponibles. <a
             href="https://fr.wikihow.com/activer-JavaScript">Instructions pour activer JavaScript</a>. </p>
       </noscript>
     </main>
   </div>
-  <script type="module" src="/src/main.fr.jsx" defer></script>
+  <script type="module" src="/src/main.fr.jsx" defer onerror="handleLoadingError()"></script>
 
   <style>
     /* inline critical CSS */
@@ -54,6 +59,18 @@
     var lp = document.getElementById('loading')
     if (lp)
       lp.style.display = 'flex'
+
+    function handleLoadingError() {
+      var le = document.getElementById('loading-error')
+      if (le)
+        le.style.display = 'flex'
+      if (lp)
+        lp.style.display = 'none'
+    }
+
+    function reload() {
+      window.location.reload()
+    }
   </script>
 </body>
 

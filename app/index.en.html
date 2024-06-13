@@ -45,13 +45,17 @@
         </svg>
         Loading...
       </p>
+      <div id="loading-error" style="display: none;">
+        <p role="alert">Failed to load application. Are you online ? You can use the retry button below.</p>
+        <button class="btn btn-primary" onClick={reload}>Retry</button>
+      </div>
       <noscript>
         <p>JavaScript has been disabled within your browser, the functionality of the web page are
           unavailable. <a href="https://www.wikihow.com/Enable-JavaScript">Instructions to enable JavaScript</a>. </p>
       </noscript>
     </main>
   </div>
-  <script type="module" src="/src/main.en.jsx" defer></script>
+  <script type="module" src="/src/main.en.jsx" defer onerror="handleLoadingError()"></script>
 
   <style>
     /* inline critical CSS */
@@ -61,7 +65,19 @@
     /* inline critical JS */
     var lp = document.getElementById('loading')
     if (lp)
-      lp.style.display = 'flex';
+      lp.style.display = 'flex'
+
+    function handleLoadingError() {
+      var le = document.getElementById('loading-error')
+      if (le)
+        le.style.display = 'flex'
+      if (lp)
+        lp.style.display = 'none'
+    }
+
+    function reload() {
+      window.location.reload()
+    }
   </script>
 </body>
 
