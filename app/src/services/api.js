@@ -118,15 +118,9 @@ async function healthCheckMock() {
   return Promise.resolve({healthy: true, timestamp: new Date().toISOString()})
 }
 
-function httpGet(url, timeoutInMilliseconds = TEN_SECONDS) {
-  return fetch(url, { 
-    // https://codedrivendevelopment.com/posts/everything-about-abort-signal-timeout
-    signal: AbortSignal.timeout(timeoutInMilliseconds)
-  })
+function httpGet(url) {
+  return fetch(url)
 }
-
-// https://www.nngroup.com/articles/website-response-times/
-const TEN_SECONDS = 10_000
 
 // export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }
 // export { findLocationsMock as findLocations, getDirectionsMock as getDirections, healthCheckMock as healthCheck }
