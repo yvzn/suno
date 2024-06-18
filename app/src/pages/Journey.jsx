@@ -46,10 +46,10 @@ function JourneyForm() {
 
   useEffect(() => {
     const journey = deserializeJourney(location.search)
-    if (journey.from.name && journey.from.coord) {
+    if (journey.from) {
       setLocationFrom(journey.from)
     }
-    if (journey.to.name && journey.to.coord) {
+    if (journey.to) {
       setLocationTo(journey.to)
     }
     if (journey.startDate) {

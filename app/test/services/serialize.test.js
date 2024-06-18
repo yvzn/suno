@@ -36,19 +36,26 @@ describe(deserializeJourney.name, () => {
 
         expect(actual).toEqual(
             {
-                from: {
-                    name: null,
-                    coord: null
-                },
-                to: {
-                    name: null,
-                    coord: null
-                },
+                from: null,
+                to: null,
                 startDate: 'now'
             }
         )
     });
-});
+
+    test('deserialize partial journey', () => {
+        const journey = 'f=Le+Croisic&fa=47.2292&fo=-1.547';
+
+        const actual = deserializeJourney(journey);
+
+        expect(actual).toEqual(
+            {
+                from: LeCroisic(),
+                to: null,
+                startDate: 'now'
+            }
+        )
+    });});
 
 function LeCroisic() {
     return ({

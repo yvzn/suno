@@ -18,14 +18,8 @@ export function deserializeJourney(searchParams) {
   const params = new URLSearchParams(searchParams)
 
   return {
-    from: {
-      name: params.get('f'),
-      coord: deserializeCoords(params.get('fa'), params.get('fo'))
-    },
-    to: {
-      name: params.get('t'),
-      coord: deserializeCoords(params.get('ta'), params.get('to'))
-    },
+    from: deserializeLocation(params.get('f'), params.get('fa'), params.get('fo')),
+    to: deserializeLocation(params.get('t'), params.get('ta'), params.get('to')),
     startDate: deserializeDate(params.get('d'))
   }
 }
@@ -40,11 +34,14 @@ function serializeDate(maybeSomeDate) {
   return maybeSomeDate
 }
 
-function deserializeCoords(maybeLatitude, maybeLongitude) {
-  if (maybeLatitude && maybeLongitude) {
+function deserializeLocation(maybeName, maybeLatitude, maybeLongitude) {
+  if (maybeName && parseFloat(maybeLatitude) && parseFloat(maybeLongitude)) {
     return {
-      lat: maybeLatitude,
-      lon: maybeLongitude,
+      name: maybeName,
+      coord: {
+        lat: maybeLatitude,
+        lon: maybeLongitude,
+      }
     }
   }
   return null

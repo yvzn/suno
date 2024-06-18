@@ -46,8 +46,9 @@
         Loading...
       </p>
       <div id="loading-error" style="display: none;">
-        <p role="alert">Failed to load application. Are you online ? You can use the retry button below.</p>
-        <button class="btn btn-primary" onClick={reload}>Retry</button>
+        <p role="alert">Failed to load application. Are you online ? Please check your network access and use the retry
+          button below.</p>
+        <button class="btn btn-primary" onClick="reload()">Retry</button>
       </div>
       <noscript>
         <p>JavaScript has been disabled within your browser, the functionality of the web page are
@@ -77,6 +78,17 @@
 
     function reload() {
       window.location.reload()
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+
+      // Cleanup old cache on page load
+      if (navigator.serviceWorker.controller) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.controller.postMessage('cleanUp');
+        });
+      }
     }
   </script>
 </body>
