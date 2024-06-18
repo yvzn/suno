@@ -17,6 +17,7 @@ public static class Health
 		ILogger log)
 	{
 		req.HttpContext.Response.Headers.Add("Cache-Control", "no-store");
+		req.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
 		return new OkObjectResult(new { healthy = true, timestamp = DateTime.UtcNow });
 	}

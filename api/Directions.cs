@@ -85,6 +85,7 @@ public static class Directions
 		};
 
 		req.HttpContext.Response.Headers.Add("Cache-Control", "private, max-age=3600");
+		req.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
 		return new OkObjectResult(trip);
 	}

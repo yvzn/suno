@@ -66,6 +66,7 @@ public static class Geocoding
 			}).ToArray();
 
 		req.HttpContext.Response.Headers.Add("Cache-Control", "private, max-age=86400");
+		req.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
 
 		return new OkObjectResult(new { results = searchResults ?? Array.Empty<object>() });
 	}
