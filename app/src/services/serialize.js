@@ -49,7 +49,7 @@ function deserializeLocation(maybeName, maybeLatitude, maybeLongitude) {
 
 function deserializeDate(maybeSomeDate) {
   try {
-    if (!d) return d
+    if (!maybeSomeDate) return 'now'
     const d = new Date(maybeSomeDate)
     if (!isNaN(d)) return d
   } catch (_) {

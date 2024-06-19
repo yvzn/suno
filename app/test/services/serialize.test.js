@@ -8,7 +8,7 @@ describe(serializeJourney.name, () => {
         const to = Angers();
         const startDate = 'now';
 
-        const actual = serializeJourney({from, to, startDate});
+        const actual = serializeJourney({ from, to, startDate });
 
         expect(String(actual)).toBe('f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now');
     });
@@ -16,7 +16,7 @@ describe(serializeJourney.name, () => {
 
 describe(deserializeJourney.name, () => {
     test('deserialize valid journey', () => {
-        const journey = 'f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=now';
+        const journey = 'f=Le+Croisic&fa=47.2292&fo=-1.547&t=Angers&ta=47.4736&to=-0.5548&d=2024-06-19T08:06:00.000Z';
 
         const actual = deserializeJourney(journey);
 
@@ -24,7 +24,7 @@ describe(deserializeJourney.name, () => {
             {
                 from: LeCroisic(),
                 to: Angers(),
-                startDate: 'now'
+                startDate: new Date('2024-06-19T08:06:00.000Z')
             }
         )
     });
@@ -51,6 +51,20 @@ describe(deserializeJourney.name, () => {
         expect(actual).toEqual(
             {
                 from: LeCroisic(),
+                to: null,
+                startDate: 'now'
+            }
+        )
+    });
+
+    test('handle invalid values', () => {
+        const journey = 'f=Le+Croisic&fa=invalid&fo=-1.547&t=Angers&ta=47.4736&to=invalid&d=invalid';
+
+        const actual = deserializeJourney(journey);
+
+        expect(actual).toEqual(
+            {
+                from: null,
                 to: null,
                 startDate: 'now'
             }
