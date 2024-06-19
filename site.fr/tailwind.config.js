@@ -7,7 +7,10 @@ export default {
 		colors: {
 			transparent: 'transparent',
 			current: 'currentColor',
-			'white': '#FCFDFF',
+			'white': {
+				50: '#FFFFFF',
+				DEFAULT: '#FCFDFF'
+			},
 			'black': '#0D1B2A',
 			'blue': {
 				DEFAULT: '#007ea7',
@@ -23,7 +26,7 @@ export default {
 			'gray': {
 				600: '#4C4A42',
 				700: '#21201C'
-			} 	
+			}
 		},
 		fontFamily: {
 			'sans': 'Seravek, "Gill Sans Nova", Ubuntu, Calibri, "DejaVu Sans", source-sans-pro, sans-serif'

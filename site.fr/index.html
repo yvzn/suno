@@ -10,10 +10,19 @@
     <link rel="icon" href="/car.svg" type="image/svg+xml">
     <base target="_top" />
     <title>Direction Soleil</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="manifest" href="/site.fr.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#006b8f">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#fcfdff">
 </head>
 
 <body class="antialiased bg-white text-black">
-    <header>
+    <header class="bg-white-50 border-b-2 border-yellow">
         <div class="mx-auto sm:px-7 px-4 max-w-screen-xl py-10">
             <nav class="flex items-center">
                 <a href="/" class="text-xl text-blue-800 font-bold underline">DirectionSoleil.fr</a>
@@ -32,7 +41,7 @@
                 </div>
 
                 <div>
-                    <h1 class="text-2xl font-bold lg:text-4xl pb-8">
+                    <h1 class="text-2xl text-yellow-900 font-bold lg:text-4xl pb-8 ">
                         La position du soleil<br>
                         le long de votre itinéraire
                     </h1>
@@ -41,7 +50,7 @@
                         trajets en toute sérénité.
                     </p>
                     <a href="https://app.directionsoleil.fr"
-                        class="mb-8 inline-block text-white text-lg bg-blue-700 rounded-lg hover:bg-blue duration-300 transition-colors border border-transparent px-8 py-2.5">
+                        class="mb-8 inline-block text-white text-lg bg-blue-700 rounded-lg font-bold border border-transparent px-8 py-2.5 underline underline-offset-2">
                         Ouvrir l'application &rarr;</i>
                     </a>
                 </div>
@@ -100,7 +109,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"
                             aria-hidden="true">
                             <path
-                                d="M3.03118 10.9764C3.0702 9.49537 3.15802 8.30899 3.35562 7.32112C3.68725 5.66312 4.30954 4.66225 5.55495 3.83206L4.44563 2.16791C2.69075 3.33771 1.8129 4.83684 1.39446 6.92885C0.999908 8.90143 0.999948 11.4836 1 14.8799V14.8799L1 14.9994C1 14.9996 1 14.9998 1 15C1 17.7614 3.23858 20 6 20C8.76143 20 11 17.7614 11 15C11 14.7261 10.9779 14.4568 10.9352 14.1941C11.2657 14.0687 11.6242 14 12 14C12.3758 14 12.7344 14.0687 13.0648 14.1941C13.0221 14.4568 13 14.7261 13 15C13 17.7614 15.2386 20 18 20C20.7614 20 23 17.7614 23 15V14.8799C23.0001 11.4836 23.0001 8.90145 22.6056 6.92888C22.1873 4.83693 21.3096 3.33779 19.555 2.16796L18.4456 3.83201C19.6907 4.66217 20.3129 5.66303 20.6445 7.32108C20.842 8.30896 20.9298 9.49537 20.9688 10.9764C20.1386 10.3628 19.1117 9.99998 18 9.99998C16.2216 9.99998 14.6617 10.9281 13.7755 12.3247C13.2232 12.1149 12.6245 12 12 12C11.3755 12 10.7768 12.1149 10.2245 12.3247C9.33834 10.9281 7.77841 9.99998 6 9.99998C4.88835 9.99998 3.86143 10.3628 3.03118 10.9764Z">
+                                d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.51472 4.92893L4.92893 3.51472L7.05025 5.63604L5.63604 7.05025L3.51472 4.92893ZM16.9497 18.364L18.364 16.9497L20.4853 19.0711L19.0711 20.4853L16.9497 18.364ZM19.0711 3.51472L20.4853 4.92893L18.364 7.05025L16.9497 5.63604L19.0711 3.51472ZM5.63604 16.9497L7.05025 18.364L4.92893 20.4853L3.51472 19.0711L5.63604 16.9497ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z">
                             </path>
                         </svg>
                     </div>
@@ -113,7 +122,7 @@
     <section id="FAQ" class="px-4">
         <div class="mx-auto sm:px-7 px-4 max-w-screen-xl py-20">
             <div class="flex items-center">
-                <h2 class="text-yellow-900 text-2xl font-bold lg:text-4xl pb-8">Questions fréquentes </h2>
+                <h2 class="text-yellow-900 text-2xl font-bold lg:text-4xl pb-8">Questions fréquentes</h2>
             </div>
 
             <div class="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-16">
@@ -162,7 +171,8 @@
                     <p>Thème dérivé du travail de <a href="https://github.com/lbegey/tw-app-tpl/"
                             class="underline">Laurent Begey</a></p>
                     <p>Icons by <a href="https://remixicon.com/" class="underline">Remixicon</a></p>
-                    <p>Phone Mockups by <a href="https://flowbite.com/docs/components/device-mockups/" class="underline">Flowbite</a></p>
+                    <p>Phone Mockups by <a href="https://flowbite.com/docs/components/device-mockups/"
+                            class="underline">Flowbite</a></p>
                 </details>
             </div>
 
