@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
@@ -11,10 +9,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.Azure.Functions.Worker;
 
 namespace suno;
 
-public static class Directions
+public class Directions(ILogger<Directions> logger)
 {
 	private static readonly string azureMapsApiKey = Environment.GetEnvironmentVariable("AZURE_MAPS_API_KEY") ?? throw new Exception("AZURE_MAPS_API_KEY not set");
 
@@ -22,16 +21,15 @@ public static class Directions
 
 	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
 
-	[FunctionName("Directions")]
-	public static async Task<IActionResult> Run(
-		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "directions")] HttpRequest req,
-		ILogger log)
+	[Function("Directions")]
+	public async Task<IActionResult> Run(
+		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "directions")] HttpRequest req)
 	{
-		string fromLatitude = req.Query["fa"];
-		string fromLongitude = req.Query["fo"];
-		string toLatitude = req.Query["ta"];
-		string toLongitude = req.Query["to"];
-		string startDate = req.Query["d"];
+		string? fromLatitude = req.Query["fa"];
+		string? fromLongitude = req.Query["fo"];
+		string? toLatitude = req.Query["ta"];
+		string? toLongitude = req.Query["to"];
+		string? startDate = req.Query["d"];
 
 		if (!IsValidCoordinate(fromLatitude, fromLongitude, toLatitude, toLongitude))
 		{
@@ -59,7 +57,7 @@ public static class Directions
 
 		if (!response.IsSuccessStatusCode)
 		{
-			log.LogError($"Azure Maps API request failed with status code: {response.StatusCode}");
+			logger.LogError("Azure Maps API request failed with status code: {StatusCode}", response.StatusCode);
 			return new StatusCodeResult(StatusCodes.Status502BadGateway);
 		}
 
@@ -84,22 +82,22 @@ public static class Directions
 			legs = MapInstructions(instructions).ToList()
 		};
 
-		req.HttpContext.Response.Headers.Add("Cache-Control", "private, max-age=3600");
-		req.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+		req.HttpContext.Response.Headers.Append("Cache-Control", "private, max-age=3600");
+		req.HttpContext.Response.Headers.Append("X-Content-Type-Options", "nosniff");
 
 		return new OkObjectResult(trip);
 	}
 
-	private static bool IsValidCoordinate(params string[] coordinates)
+	private static bool IsValidCoordinate(params string?[] coordinates)
 	{
 		return coordinates.All(IsAnumber);
 
-		static bool IsAnumber(string maybeAnumber) => decimal.TryParse(maybeAnumber, out _);
+		static bool IsAnumber(string? maybeAnumber) => decimal.TryParse(maybeAnumber, CultureInfo.InvariantCulture, out _);
 	}
 
-	private static bool IsValidStartDate(string startDate)
-		=> "now".Equals(startDate, StringComparison.InvariantCulture)
-			|| DateTimeOffset.TryParse(startDate, out _);
+	private static bool IsValidStartDate(string? maybeStartDate)
+		=> "now".Equals(maybeStartDate, StringComparison.InvariantCulture)
+			|| DateTimeOffset.TryParse(maybeStartDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
 
 	internal static IEnumerable<Leg> MapInstructions(IEnumerable<AzureMapsGuidanceInstruction> instructions)
 	{

@@ -1,23 +1,18 @@
 using System;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+using Microsoft.Azure.Functions.Worker;
 
 namespace suno;
 
 public static class Health
 {
-	[FunctionName("Health")]
+	[Function("Health")]
 	public static IActionResult Run(
-		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "health")] HttpRequest req,
-		ILogger log)
+		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "health")] HttpRequest req)
 	{
-		req.HttpContext.Response.Headers.Add("Cache-Control", "no-store");
-		req.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+		req.HttpContext.Response.Headers.Append("Cache-Control", "no-store");
+		req.HttpContext.Response.Headers.Append("X-Content-Type-Options", "nosniff");
 
 		return new OkObjectResult(new { healthy = true, timestamp = DateTime.UtcNow });
 	}

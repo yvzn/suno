@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
@@ -10,10 +8,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
+using Microsoft.Azure.Functions.Worker;
 
 namespace suno;
 
-public static class Geocoding
+public class Geocoding(ILogger<Directions> logger)
 {
 	private static readonly string azureMapsApiKey = Environment.GetEnvironmentVariable("AZURE_MAPS_API_KEY") ?? throw new Exception("AZURE_MAPS_API_KEY not set");
 
@@ -21,12 +20,11 @@ public static class Geocoding
 
 	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
 
-	[FunctionName("Geocoding")]
-	public static async Task<IActionResult> Run(
-		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "geocoding")] HttpRequest req,
-		ILogger log)
+	[Function("Geocoding")]
+	public async Task<IActionResult> Run(
+		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "geocoding")] HttpRequest req)
 	{
-		string searchQuery = req.Query["q"];
+		string? searchQuery = req.Query["q"];
 
 		if (string.IsNullOrEmpty(searchQuery))
 		{
@@ -39,7 +37,7 @@ public static class Geocoding
 
 		if (!response.IsSuccessStatusCode)
 		{
-			log.LogError("Azure Maps API request failed with status code: {AzureMapsStatusCode}", response.StatusCode);
+			logger.LogError("Azure Maps API request failed with status code: {AzureMapsStatusCode}", response.StatusCode);
 			return new StatusCodeResult(StatusCodes.Status502BadGateway);
 		}
 
@@ -65,8 +63,8 @@ public static class Geocoding
 				};
 			}).ToArray();
 
-		req.HttpContext.Response.Headers.Add("Cache-Control", "private, max-age=86400");
-		req.HttpContext.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+		req.HttpContext.Response.Headers.Append("Cache-Control", "private, max-age=86400");
+		req.HttpContext.Response.Headers.Append("X-Content-Type-Options", "nosniff");
 
 		return new OkObjectResult(new { results = searchResults ?? Array.Empty<object>() });
 	}
