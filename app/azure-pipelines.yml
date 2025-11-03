@@ -1,5 +1,6 @@
 variables:
 - group: "production"
+- group: "production-app"
 
 trigger:
   branches:
@@ -51,21 +52,11 @@ jobs:
     runOnce:
       deploy:
         steps:
-        - task: AzureCLI@2
-          displayName: 'upload files to Azure (en)'
+        - task: CopyFilesOverSSH@0
           inputs:
-            azureSubscription: '$(azureSubscription)'
-            scriptType: 'pscore'
-            scriptLocation: 'inlineScript'
-            inlineScript: |
-              az storage blob delete-batch --account-key $(enStorageAccountKey) --account-name $(enStorageAccountName) --source `$web --delete-snapshots include
-              az storage blob upload-batch --account-key $(enStorageAccountKey) --account-name $(enStorageAccountName) --destination `$web --source $(Pipeline.Workspace)/app
-        - task: AzureCLI@2
-          displayName: 'upload files to Azure (fr)'
-          inputs:
-            azureSubscription: '$(azureSubscription)'
-            scriptType: 'pscore'
-            scriptLocation: 'inlineScript'
-            inlineScript: |
-              az storage blob delete-batch --account-key $(frStorageAccountKey) --account-name $(frStorageAccountName) --source `$web --delete-snapshots include
-              az storage blob upload-batch --account-key $(frStorageAccountKey) --account-name $(frStorageAccountName) --destination `$web --source $(Pipeline.Workspace)/app              
+            sshEndpoint: '$(frSshEndpoint)'
+            sourceFolder: '$(Pipeline.Workspace)/app'
+            contents: '**'
+            targetFolder: '$(frSshTargetFolder)'
+            readyTimeout: '20000'
+            overwrite: true

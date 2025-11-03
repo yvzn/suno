@@ -3,8 +3,9 @@ import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [preact()],
+  base: (command === 'build' ? '/app/' : '/'),
   build: {
     rollupOptions: {
       input: {
@@ -15,4 +16,4 @@ export default defineConfig({
       },
     },
   },
-})
+}));

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Direction Soleil</title>
+  <title>Sun Trip Tracker</title>
   <meta name="description"
-    content="Prévoyez votre trajet en toute tranquillité avec cette application gratuite qui fournit la position du soleil le long de votre itinéraire. Maximisez votre confort au volant ainsi que celui de vos passagers." />
+    content="Plan your journey with peace of mind using this free app that provides the sun's position along your route. Enhance your driving comfort and that of your passengers." />
 
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="manifest" href="/site.fr.webmanifest">
+  <link rel="manifest" href="/site.en.webmanifest">
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#006b8f">
   <meta name="msapplication-TileColor" content="#2b5797">
   <meta name="theme-color" content="#fcfdff">
@@ -21,12 +21,20 @@
 <body>
   <div id="app">
     <header>
-      <h1>Bienvenue sur l'application</h1>
+      <h1>Welcome to Suno app</h1>
     </header>
     <main id="home">
       <div class="markup">
-        <p>Découvrez la position du soleil en direct, le long de votre itinéraire.</p>
-        <p>Anticipez l'orientation du soleil en fonction de l'heure et planifiez vos trajets en toute sérénité.</p>
+        <p>Discover the sun's position in real-time along your route:</p>
+        <ul>
+          <li>Where will the sun be: in your eyes? behind you? on the left? on the right?</li>
+          <li>Find the best seat to stay in the shade</li>
+          <li>Ensure your children's safety by choosing their side</li>
+          <li>Determine the position of the sunshade in the car for a hassle-free journey</li>
+          <li>Prepare the appropriate motorcycle gear and avoid glare</li>
+        </ul>
+        <p>This free interactive tool guides you for a comfortable and safe journey.</p>
+        <p>Anticipate the sun's orientation based on the time of day and plan your trips with peace of mind.</p>
       </div>
       <p id="loading" class="loading-indicator" role="alert" style="display: none;">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -35,20 +43,20 @@
           <path stroke-linecap="round" stroke-linejoin="round"
             d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
         </svg>
-        Chargement...
+        Loading...
       </p>
       <div id="loading-error" style="display: none;">
-        <p role="alert">Impossible de charger l'application. Êtes-vous connecté au réseau ? Vous pouvez utiliser le
-          bouton réessayer ci-après.</p>
-        <button class="btn btn-primary" onClick="reload()">Réessayer</button>
+        <p role="alert">Failed to load application. Are you online ? Please check your network access and use the retry
+          button below.</p>
+        <button class="btn btn-primary" onClick="reload()">Retry</button>
       </div>
       <noscript>
-        <p>JavaScript a été désactivé dans votre navigateur, les fonctionnalités du site sont indisponibles. <a
-            href="https://fr.wikihow.com/activer-JavaScript">Instructions pour activer JavaScript</a>. </p>
+        <p>JavaScript has been disabled within your browser, the functionality of the web page are
+          unavailable. <a href="https://www.wikihow.com/Enable-JavaScript">Instructions to enable JavaScript</a>. </p>
       </noscript>
     </main>
   </div>
-  <script type="module" src="/src/main.fr.jsx" defer onerror="handleLoadingError()"></script>
+  <script type="module" src="/src/main.en.jsx" defer onerror="handleLoadingError()"></script>
 
   <style>
     /* inline critical CSS */
