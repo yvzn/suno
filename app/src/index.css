@@ -211,6 +211,10 @@ header {
   }
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* || SITEWIDE */
 
 #app {
