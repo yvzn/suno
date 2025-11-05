@@ -49,7 +49,8 @@
   },
   "notFound": {
     "message": "Le contenu demandé a été déplacé ou supprimé. Désolé pour la gêne occasionnée.",
-    "title": "Page non trouvée"
+    "title": "Page non trouvée",
+    "home": "Accueil"
   },
   "sun": {
     "chart": {

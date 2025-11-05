@@ -49,7 +49,8 @@
   },
   "notFound": {
     "message": "The requested content is either deleted or has been moved. Apologies for the inconvenience.",
-    "title": "Not found"
+    "title": "Not found",
+    "home": "Home Page"
   },
   "sun": {
     "chart": {
