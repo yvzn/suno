@@ -1,7 +1,7 @@
 import { MarkupText, Text, withText } from 'preact-i18n';
-import { Link } from 'preact-router';
 
 import { DocumentTitle } from '../components/DocumentTitle';
+import { CustomLink } from '../components/CustomLink';
 
 const SetDocumentTitle = withText('home.title')(DocumentTitle);
 
@@ -19,7 +19,7 @@ export function Home(props) {
         {props.children}
       </main>
       <footer>
-        <Link href="/journey" className="btn btn-primary pulse"><Text id="home.continue"></Text></Link>
+        <CustomLink href="/journey" className="btn btn-primary pulse"><Text id="home.continue"></Text></CustomLink>
       </footer>
     </>
   );

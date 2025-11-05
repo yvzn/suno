@@ -73,7 +73,7 @@
     }
 
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/app/sw.js');
+      navigator.serviceWorker.register('%VITE_APP_BASE%/sw.js');
 
       // Cleanup old cache on page load
       if (navigator.serviceWorker.controller) {

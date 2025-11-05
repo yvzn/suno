@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'preact/hooks'
 import { Text, withText } from 'preact-i18n'
 import { deserializeJourney } from '../services/serialize'
-import { Link, route } from 'preact-router'
 
 import { LoadingIndicator } from '../components/LoadingIndicator'
 import { ErrorMessage } from '../components/ErrorMessage'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 import { ItinerarySummary } from '../components/ItinerarySummary'
+import { CustomLink } from '../components/CustomLink';
 
 import { getDirections } from '../services/api'
 import { formatDurationInSeconds } from '../services/duration'
 import { aggregateLegs } from '../services/directions'
+import { customRoute } from '../services/router'
 
 import './Directions.css'
 
@@ -28,7 +29,7 @@ export function Directions() {
   useEffect(() => {
     const journey = deserializeJourney(location.search)
     if (!journey.from || !journey.to || !journey.startDate) {
-      route('/journey')
+      customRoute('/journey')
     }
     setJourney(journey)
   }, [])
@@ -71,12 +72,12 @@ export function Directions() {
       </main>
       {journey && itinerary && (
         <footer>
-          <Link
+          <CustomLink
             href={'/sun' + window.location.search}
             className="btn btn-primary"
           >
             <Text id="directions.sun"></Text>
-          </Link>
+          </CustomLink>
         </footer>
       )}
     </>

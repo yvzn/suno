@@ -1,5 +1,6 @@
 import { Text } from "preact-i18n";
-import { Link } from "preact-router";
+
+import { CustomLink } from "./CustomLink";
 
 import './ItinerarySummary.css';
 
@@ -36,7 +37,7 @@ export function ItinerarySummary(props) {
                 )}
             </div>
             <div>
-                <Link
+                <CustomLink
                     href={'/journey' + window.location.search}
                     className="btn btn-secondary"
                 >
@@ -46,7 +47,7 @@ export function ItinerarySummary(props) {
                         </svg>
                     </span>
                     <span class="visually-hidden on-small-device"><Text id="sun.editJourney"></Text></span>
-                </Link>
+                </CustomLink>
             </div>
         </section>
     );

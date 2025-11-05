@@ -1,12 +1,12 @@
 import { Text, withText } from 'preact-i18n'
 import { useEffect, useRef, useState } from 'preact/hooks'
-import { Link } from 'preact-router'
 
 import { LocationInput } from '../components/LocationInput'
 import { LocationSearchResults } from '../components/LocationSearchResults'
 import { StartDateInput } from '../components/StartDateInput'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
+import { CustomLink } from '../components/CustomLink';
 
 import { deserializeJourney, serializeJourney } from '../services/serialize'
 
@@ -116,12 +116,12 @@ function JourneyForm() {
       </main>
       {locationFrom.coord && locationTo.coord && startDate && (
         <footer>
-          <Link
+          <CustomLink
             href={'/sun?' + serializeJourney({ from: locationFrom, to: locationTo, startDate })}
             className="btn btn-primary"
           >
             <Text id="nav.continue"></Text>
-          </Link>
+          </CustomLink>
         </footer>
       )}
     </>

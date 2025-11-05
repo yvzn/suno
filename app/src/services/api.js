@@ -119,7 +119,13 @@ async function healthCheckMock() {
 }
 
 function httpGet(url) {
-  return fetch(url)
+  return fetchWithTimeout(url, 30_000);
+}
+
+function fetchWithTimeout(resource, timeout) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  return fetch(resource, { signal: controller.signal }).finally(() => clearTimeout(id));
 }
 
 // export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }

@@ -1,5 +1,5 @@
 import { IntlProvider } from 'preact-i18n'
-import { Router, route } from 'preact-router'
+import { Router } from 'preact-router'
 import { useEffect, useState } from 'preact/hooks'
 
 import { Home } from './pages/Home'
@@ -8,6 +8,7 @@ import { Sun } from './pages/Sun'
 import { Directions } from './pages/Directions'
 import { NotFound } from './pages/NotFound'
 import { healthCheck } from './services/api'
+import { customRoute } from './services/router'
 import { LanguagePicker } from './components/LanguagePicker'
 
 export function App(props) {
@@ -20,19 +21,19 @@ export function App(props) {
   const handleLanguageChange = (language) => {
     setTranslations(definitions(language))
     document.documentElement.setAttribute("lang", language)
-    route('/')
+    customRoute('/')
   }
 
   return (
     <>
       <IntlProvider definition={translations}>
         <Router>
-          <Home path="/">
+          <Home path={`${import.meta.env.VITE_APP_BASE}/`}>
             <LanguagePicker value={props.language} onChange={handleLanguageChange} />
           </Home>
-          <Journey path="/journey" />
-          <Sun path="/sun" />
-          <Directions path="/directions" />
+          <Journey path={`${import.meta.env.VITE_APP_BASE}/journey`} />
+          <Sun path={`${import.meta.env.VITE_APP_BASE}/sun`} />
+          <Directions path={`${import.meta.env.VITE_APP_BASE}/directions`} />
           <NotFound default />
         </Router>
       </IntlProvider>

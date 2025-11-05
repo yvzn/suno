@@ -1,8 +1,8 @@
 import { Text, withText } from 'preact-i18n';
-import { Link } from 'preact-router';
 
 import { PageTitle } from '../components/PageTitle';
 import { DocumentTitle } from '../components/DocumentTitle';
+import { CustomLink } from '../components/CustomLink';
 
 const Title = withText('notFound.title')(PageTitle);
 const SetDocumentTitle = withText('notFound.title')(DocumentTitle);
@@ -20,7 +20,7 @@ export function NotFound() {
         </p>
       </main>
       <footer>
-        <Link href="/" className="btn btn-primary"><Text id="nav.home"></Text></Link>
+        <CustomLink href="/" className="btn btn-primary"><Text id="nav.home"></Text></CustomLink>
       </footer>
     </>
   );

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'preact/hooks';
 import { Text, withText } from 'preact-i18n';
 import { deserializeJourney } from '../services/serialize';
-import { Link, route } from 'preact-router';
 
 import { SunPositionChart } from '../components/SunPositionChart';
 import { SunPositionTable } from '../components/SunPositionTable';
@@ -10,10 +9,12 @@ import { ErrorMessage } from '../components/ErrorMessage';
 import { PageTitle } from '../components/PageTitle';
 import { DocumentTitle } from '../components/DocumentTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
+import { CustomLink } from '../components/CustomLink';
 
 import { getDirections } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 import { aggregateSunPositions } from '../services/table';
+import { customRoute } from '../services/router'
 
 const Title = withText('sun.title')(PageTitle);
 const SetDocumentTitle = withText('sun.title')(DocumentTitle);
@@ -29,7 +30,7 @@ export function Sun() {
   useEffect(() => {
     const journey = deserializeJourney(location.search);
     if (!journey.from || !journey.to || !journey.startDate) {
-      route('/journey');
+      customRoute('/journey');
     }
     setJourney(journey)
   }, []);
@@ -75,12 +76,12 @@ export function Sun() {
       </main>
       {journey && itinerary && (
         <footer>
-          <Link
+          <CustomLink
             href={'/directions' + window.location.search}
             className="btn btn-secondary"
           >
             <Text id="sun.directions"></Text>
-          </Link>
+          </CustomLink>
         </footer>
       )}
     </>

@@ -32,33 +32,35 @@ export function SunPositionTable(props) {
                 <caption>
                     <Text id="sun.position.description"></Text>
                 </caption>
-                <tr>
-                    <td></td>
-                    <th><Text id="sun.position.direction"></Text></th>
-                    <th><Text id="sun.position.duration"></Text></th>
-                </tr>
-                {props.positions.map((durationInSeconds, index) => {
-                    if (durationInSeconds > 0)
-                        return (
-                            <tr key={"position-" + index}>
-                                <td>
-                                    <svg
-                                        viewBox="0 0 32 32"
-                                        style={{ '--heading-rotation': rotationByHeading[index] }}
-                                        role="presentation">
-                                        <title></title>
-                                        <circle r="16" cx="16" cy="16" />
-                                    </svg>
-                                </td>
-                                <td id={'direction-' + index}>
-                                    {labelsByHeading[index]}
-                                </td>
-                                <td>
-                                    {formatDurationInMinutes(Math.round(durationInSeconds / 60))}
-                                </td>
-                            </tr>
-                        )
-                })}
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <th><Text id="sun.position.direction"></Text></th>
+                        <th><Text id="sun.position.duration"></Text></th>
+                    </tr>
+                    {props.positions.map((durationInSeconds, index) => {
+                        if (durationInSeconds > 0)
+                            return (
+                                <tr key={"position-" + index}>
+                                    <td>
+                                        <svg
+                                            viewBox="0 0 32 32"
+                                            style={{ '--heading-rotation': rotationByHeading[index] }}
+                                            role="presentation">
+                                            <title></title>
+                                            <circle r="16" cx="16" cy="16" />
+                                        </svg>
+                                    </td>
+                                    <td id={'direction-' + index}>
+                                        {labelsByHeading[index]}
+                                    </td>
+                                    <td>
+                                        {formatDurationInMinutes(Math.round(durationInSeconds / 60))}
+                                    </td>
+                                </tr>
+                            )
+                    })}
+                </tbody>
             </table>
         </section>
     )
