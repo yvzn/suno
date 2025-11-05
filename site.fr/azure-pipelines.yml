@@ -1,0 +1,51 @@
+variables:
+- group: "production"
+- group: "production-site"
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - site.fr
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+- job: CI
+  steps:
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      command: 'ci'
+      workingDir: 'site.fr'
+  - task: Npm@1
+    displayName: 'npm build'
+    inputs:
+      command: 'custom'
+      workingDir: 'site.fr'
+      customCommand: 'run build'
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: 'site.fr/dist'
+      publishLocation: 'pipeline'
+      artifact: 'site'
+
+- deployment: CD
+  dependsOn: CI
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  environment: 'Azure'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: CopyFilesOverSSH@0
+          inputs:
+            sshEndpoint: '$(frSshEndpoint)'
+            sourceFolder: '$(Pipeline.Workspace)/site'
+            contents: '**'
+            targetFolder: '$(frSshTargetFolder)'
+            readyTimeout: '20000'
+            overwrite: true
