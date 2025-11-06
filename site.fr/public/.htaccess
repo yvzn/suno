@@ -2,19 +2,22 @@ RewriteEngine On
 RewriteCond %{ENV:HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# BEGIN Cache-Control Headers
-<ifmodule mod_headers.c>
- <filesmatch "\\.(png|svg)$">
- Header set Cache-Control "max-age=31536000, public"
- </filesmatch>
- <filesmatch "\\.(css)$">
- Header set Cache-Control "max-age=31536000, public"
- </filesmatch>
- <filesmatch "\\.(js)$">
- Header set Cache-Control "max-age=31536000, private"
- </filesmatch>
- <filesmatch "\\.(html)$">
- Header set Cache-Control "max-age=7200, public"
- </filesmatch>
-</ifmodule>
-# END Cache-Control Headers
+Header set X-Content-Type-Options "nosniff"
+Header set X-Frame-Options "deny"
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+Header set Referrer-Policy "origin-when-cross-origin"
+
+<FilesMatch "\.html$">
+	Header set Content-Security-Policy "default-src 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content"
+	Header set Cache-Control "max-age=7200, public"
+</FilesMatch>
+
+<FilesMatch "\.(css|js|svg|webp|png|ico|woff2)$">
+	Header set Cache-Control "max-age=31536000, immutable"
+</FilesMatch>
+
+AddType text/html;charset=utf-8 .html
+AddType text/css;charset=utf-8 .css
+AddType application/javascript;charset=utf-8 .js
+AddType application/manifest+json;charset=utf-8 .webmanifest
+AddType font/woff2 .woff2
