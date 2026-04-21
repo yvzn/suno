@@ -40,9 +40,11 @@
   --color-richblack: #0d1b2a;
   --color-dimgray: #706c61;
   --color-dimgray-200: #D0CEC8;
+  --color-stone: #F5F5F4;
 
   /* light theme */
   --color-bg: var(--color-white);
+  --color-desktop-bg: var(--color-stone);
   --color-text: var(--color-richblack);
   --color-interactive: var(--color-cerulean);
   --color-interactive-bg: var(--color-cerulean-900);
@@ -236,6 +238,18 @@ header {
   
   #app>*:first-child {
     padding: var(--space-4x);
+  }
+}
+
+@media (width >= 768px) {
+  body {
+    background-color: var(--color-desktop-bg);
+  }
+
+  #app {
+    background-color: var(--color-bg);
+    margin: 0 auto;
+    max-width: 480px;
   }
 }
 
