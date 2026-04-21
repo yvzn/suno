@@ -18,26 +18,34 @@
 
 - Accessibility is a key priority:
   - Use semantic HTML, ARIA attributes when necessary
-  - Ensure WCAG guidelines (level AAA) and RGAA standards are met
+  - Minimum compliance: WCAG 2.2 AA and RGAA 4.1 AA — aim for WCAG 2.2 AAA wherever the design system palette and layout allow
   - Ensure proper keyboard navigation support
   - Ensure a natural language structure in HTML for screen readers
+
 - Use i18n for all user-facing text, do not hardcode strings in JSX
 
-Design principles:
-- Design for ease of use and clarity, following the principles from Don Norman's "The Design of Everyday Things":
-  - Make important information and controls visible and easily discoverable
-  - Provide clear feedback for user actions (e.g. loading states, error messages)
-  - Use consistent design patterns and UI elements throughout the app
-  - Avoid overwhelming users with too much information at once - break down complex tasks into simpler steps
-- Follow the recommandations from Steve Krug's "Don't Make Me Think" for intuitive navigation and user experience:
-  - Ensure that the purpose of each page and element is immediately clear to users
-  - Use clear and descriptive labels for buttons and links
-  - Minimize the number of clicks required to complete common tasks
-  - Avoid unnecessary complexity in the user interface
+Design principles (see `design-system.md` for the full specification):
+
+- **Semantic color roles**: Yellow (`#FFCF57`) is exclusively for solar data and branding; Blue (`#007EA7`) is exclusively for interactive elements. Never swap these roles — yellow is never used on a button, blue is never used on solar visualizations.
+- **Always use CSS tokens**: Never hardcode hex values. Use the defined CSS custom properties (`--color-sun`, `--color-nav`, `--color-text`, etc.) for all colors, and `--space-*` / `--radius-*` tokens for spacing and border radii.
+- **Flat UI only**: No drop shadows, gradients, blur, or decorative effects. Visual hierarchy is achieved through color, weight, spacing, and border width alone. The only permitted `box-shadow` is the focus ring (`0 0 0 2px`).
+- **Typography cap at weight 500**: Never use `font-weight: 600` or `700`. Field labels are the only uppercase text (with `letter-spacing: 0.06em`); use sentence case everywhere else.
+- **8px spacing grid**: All spacing values must be multiples of 8px (or 4px for micro-spacing inside compact components).
+- **Max content width 480px**: The main content area, route card, and overlays are capped at 480px. The mobile/desktop breakpoint is 768px.
+- **Icons are inline SVG only**: No icon fonts or external icon libraries. All icons use strokes (`stroke-width: 1.2–1.5px`, `fill: none`) except filled dot icons.
+- **One primary button per screen**: Never place two primary buttons on the same screen. The sun-themed secondary button is only used for actions that directly relate to solar data output.
+- **Input fields are `<button>` elements**: Location fields are styled `<button>` elements that open a search overlay (mobile) or dropdown (desktop) — not native `<input>` elements.
+- **Chart.js on `<canvas>` for the polar chart**: The sun-exposure polar chart is implemented with Chart.js. Wrap the canvas in a container with `role="img"` and a descriptive `aria-label`.
+
+Styling conventions:
+
+- Do not use inline styles in JSX - all styles should be defined in CSS files and imported
+- Use CSS classes for styling and ensure they follow the BEM naming convention for maintainability (refactor existing styles to follow BEM if necessary)
+- use CSS identifiers corresponding to the current page for scoping (e.g. `#journey`) and avoid global styles that can cause conflicts
+- Use CSS variables for colors, spacing, and other design tokens to ensure consistency and easy theming
 
 Technical conventions:
 
-- Do not use inline styles in JSX - all styles should be defined in CSS files and imported
 - Use simple functional components and hooks, avoid too large components - break down into smaller reusable pieces when necessary
 - Use URL and query parameters for state management (i.e. route parameters) instead of complex global state management. The current application state must always be reflected via the URL for shareability and bookmarking.
 
