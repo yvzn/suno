@@ -4,6 +4,7 @@ import { Text } from 'preact-i18n'
 import { findLocations } from '../services/api'
 import { LoadingIndicator } from './LoadingIndicator'
 import { ErrorMessage } from './ErrorMessage'
+import { scrollSubmitButtonIntoView } from './location-utils'
 
 import './LocationSearchResults.css'
 
@@ -12,6 +13,7 @@ export function LocationSearchResults(props) {
   const [error, setError] = useState(undefined)
   const [searchResults, setSearchResults] = useState()
   const displayedResultsRef = useRef()
+  const submitButtonRef = useRef()
 
   const search = () => {
     setSearchResults(undefined)
@@ -32,7 +34,11 @@ export function LocationSearchResults(props) {
   useEffect(() => {
     if (!displayedResultsRef.current) return
     displayedResultsRef.current.focus()
-  }, [displayedResultsRef.current])
+
+    if (!searchResults || searchResults.length < 1) return
+
+    scrollSubmitButtonIntoView(submitButtonRef.current)
+  }, [searchResults])
 
   const selectResult = (event) => {
     event.preventDefault()
@@ -64,7 +70,7 @@ export function LocationSearchResults(props) {
                 {result.name}
               </label>
             ))}
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" ref={submitButtonRef}>
               <Text id="journey.selectSearchResult"></Text>
             </button>
           </form>

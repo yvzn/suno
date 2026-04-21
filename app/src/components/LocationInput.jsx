@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 import { Text } from 'preact-i18n'
+import { hideVirtualKeyboard } from './location-utils'
 
 import './LocationInput.css'
 
@@ -11,6 +12,7 @@ export function LocationInput(props) {
   const handleSubmit = (event) => {
     event.preventDefault()
     props.onChange(nameValue)
+    hideVirtualKeyboard()
   }
 
   const handleInput = (event) => {
