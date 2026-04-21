@@ -84,8 +84,10 @@ function JourneyForm() {
   }
 
   const onSwapLocations = () => {
-    setLocationFrom({ ...locationTo })
-    setLocationTo({ ...locationFrom })
+    const previousLocationFrom = locationFrom
+    const previousLocationTo = locationTo
+    setLocationFrom({ ...previousLocationTo })
+    setLocationTo({ ...previousLocationFrom })
     setSearch({ sid: Math.random() })
   }
 
@@ -148,7 +150,7 @@ function JourneySwapButton(props) {
         title={props.swap}
       >
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M7 7H18L15 4M18 7L15 10M17 17H6L9 14M6 17L9 20"></path>
+          <path d="M7 7L18 7L15 4M18 7L15 10M17 17L6 17L9 14M6 17L9 20"></path>
         </svg>
       </button>
     </div>
