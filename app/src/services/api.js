@@ -2,6 +2,8 @@ import { serializeJourney } from "./serialize"
 
 const apiUrl = import.meta.env.VITE_API_URL
 const apiKey = import.meta.env.VITE_API_KEY || localStorage.getItem('apiKey')
+const DEFAULT_TIMEOUT = 30_000
+const RETRY_TIMEOUT_FACTOR = 2
 
 async function findLocationsApi(searchQuery) {
   const params = new URLSearchParams()
@@ -52,11 +54,12 @@ function findLocationsMock(searchQuery) {
   return Promise.resolve(results)
 }
 
-async function getDirectionsApi({ from, to, startDate }) {
+async function getDirectionsApi({ from, to, startDate }, { retry = false } = {}) {
   const params = serializeJourney({ from, to, startDate })
   params.set("code", apiKey)
+  const timeout = retry ? DEFAULT_TIMEOUT * RETRY_TIMEOUT_FACTOR : DEFAULT_TIMEOUT
 
-  const response = await httpGet(`${apiUrl}/directions?${params.toString()}`)
+  const response = await httpGet(`${apiUrl}/directions?${params.toString()}`, timeout)
 
   const json = await response.json()
   return json
@@ -118,8 +121,8 @@ async function healthCheckMock() {
   return Promise.resolve({healthy: true, timestamp: new Date().toISOString()})
 }
 
-function httpGet(url) {
-  return fetchWithTimeout(url, 30_000);
+function httpGet(url, timeout = DEFAULT_TIMEOUT) {
+  return fetchWithTimeout(url, timeout);
 }
 
 function fetchWithTimeout(resource, timeout) {

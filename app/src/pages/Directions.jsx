@@ -34,12 +34,12 @@ export function Directions() {
     setJourney(journey)
   }, [])
 
-  const fetchItinerary = () => {
+  const fetchItinerary = (retry = false) => {
     if (!journey) return
     setError(undefined)
     setItinerary(undefined)
     setLoading(true)
-    getDirections(journey)
+    getDirections(journey, { retry })
       .then(setItinerary, setError)
       .finally(() => setLoading(false))
   }
@@ -58,7 +58,7 @@ export function Directions() {
           to={journey?.to?.name} />
 
         <LoadingIndicator isLoading={isLoading} />
-        <ErrorMessage error={error} onRetry={fetchItinerary} />
+        <ErrorMessage error={error} onRetry={() => fetchItinerary(true)} />
 
         <section aria-live="polite">
           {itinerary && itinerary.legs && (

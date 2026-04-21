@@ -35,11 +35,11 @@ export function Sun() {
     setJourney(journey)
   }, []);
 
-  const fetchItinerary = () => {
+  const fetchItinerary = (retry = false) => {
     if (!journey) return;
     setError(undefined);
     setLoading(true);
-    getDirections(journey)
+    getDirections(journey, { retry })
       .then(setItinerary, setError)
       .finally(() => setLoading(false));
   }
@@ -69,7 +69,7 @@ export function Sun() {
           startDate={journey?.startDate} />
 
         <LoadingIndicator isLoading={isLoading} />
-        <ErrorMessage error={error} onRetry={fetchItinerary} />
+        <ErrorMessage error={error} onRetry={() => fetchItinerary(true)} />
 
         {sunPositions && <SunPositionChart positions={sunPositions} />}
         {sunPositions && <SunPositionTable positions={aggregateSunPositions(sunPositions)} />}
