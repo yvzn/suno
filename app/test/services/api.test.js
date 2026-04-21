@@ -12,6 +12,7 @@ describe('getDirections timeout', () => {
     vi.stubEnv('VITE_API_URL', 'https://api.example.test')
     vi.stubEnv('VITE_API_KEY', 'test-key')
     vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: true,
       json: () => Promise.resolve({ legs: [] })
     })
   })
