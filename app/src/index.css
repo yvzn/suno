@@ -76,7 +76,7 @@
 
 html,
 body {
-  background-color: var(--color-bg);
+  background-color: var(--color-desktop-bg);
   color: var(--color-text);
   font-size: 16px;
   font-size: clamp(16px, calc(15px + 0.3906vw), 32px);
@@ -220,7 +220,10 @@ header {
 /* || SITEWIDE */
 
 #app {
+  background-color: var(--color-bg);
   height: 100%;
+  margin: 0 auto;
+  max-width: 480px;
 }
 
 #app>* {
@@ -238,18 +241,6 @@ header {
   
   #app>*:first-child {
     padding: var(--space-4x);
-  }
-}
-
-@media (width >= 768px) {
-  body {
-    background-color: var(--color-desktop-bg);
-  }
-
-  #app {
-    background-color: var(--color-bg);
-    margin: 0 auto;
-    max-width: 480px;
   }
 }
 
