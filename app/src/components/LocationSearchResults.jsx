@@ -33,9 +33,12 @@ export function LocationSearchResults(props) {
 
   useEffect(() => {
     if (!displayedResultsRef.current) return
-    displayedResultsRef.current.focus()
 
-    if (!searchResults || searchResults.length < 1) return
+    displayedResultsRef.current.focus()
+  }, [searchResults])
+
+  useEffect(() => {
+    if (!searchResults?.length) return
 
     scrollSubmitButtonIntoView(submitButtonRef.current)
   }, [searchResults])
