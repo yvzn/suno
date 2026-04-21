@@ -24,3 +24,23 @@
     /* same padding as button, to align */
     padding: var(--button-padding-y); 
 }
+
+#journey .journey-swap-row {
+    display: flex;
+    justify-content: center;
+}
+
+#journey .journey-swap-button {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    min-height: var(--space-4x);
+    min-width: var(--space-4x);
+    padding: var(--space-1x);
+}
+
+#journey .journey-swap-button svg {
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 1.5px;
+}

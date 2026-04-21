@@ -20,6 +20,7 @@ const InputFrom = withText('journey.from.label')(
 const InputTo = withText('journey.to.label')(
   withText('journey.to.placeholder')(LocationInput)
 )
+const SwapButton = withText('journey.swap')(JourneySwapButton)
 
 export function Journey() {
   return (
@@ -82,6 +83,12 @@ function JourneyForm() {
     setStartDate(value)
   }
 
+  const onSwapLocations = () => {
+    setLocationFrom({ ...locationTo })
+    setLocationTo({ ...locationFrom })
+    setSearch({ sid: Math.random() })
+  }
+
   return (
     <>
       <main id="journey">
@@ -95,6 +102,7 @@ function JourneyForm() {
           disabled={search.target === 'to'}
           primary={!locationFrom.coord && !search.target}
         />
+        <SwapButton onClick={onSwapLocations} disabled={!!search.target} />
         <InputTo
           nameValue={locationTo.name}
           coordValue={locationTo.coord}
@@ -125,5 +133,24 @@ function JourneyForm() {
         </footer>
       )}
     </>
+  )
+}
+
+function JourneySwapButton(props) {
+  return (
+    <div className="journey-swap-row">
+      <button
+        type="button"
+        className="btn btn-secondary journey-swap-button"
+        onClick={props.onClick}
+        disabled={props.disabled}
+        aria-label={props.swap}
+        title={props.swap}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M7 7H18L15 4M18 7L15 10M17 17H6L9 14M6 17L9 20"></path>
+        </svg>
+      </button>
+    </div>
   )
 }

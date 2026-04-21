@@ -36,6 +36,7 @@
     "searchResults": "Choisissez le lieu correspondant à '{{query}}' parmi ces options :",
     "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
     "selectSearchResult": "Valider",
+    "swap": "Inverser départ et arrivée",
     "tagline": "Renseignez les détails de votre itinéraire.",
     "time": "Heure:",
     "title": "Saisie du trajet",

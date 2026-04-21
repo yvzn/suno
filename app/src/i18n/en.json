@@ -36,6 +36,7 @@
     "searchResults": "Choose the corresponding location for '{{query}}' among these options:",
     "searchResultsEmpty": "No corresponding location found for '{{query}}'. Please try another search.",
     "selectSearchResult": "Submit",
+    "swap": "Swap start and destination",
     "tagline": "Choose the details of your itinerary.",
     "time": "Time:",
     "title": "Route entry",
