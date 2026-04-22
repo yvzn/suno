@@ -4,9 +4,16 @@ import { Text } from 'preact-i18n'
 import { findLocations } from '../services/api'
 import { LoadingIndicator } from './LoadingIndicator'
 import { ErrorMessage } from './ErrorMessage'
-import { scrollSubmitButtonIntoView } from './location-utils'
 
 import './LocationSearchResults.css'
+
+function scrollSubmitButtonIntoView(submitButton) {
+  if (!submitButton || typeof submitButton.scrollIntoView !== 'function') {
+    return
+  }
+
+  submitButton.scrollIntoView(false)
+}
 
 export function LocationSearchResults(props) {
   const [isLoading, setLoading] = useState(false)
