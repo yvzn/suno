@@ -223,7 +223,7 @@ header {
   background-color: var(--color-bg);
   height: 100%;
   margin: 0 auto;
-  max-width: 480px;
+  max-width: 640px;
 }
 
 #app>* {
