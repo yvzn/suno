@@ -7,11 +7,20 @@ import { ErrorMessage } from './ErrorMessage'
 
 import './LocationSearchResults.css'
 
+function scrollSubmitButtonIntoView(submitButton) {
+  if (!submitButton || typeof submitButton.scrollIntoView !== 'function') {
+    return
+  }
+
+  submitButton.scrollIntoView(false)
+}
+
 export function LocationSearchResults(props) {
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(undefined)
   const [searchResults, setSearchResults] = useState()
   const displayedResultsRef = useRef()
+  const submitButtonRef = useRef()
 
   const search = () => {
     setSearchResults(undefined)
@@ -31,8 +40,15 @@ export function LocationSearchResults(props) {
 
   useEffect(() => {
     if (!displayedResultsRef.current) return
+
     displayedResultsRef.current.focus()
-  }, [displayedResultsRef.current])
+  }, [searchResults])
+
+  useEffect(() => {
+    if (!searchResults?.length) return
+
+    scrollSubmitButtonIntoView(submitButtonRef.current)
+  }, [searchResults])
 
   const selectResult = (event) => {
     event.preventDefault()
@@ -64,7 +80,7 @@ export function LocationSearchResults(props) {
                 {result.name}
               </label>
             ))}
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" ref={submitButtonRef}>
               <Text id="journey.selectSearchResult"></Text>
             </button>
           </form>
