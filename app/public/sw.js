@@ -1,7 +1,6 @@
 // Derivative work from Service Worker boilerplate, MIT License, (c) Chris Ferdinandi.
 //
 // https://gist.github.com/cferdinandi/0d7937dc333236ba0ee60f1ba9fc0457
-// https://gomakethings.com/toolkit/boilerplates/service-worker/
 //
 
 //
@@ -9,7 +8,7 @@
 //
 
 // Version number
-let version = '0.2';
+let version = '0.3';
 
 // Cache IDs
 let coreID = `${version}_core`;

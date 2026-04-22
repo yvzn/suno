@@ -48,6 +48,7 @@ Technical conventions:
 
 - Use simple functional components and hooks, avoid too large components - break down into smaller reusable pieces when necessary
 - Use URL and query parameters for state management (i.e. route parameters) instead of complex global state management. The current application state must always be reflected via the URL for shareability and bookmarking.
+- Always increment the patch version in `package.json` and `sw.js` on any change to the frontend codebase, even for minor fixes or non-code changes, to ensure proper cache invalidation of the service worker and assets.
 
 ---
 
