@@ -17,7 +17,7 @@ export function showVirtualKeyboard() {
     return
   }
 
-  navigator.virtualKeyboard.show()
+  navigator.virtualKeyboard?.show?.()
 }
 
 export function hideVirtualKeyboard() {
@@ -25,5 +25,5 @@ export function hideVirtualKeyboard() {
     return
   }
 
-  navigator.virtualKeyboard.hide()
+  navigator.virtualKeyboard?.hide?.()
 }
