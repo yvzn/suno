@@ -11,7 +11,7 @@ import { DocumentTitle } from '../components/DocumentTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
 import { CustomLink } from '../components/CustomLink';
 
-import { getDirections } from '../services/api';
+import { getDirections, getDirectionsWithRetry } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
 import { aggregateSunPositions } from '../services/table';
 import { customRoute } from '../services/router'
@@ -35,11 +35,11 @@ export function Sun() {
     setJourney(journey)
   }, []);
 
-  const fetchItinerary = () => {
+  const fetchItinerary = (fetchFn = getDirections) => {
     if (!journey) return;
     setError(undefined);
     setLoading(true);
-    getDirections(journey)
+    fetchFn(journey)
       .then(setItinerary, setError)
       .finally(() => setLoading(false));
   }
@@ -51,6 +51,8 @@ export function Sun() {
     const positions = computeSunPositions(itinerary, journey.startDate)
     setSunPositions(positions);
   }, [itinerary]);
+
+  const fetchItineraryWithRetry = () => fetchItinerary(getDirectionsWithRetry);
 
   return (
     <>
@@ -69,7 +71,7 @@ export function Sun() {
           startDate={journey?.startDate} />
 
         <LoadingIndicator isLoading={isLoading} />
-        <ErrorMessage error={error} onRetry={fetchItinerary} />
+        <ErrorMessage error={error} onRetry={fetchItineraryWithRetry} />
 
         {sunPositions && <SunPositionChart positions={sunPositions} />}
         {sunPositions && <SunPositionTable positions={aggregateSunPositions(sunPositions)} />}

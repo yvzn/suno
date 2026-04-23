@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
 import { Text } from 'preact-i18n'
 
-import { findLocations } from '../services/api'
+import { findLocations, findLocationsWithRetry } from '../services/api'
 import { LoadingIndicator } from './LoadingIndicator'
 import { ErrorMessage } from './ErrorMessage'
 
@@ -22,7 +22,7 @@ export function LocationSearchResults(props) {
   const displayedResultsRef = useRef()
   const submitButtonRef = useRef()
 
-  const search = () => {
+  const search = (fetchFn = findLocations) => {
     setSearchResults(undefined)
     setError(undefined)
 
@@ -31,10 +31,12 @@ export function LocationSearchResults(props) {
     }
 
     setLoading(true)
-    findLocations(props.query)
+    fetchFn(props.query)
       .then(setSearchResults, setError)
       .finally(() => setLoading(false))
   }
+
+  const searchWithRetry = () => search(findLocationsWithRetry)
 
   useEffect(search, [props.query, props.sid])
 
@@ -66,7 +68,7 @@ export function LocationSearchResults(props) {
   return (
     <div id="search-results">
       <LoadingIndicator isLoading={isLoading} />
-      <ErrorMessage error={error} onRetry={search} />
+      <ErrorMessage error={error} onRetry={searchWithRetry} />
 
       {searchResults && searchResults.length > 0 && (
         <section class="search-results-list" ref={displayedResultsRef} tabIndex={-1}>
