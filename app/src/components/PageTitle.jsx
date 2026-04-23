@@ -15,7 +15,7 @@ export function PageTitle(props) {
 
     const goToHomePage = () => {
         // use onClick instead of a link, to avoid breaking accessibility focus flow
-        window.location.href = import.meta.env.VITE_APP_BASE;
+        window.location.href = import.meta.env.VITE_APP_BASE || '/';
     }
 
     return (
