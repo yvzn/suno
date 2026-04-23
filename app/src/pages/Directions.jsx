@@ -9,7 +9,7 @@ import { DocumentTitle } from '../components/DocumentTitle'
 import { ItinerarySummary } from '../components/ItinerarySummary'
 import { CustomLink } from '../components/CustomLink';
 
-import { getDirections } from '../services/api'
+import { getDirections, getDirectionsWithRetry } from '../services/api'
 import { formatDurationInSeconds } from '../services/duration'
 import { aggregateLegs } from '../services/directions'
 import { customRoute } from '../services/router'
@@ -34,17 +34,19 @@ export function Directions() {
     setJourney(journey)
   }, [])
 
-  const fetchItinerary = (retry = false) => {
+  const fetchItinerary = (fetchFn = getDirections) => {
     if (!journey) return
     setError(undefined)
     setItinerary(undefined)
     setLoading(true)
-    getDirections(journey, { retry })
+    fetchFn(journey)
       .then(setItinerary, setError)
       .finally(() => setLoading(false))
   }
 
   useEffect(fetchItinerary, [journey])
+
+  const fetchItineraryWithRetry = () => fetchItinerary(getDirectionsWithRetry);
 
   return (
     <>
@@ -58,7 +60,7 @@ export function Directions() {
           to={journey?.to?.name} />
 
         <LoadingIndicator isLoading={isLoading} />
-        <ErrorMessage error={error} onRetry={() => fetchItinerary(true)} />
+        <ErrorMessage error={error} onRetry={fetchItineraryWithRetry} />
 
         <section aria-live="polite">
           {itinerary && itinerary.legs && (

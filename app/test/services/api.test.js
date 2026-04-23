@@ -33,9 +33,9 @@ describe('getDirections timeout', () => {
 
   test('uses doubled timeout on retry request', async () => {
     const setTimeoutSpy = vi.spyOn(globalThis, 'setTimeout')
-    const { getDirections } = await import('../../src/services/api')
+    const { getDirectionsWithRetry } = await import('../../src/services/api')
 
-    await getDirections(journey, { retry: true })
+    await getDirectionsWithRetry(journey)
 
     expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60_000)
   })

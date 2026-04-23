@@ -54,16 +54,20 @@ function findLocationsMock(searchQuery) {
   return Promise.resolve(results)
 }
 
-async function getDirectionsApi({ from, to, startDate }, { retry = false } = {}) {
-  const params = serializeJourney({ from, to, startDate })
-  params.set("code", apiKey)
-  const timeout = retry ? DEFAULT_TIMEOUT * RETRY_TIMEOUT_FACTOR : DEFAULT_TIMEOUT
+function createGetDirectionsApi(timeout) {
+  return async function({ from, to, startDate }) {
+    const params = serializeJourney({ from, to, startDate })
+    params.set("code", apiKey)
 
-  const response = await httpGet(`${apiUrl}/directions?${params.toString()}`, timeout)
+    const response = await httpGet(`${apiUrl}/directions?${params.toString()}`, timeout)
 
-  const json = await response.json()
-  return json
+    const json = await response.json()
+    return json
+  }
 }
+
+const getDirectionsApi = createGetDirectionsApi(DEFAULT_TIMEOUT)
+const getDirectionsApiWithRetry = createGetDirectionsApi(DEFAULT_TIMEOUT * RETRY_TIMEOUT_FACTOR)
 
 function getDirectionsMock(_journey) {
   const Nantes = {
@@ -131,7 +135,7 @@ function fetchWithTimeout(resource, timeout) {
   return fetch(resource, { signal: controller.signal }).finally(() => clearTimeout(id));
 }
 
-// export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }
+// export { findLocationsApi as findLocations, getDirectionsApi as getDirections, getDirectionsApiWithRetry as getDirectionsWithRetry, healthCheckApi as healthCheck }
 // export { findLocationsMock as findLocations, getDirectionsMock as getDirections, healthCheckMock as healthCheck }
 
-export { findLocationsApi as findLocations, getDirectionsApi as getDirections, healthCheckApi as healthCheck }
+export { findLocationsApi as findLocations, getDirectionsApi as getDirections, getDirectionsApiWithRetry as getDirectionsWithRetry, healthCheckApi as healthCheck }
