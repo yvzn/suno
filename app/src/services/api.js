@@ -21,44 +21,6 @@ function createFindLocationsApi(timeout) {
 const findLocationsApi = createFindLocationsApi(DEFAULT_TIMEOUT)
 const findLocationsApiWithRetry = createFindLocationsApi(DEFAULT_TIMEOUT * RETRY_TIMEOUT_FACTOR)
 
-function findLocationsMock(searchQuery) {
-  const Nantes = {
-    name: 'Nantes',
-    coord: {
-      lat: 47.2292,
-      lon: -1.547,
-    },
-  }
-
-  const Angers = {
-    name: 'Angers',
-    coord: {
-      lat: 47.4736,
-      lon: -0.5548,
-    },
-  }
-
-  const Paris = {
-    name: 'Paris',
-    coord: {
-      lat: 48.8566,
-      lon: 2.3511,
-    },
-  }
-
-  const results = [Nantes, Angers, Paris]
-
-  if (searchQuery && searchQuery.indexOf("slow") > -1) {
-    return new Promise((resolve, _reject) => {
-      setTimeout(() => {
-        resolve(results)
-      }, 2_000)
-    })
-  }
-
-  return Promise.resolve(results)
-}
-
 function createGetDirectionsApi(timeout) {
   return async function({ from, to, startDate }) {
     const params = serializeJourney({ from, to, startDate })
@@ -74,48 +36,6 @@ function createGetDirectionsApi(timeout) {
 const getDirectionsApi = createGetDirectionsApi(DEFAULT_TIMEOUT)
 const getDirectionsApiWithRetry = createGetDirectionsApi(DEFAULT_TIMEOUT * RETRY_TIMEOUT_FACTOR)
 
-function getDirectionsMock(_journey) {
-  const Nantes = {
-    name: 'Nantes',
-    coord: {
-      lat: 47.2292,
-      lon: -1.547,
-    },
-  }
-
-  const Angers = {
-    name: 'Angers',
-    coord: {
-      lat: 47.4736,
-      lon: -0.5548,
-    },
-  }
-
-  const Paris = {
-    name: 'Paris',
-    coord: {
-      lat: 48.8566,
-      lon: 2.3511,
-    },
-  }
-
-  const results = {
-    legs: [
-      {
-        start: Nantes,
-        end: Angers,
-        durationInSeconds: 3600
-      },
-      {
-        start: Angers,
-        end: Paris,
-        durationInSeconds: 12600
-      }
-    ]
-  }
-  return Promise.resolve(results)
-}
-
 async function healthCheckApi() {
   const params = new URLSearchParams()
   params.set("code", apiKey)
@@ -124,10 +44,6 @@ async function healthCheckApi() {
 
   const json = await response.json()
   return json
-}
-
-async function healthCheckMock() {
-  return Promise.resolve({healthy: true, timestamp: new Date().toISOString()})
 }
 
 function httpGet(url, timeout = DEFAULT_TIMEOUT) {
@@ -139,8 +55,5 @@ function fetchWithTimeout(resource, timeout) {
   const id = setTimeout(() => controller.abort(), timeout);
   return fetch(resource, { signal: controller.signal }).finally(() => clearTimeout(id));
 }
-
-// export { findLocationsApi as findLocations, findLocationsApiWithRetry as findLocationsWithRetry, getDirectionsApi as getDirections, getDirectionsApiWithRetry as getDirectionsWithRetry, healthCheckApi as healthCheck }
-// export { findLocationsMock as findLocations, getDirectionsMock as getDirections, healthCheckMock as healthCheck }
 
 export { findLocationsApi as findLocations, findLocationsApiWithRetry as findLocationsWithRetry, getDirectionsApi as getDirections, getDirectionsApiWithRetry as getDirectionsWithRetry, healthCheckApi as healthCheck }
