@@ -7,6 +7,7 @@ import { StartDateInput } from '../components/StartDateInput'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 import { CustomLink } from '../components/CustomLink';
+import { JourneySwapButton } from '../components/JourneySwapButton';
 
 import { deserializeJourney, serializeJourney } from '../services/serialize'
 
@@ -20,7 +21,9 @@ const InputFrom = withText('journey.from.label')(
 const InputTo = withText('journey.to.label')(
   withText('journey.to.placeholder')(LocationInput)
 )
-const SwapButton = withText('journey.swap')(JourneySwapButton)
+const SwapButton = withText('journey.swap.label')(
+  withText('journey.swap.description')(JourneySwapButton)
+);
 
 export function Journey() {
   return (
@@ -104,7 +107,6 @@ function JourneyForm() {
           disabled={search.target === 'to'}
           primary={!locationFrom.coord && !search.target}
         />
-        <SwapButton onClick={onSwapLocations} disabled={!!search.target} />
         <InputTo
           nameValue={locationTo.name}
           coordValue={locationTo.coord}
@@ -114,9 +116,12 @@ function JourneyForm() {
           primary={locationFrom.coord && !locationTo.coord && !search.target}
         />
         {locationFrom.coord && locationTo.coord && (
-          <StartDateInput
-            value={startDate}
-            onChange={onChangeStartDate} />
+          <div className="journey-tools">
+            <StartDateInput
+              value={startDate}
+              onChange={onChangeStartDate} />
+            <SwapButton onClick={onSwapLocations} disabled={!!search.target} />
+          </div>
         )}
         <LocationSearchResults
           query={search.query}
@@ -138,21 +143,4 @@ function JourneyForm() {
   )
 }
 
-function JourneySwapButton(props) {
-  return (
-    <div className="journey-swap-row">
-      <button
-        type="button"
-        className="btn btn-secondary journey-swap-button"
-        onClick={props.onClick}
-        disabled={props.disabled}
-        aria-label={props.swap}
-        title={props.swap}
-      >
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M7 7L18 7L15 4M18 7L15 10M17 17L6 17L9 14M6 17L9 20"></path>
-        </svg>
-      </button>
-    </div>
-  )
-}
+

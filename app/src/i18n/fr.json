@@ -36,7 +36,10 @@
     "searchResults": "Choisissez le lieu correspondant à '{{query}}' parmi ces options :",
     "searchResultsEmpty": "Pas de lieu correspondant à '{{query}}'. Veuillez réessayer une autre recherche.",
     "selectSearchResult": "Valider",
-    "swap": "Inverser départ et arrivée",
+    "swap": {
+      "description": "Inverser départ et arrivée",
+      "label": "Inverser"
+    },
     "tagline": "Renseignez les détails de votre itinéraire.",
     "time": "Heure:",
     "title": "Saisie du trajet",
@@ -49,9 +52,9 @@
     "continue": "Continuer"
   },
   "notFound": {
+    "home": "Accueil",
     "message": "Le contenu demandé a été déplacé ou supprimé. Désolé pour la gêne occasionnée.",
-    "title": "Page non trouvée",
-    "home": "Accueil"
+    "title": "Page non trouvée"
   },
   "sun": {
     "chart": {
