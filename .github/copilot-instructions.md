@@ -17,7 +17,8 @@
 ### Frontend (`/app`)
 
 - Accessibility is a key priority:
-  - Use semantic HTML, ARIA attributes when necessary
+  - Use semantic HTML
+    - Use ARIA attributes, but only when necessary (do not overuse ARIA if native HTML can achieve the same result)
   - Minimum compliance: WCAG 2.2 AA and RGAA 4.1 AA — aim for WCAG 2.2 AAA wherever the design system palette and layout allow
   - Ensure proper keyboard navigation support
   - Ensure a natural language structure in HTML for screen readers
@@ -46,7 +47,9 @@ Styling conventions:
 
 Technical conventions:
 
-- Use simple functional components and hooks, avoid too large components - break down into smaller reusable pieces when necessary
+- Use simple functional components and hooks, avoid too large components
+  - break down into smaller reusable pieces when necessary
+  - each component should ideally be in its own file for clarity and maintainability: main pages in `pages/`, shared components in `components/`
 - Use URL and query parameters for state management (i.e. route parameters) instead of complex global state management. The current application state must always be reflected via the URL for shareability and bookmarking.
 - Always increment the patch version in `package.json` and `sw.js` on any change to the frontend codebase, even for minor fixes or non-code changes, to ensure proper cache invalidation of the service worker and assets.
 
