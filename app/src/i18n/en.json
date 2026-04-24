@@ -36,6 +36,10 @@
     "searchResults": "Choose the corresponding location for '{{query}}' among these options:",
     "searchResultsEmpty": "No corresponding location found for '{{query}}'. Please try another search.",
     "selectSearchResult": "Submit",
+    "swap": {
+      "description": "Swap start and destination",
+      "label": "Swap"
+    },
     "tagline": "Choose the details of your itinerary.",
     "time": "Time:",
     "title": "Route entry",
@@ -48,9 +52,9 @@
     "continue": "Continue"
   },
   "notFound": {
+    "home": "Home Page",
     "message": "The requested content is either deleted or has been moved. Apologies for the inconvenience.",
-    "title": "Not found",
-    "home": "Home Page"
+    "title": "Not found"
   },
   "sun": {
     "chart": {

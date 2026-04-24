@@ -50,8 +50,9 @@ function renderChart(canvasElement, chartData) {
                 r: {
                     display: true,
                     ticks: {
+                        maxTicksLimit: 5,
                         callback: function (value, _index, _ticks) {
-                            return value + "min";
+                            return formatDurationInMinutes(value);
                         }
                     }
                 },

@@ -24,3 +24,9 @@
     /* same padding as button, to align */
     padding: var(--button-padding-y); 
 }
+
+#journey .journey-tools {
+  column-gap: var(--space-1x);
+  display: grid;
+  grid-template-columns: 1fr var(--button-width);
+}

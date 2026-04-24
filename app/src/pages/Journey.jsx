@@ -7,6 +7,7 @@ import { StartDateInput } from '../components/StartDateInput'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 import { CustomLink } from '../components/CustomLink';
+import { JourneySwapButton } from '../components/JourneySwapButton';
 
 import { deserializeJourney, serializeJourney } from '../services/serialize'
 
@@ -20,6 +21,9 @@ const InputFrom = withText('journey.from.label')(
 const InputTo = withText('journey.to.label')(
   withText('journey.to.placeholder')(LocationInput)
 )
+const SwapButton = withText('journey.swap.label')(
+  withText('journey.swap.description')(JourneySwapButton)
+);
 
 export function Journey() {
   return (
@@ -82,6 +86,14 @@ function JourneyForm() {
     setStartDate(value)
   }
 
+  const onSwapLocations = () => {
+    const previousLocationFrom = locationFrom
+    const previousLocationTo = locationTo
+    setLocationFrom({ ...previousLocationTo })
+    setLocationTo({ ...previousLocationFrom })
+    setSearch({ sid: Math.random() })
+  }
+
   return (
     <>
       <main id="journey">
@@ -104,9 +116,12 @@ function JourneyForm() {
           primary={locationFrom.coord && !locationTo.coord && !search.target}
         />
         {locationFrom.coord && locationTo.coord && (
-          <StartDateInput
-            value={startDate}
-            onChange={onChangeStartDate} />
+          <div className="journey-tools">
+            <StartDateInput
+              value={startDate}
+              onChange={onChangeStartDate} />
+            <SwapButton onClick={onSwapLocations} disabled={!!search.target} />
+          </div>
         )}
         <LocationSearchResults
           query={search.query}
@@ -127,3 +142,5 @@ function JourneyForm() {
     </>
   )
 }
+
+
