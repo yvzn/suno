@@ -62,6 +62,13 @@
       "description": "Cumulative durations chart"
     },
     "directions": "Directions",
+    "duration": {
+      "description": "Duration summary",
+      "label": "Category",
+      "total": "Total duration",
+      "withSun": "With sun",
+      "withoutSun": "Without sun"
+    },
     "editJourney": "Edit journey",
     "position": {
       "description": "Cumulative durations summary",

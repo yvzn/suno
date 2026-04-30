@@ -62,6 +62,13 @@
       "description": "Graphique des durées"
     },
     "directions": "Étapes de l'itinéraire",
+    "duration": {
+      "description": "Résumé des durées",
+      "label": "Catégorie",
+      "total": "Durée totale",
+      "withSun": "Avec le soleil",
+      "withoutSun": "Sans le soleil"
+    },
     "editJourney": "Editer trajet",
     "position": {
       "description": "Résumé des durées cumulées",

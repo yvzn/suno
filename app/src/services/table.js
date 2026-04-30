@@ -1,5 +1,25 @@
 
 /**
+ * Computes the total journey duration from the itinerary.
+ *
+ * @param {import('./sun-position').Itinerary} itinerary - The journey itinerary.
+ * @returns {number} - The total journey duration in seconds.
+ */
+export function computeTotalDuration(itinerary) {
+    return itinerary.legs.reduce((sum, leg) => sum + leg.durationInSeconds, 0);
+}
+
+/**
+ * Computes the total duration with sun (daylight) from the sun positions array.
+ *
+ * @param {number[]} sunPositions - An array of total sunlight durations for each compass sector, in seconds.
+ * @returns {number} - The total duration with sun in seconds.
+ */
+export function computeDurationWithSun(sunPositions) {
+    return sunPositions.reduce((sum, duration) => sum + duration, 0);
+}
+
+/**
  * Aggregates the total duration of sunlight by a predefined set of angles.
  * 
  * @param {number[]} sunPositions - An array of total sunlight durations for each compass sector, in seconds.
