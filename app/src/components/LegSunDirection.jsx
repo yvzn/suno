@@ -7,7 +7,6 @@ import { formatDurationInMinutes } from '../services/duration';
 
 import './LegSunDirection.css';
 
-const rotationByHeading = ['-135deg', '-225deg', '-315deg', '-45deg'];
 const headingKeys = [
     'sun.position.heading0',
     'sun.position.heading1',
@@ -90,7 +89,7 @@ export function LegSunDirection({ positions, legIndex }) {
                                     <td>
                                         <svg
                                             viewBox="0 0 32 32"
-                                            style={{ '--heading-rotation': rotationByHeading[index] }}
+                                            data-heading={index}
                                             role="presentation"
                                             aria-hidden="true"
                                         >

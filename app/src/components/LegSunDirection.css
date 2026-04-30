@@ -58,8 +58,23 @@
     border: solid 1px var(--color-dimgray-200);
     border-radius: 50%;
     height: 48px;
-    transform: rotate(var(--heading-rotation));
     width: 48px;
+}
+
+.leg-sun-table svg[data-heading="0"] {
+    transform: rotate(-135deg);
+}
+
+.leg-sun-table svg[data-heading="1"] {
+    transform: rotate(-225deg);
+}
+
+.leg-sun-table svg[data-heading="2"] {
+    transform: rotate(-315deg);
+}
+
+.leg-sun-table svg[data-heading="3"] {
+    transform: rotate(-45deg);
 }
 
 .leg-sun-table circle {
