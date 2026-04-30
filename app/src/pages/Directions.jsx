@@ -55,7 +55,7 @@ export function Directions() {
     const aggregated = aggregateLegs(itinerary.legs)
     const positions = computeSunPositionsPerLeg({ legs: aggregated }, journey.startDate)
     setSunPositionsPerLeg(positions)
-  }, [itinerary])
+  }, [itinerary, journey])
 
   const fetchItineraryWithRetry = () => fetchItinerary(getDirectionsWithRetry);
 
