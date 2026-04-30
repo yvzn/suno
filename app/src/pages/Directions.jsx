@@ -7,11 +7,13 @@ import { ErrorMessage } from '../components/ErrorMessage'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 import { ItinerarySummary } from '../components/ItinerarySummary'
-import { CustomLink } from '../components/CustomLink';
+import { CustomLink } from '../components/CustomLink'
+import { LegSunDirection } from '../components/LegSunDirection'
 
 import { getDirections, getDirectionsWithRetry } from '../services/api'
 import { formatDurationInSeconds } from '../services/duration'
 import { aggregateLegs } from '../services/directions'
+import { computeSunPositionsPerLeg } from '../services/sun-position'
 import { customRoute } from '../services/router'
 
 import './Directions.css'
@@ -25,6 +27,7 @@ export function Directions() {
   const [error, setError] = useState(undefined)
 
   const [itinerary, setItinerary] = useState()
+  const [sunPositionsPerLeg, setSunPositionsPerLeg] = useState()
 
   useEffect(() => {
     const journey = deserializeJourney(location.search)
@@ -38,6 +41,7 @@ export function Directions() {
     if (!journey) return
     setError(undefined)
     setItinerary(undefined)
+    setSunPositionsPerLeg(undefined)
     setLoading(true)
     fetchFn(journey)
       .then(setItinerary, setError)
@@ -45,6 +49,13 @@ export function Directions() {
   }
 
   useEffect(fetchItinerary, [journey])
+
+  useEffect(() => {
+    if (!itinerary || !journey?.startDate) return
+    const aggregated = aggregateLegs(itinerary.legs)
+    const positions = computeSunPositionsPerLeg({ legs: aggregated }, journey.startDate)
+    setSunPositionsPerLeg(positions)
+  }, [itinerary])
 
   const fetchItineraryWithRetry = () => fetchItinerary(getDirectionsWithRetry);
 
@@ -66,7 +77,12 @@ export function Directions() {
           {itinerary && itinerary.legs && (
             <dl>
               {aggregateLegs(itinerary.legs).map(
-                (leg, index) => <ItineraryLeg leg={leg} key={"leg-" + index} />
+                (leg, index) => <ItineraryLeg
+                  leg={leg}
+                  sunPositions={sunPositionsPerLeg?.[index]}
+                  legIndex={index}
+                  key={"leg-" + index}
+                />
               )}
             </dl>
           )}
@@ -86,21 +102,26 @@ export function Directions() {
   )
 }
 
-function ItineraryLeg(props) {
-  const legDuration = formatDurationInSeconds(props.leg.durationInSeconds)
+function ItineraryLeg({ leg, sunPositions, legIndex }) {
+  const legDuration = formatDurationInSeconds(leg.durationInSeconds)
   return (<>
     <dt>
       <Text
         id="directions.legDescription"
         fields={{
-          from: props.leg.start.name,
-          to: props.leg.end.name,
+          from: leg.start.name,
+          to: leg.end.name,
         }}
       ></Text>
     </dt>
     <dd>
       {legDuration}
     </dd>
+    {sunPositions && (
+      <dd>
+        <LegSunDirection positions={sunPositions} legIndex={legIndex} />
+      </dd>
+    )}
   </>)
 }
 

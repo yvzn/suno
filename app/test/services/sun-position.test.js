@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { computeLegDates, computeAngleBetween, computeSunPositions, bucketize } from '../../src/services/sun-position';
+import { computeLegDates, computeAngleBetween, computeSunPositions, computeSunPositionsPerLeg, bucketize } from '../../src/services/sun-position';
 
 describe(computeSunPositions.name, () => {
     test('compute sun positions bucketed by sector, going east around midday', () => {
@@ -47,6 +47,55 @@ describe(computeSunPositions.name, () => {
         // the sun position (with respect to the itinerary) sould be in the topmost buckets
         expect(positions).toEqual([5 * 60, 0, 0, 0, 0, 0, 0, 0]);
     })
+});
+
+describe(computeSunPositionsPerLeg.name, () => {
+    test('returns one position array per leg', () => {
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [
+            { start: Greenwich(), end: Woolwich(), durationInSeconds: 5 * 60 },
+            { start: Woolwich(), end: Greenwich(), durationInSeconds: 5 * 60 },
+        ];
+
+        const positions = computeSunPositionsPerLeg({ legs }, tripDate);
+
+        expect(positions).toHaveLength(2);
+        expect(positions[0]).toHaveLength(8);
+        expect(positions[1]).toHaveLength(8);
+    });
+
+    test('each leg has independent sun positions', () => {
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [
+            { start: Greenwich(), end: Woolwich(), durationInSeconds: 5 * 60 },
+            { start: Woolwich(), end: Greenwich(), durationInSeconds: 5 * 60 },
+        ];
+
+        const positions = computeSunPositionsPerLeg({ legs }, tripDate);
+
+        // going east: sun mostly to the right
+        expect(positions[0]).toEqual([0, 0, 0, 0, 0, 0, 5 * 60, 0]);
+        // going west: sun mostly to the left
+        expect(positions[1]).toEqual([0, 0, 5 * 60, 0, 0, 0, 0, 0]);
+    });
+
+    test('sums of per-leg positions equal the overall computeSunPositions result', () => {
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [
+            { start: Greenwich(), end: Woolwich(), durationInSeconds: 5 * 60 },
+            { start: Woolwich(), end: Greenwich(), durationInSeconds: 5 * 60 },
+        ];
+
+        const overall = computeSunPositions({ legs }, tripDate);
+        const perLeg = computeSunPositionsPerLeg({ legs }, tripDate);
+
+        const summed = perLeg.reduce(
+            (acc, legPositions) => acc.map((v, i) => v + legPositions[i]),
+            Array(8).fill(0)
+        );
+
+        expect(summed).toEqual(overall);
+    });
 });
 
 describe(computeLegDates.name, () => {

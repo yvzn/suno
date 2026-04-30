@@ -13,6 +13,41 @@ const MAX_BUCKET_DURATION_IN_SECONDS = 15 * 60;
 const VECTOR_POINTING_SOUTH = { x: 0, y: -1 };
 
 /**
+ * Computes the total duration of sunlight for each of eight heading sectors, for each individual leg of an itinerary.
+ *
+ * @param {Itinerary} itinerary - The itinerary for the journey.
+ * @param {Date|string} startDate - The start date of the journey. If set to 'now', the current date and time will be used.
+ * @returns {Array<number[]>} - An array of sector duration arrays, one per leg.
+ */
+export function computeSunPositionsPerLeg(itinerary, startDate) {
+  if (startDate === 'now') startDate = new Date();
+
+  const legDates = computeLegDates(itinerary.legs, startDate);
+
+  return itinerary.legs.map((leg, index) => {
+    const { start: legStartDate } = legDates[index];
+    const durationSumPerSectorInSeconds = Array(SECTOR_COUNT).fill(0);
+
+    for (const bucket of bucketize(leg, legStartDate)) {
+      const { bucketStart, bucketStartDate, durationInSeconds: bucketDurationInSeconds } = bucket;
+
+      const bucketSunPosition = getSunPosition(bucketStartDate, bucketStart);
+
+      if (bucketSunPosition.altitude >= 0) {
+        const legVector = convertLegToVector(leg);
+        const legAngle = computeAngleBetween(VECTOR_POINTING_SOUTH, legVector);
+        const bucketAngle = normalizeAngle(bucketSunPosition.azimuth - legAngle);
+        const bucketSector = convertAngleToSector(bucketAngle);
+
+        durationSumPerSectorInSeconds[bucketSector] += bucketDurationInSeconds;
+      }
+    }
+
+    return durationSumPerSectorInSeconds;
+  });
+}
+
+/**
  * Computes the total duration of sunlight for each of eight heading sectors along a given itinerary's path.
  *
  * @param {Itinerary} itinerary - The itinerary for the journey.
