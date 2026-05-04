@@ -31,6 +31,10 @@ export function LocationInput(props) {
     showVirtualKeyboard()
   }
 
+  const handleBlur = (event) => {
+    hideVirtualKeyboard();
+  };
+
   return (
     <search>
       <form onSubmit={handleSubmit} className={'location-input ' + (props.coordValue && 'has-coords')} tabIndex={-1} ref={props.forwardRef}>
@@ -42,6 +46,7 @@ export function LocationInput(props) {
           value={nameValue}
           onInput={handleInput}
           onFocus={handleSetFocus}
+          onBlur={handleBlur}
           enterKeyHint="search"
           autoComplete="street-address"
           required="required"
