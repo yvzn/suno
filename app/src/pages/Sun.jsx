@@ -4,6 +4,7 @@ import { deserializeJourney } from '../services/serialize';
 
 import { SunPositionChart } from '../components/SunPositionChart';
 import { SunPositionTable } from '../components/SunPositionTable';
+import { SunDurationTable } from '../components/SunDurationTable';
 import { LoadingIndicator } from '../components/LoadingIndicator';
 import { ErrorMessage } from '../components/ErrorMessage';
 import { PageTitle } from '../components/PageTitle';
@@ -13,7 +14,7 @@ import { CustomLink } from '../components/CustomLink';
 
 import { getDirections, getDirectionsWithRetry } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
-import { aggregateSunPositions } from '../services/table';
+import { aggregateSunPositions, computeTotalDuration, computeDurationWithSun } from '../services/table';
 import { customRoute } from '../services/router'
 
 const Title = withText('sun.title')(PageTitle);
@@ -75,6 +76,12 @@ export function Sun() {
 
         {sunPositions && <SunPositionChart positions={sunPositions} />}
         {sunPositions && <SunPositionTable positions={aggregateSunPositions(sunPositions)} />}
+        {sunPositions && itinerary && (
+          <SunDurationTable
+            totalDurationInSeconds={computeTotalDuration(itinerary)}
+            durationWithSunInSeconds={computeDurationWithSun(sunPositions)}
+          />
+        )}
       </main>
       {journey && itinerary && (
         <footer>

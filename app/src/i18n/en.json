@@ -62,6 +62,12 @@
       "description": "Cumulative durations chart"
     },
     "directions": "Directions",
+    "duration": {
+      "description": "Itinerary summary",
+      "total": "Total",
+      "withSun": "With sun",
+      "withoutSun": "Without sun"
+    },
     "editJourney": "Edit journey",
     "position": {
       "description": "Cumulative durations summary",
