@@ -18,7 +18,7 @@ export function SunDurationTable({ totalDurationInSeconds, durationWithSunInSeco
                 </caption>
                 <tbody>
                     <tr>
-                        <th scope="col"><Text id="sun.duration.label"></Text></th>
+                        <td></td>
                         <th scope="col"><Text id="sun.position.duration"></Text></th>
                     </tr>
                     <tr>

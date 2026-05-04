@@ -63,9 +63,8 @@
     },
     "directions": "Étapes de l'itinéraire",
     "duration": {
-      "description": "Résumé des durées",
-      "label": "Catégorie",
-      "total": "Durée totale",
+      "description": "Résumé de l'itinéraire",
+      "total": "Total",
       "withSun": "Avec le soleil",
       "withoutSun": "Sans le soleil"
     },

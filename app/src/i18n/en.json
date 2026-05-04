@@ -63,9 +63,8 @@
     },
     "directions": "Directions",
     "duration": {
-      "description": "Duration summary",
-      "label": "Category",
-      "total": "Total duration",
+      "description": "Itinerary summary",
+      "total": "Total",
       "withSun": "With sun",
       "withoutSun": "Without sun"
     },
