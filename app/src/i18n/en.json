@@ -16,6 +16,7 @@
     "retry": "Retry"
   },
   "home": {
+    "contact": "Contact",
     "content": "<p>Discover the sun's position in real-time along your route.</p><p>Anticipate the sun's orientation based on the time of day and plan your trips with peace of mind.</p>",
     "continue": "Start",
     "language": "Language:",
@@ -52,6 +53,7 @@
     "continue": "Continue"
   },
   "notFound": {
+    "contact": "Contact",
     "home": "Home Page",
     "message": "The requested content is either deleted or has been moved. Apologies for the inconvenience.",
     "title": "Not found"

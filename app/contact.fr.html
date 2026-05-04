@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact &mdash; Direction Soleil</title>
+  <meta name="description"
+    content="Contactez l'équipe Direction Soleil. Partagez vos retours ou signalez un problème." />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="manifest" href="/site.fr.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#006b8f">
+  <meta name="msapplication-TileColor" content="#2b5797">
+  <meta name="theme-color" content="#fcfdff">
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <h1>Contact</h1>
+    </header>
+    <main id="contact">
+      <p id="contact-intro">
+        Partagez vos retours ou signalez un problème à l'équipe Direction Soleil.
+      </p>
+
+      <form id="contact-form" novalidate>
+        <div class="form-field">
+          <label for="comment">Votre message</label>
+          <textarea
+            id="comment"
+            name="c"
+            rows="5"
+            required
+            aria-required="true"
+            aria-describedby="comment-hint"
+            placeholder="Votre retour, question ou signalement&#8230;"></textarea>
+          <p id="comment-hint" class="field-hint">Obligatoire. Maximum 2000 caractères.</p>
+        </div>
+
+        <input type="hidden" id="technical-data" name="t" value="" />
+
+        <div id="contact-status" role="status" aria-live="polite"></div>
+
+        <button type="submit" class="btn btn-primary" id="submit-btn">Envoyer</button>
+      </form>
+    </main>
+    <footer>
+      <a href="/" class="btn btn-secondary">Accueil</a>
+    </footer>
+  </div>
+
+  <style>
+    /* inline critical CSS */
+    @import './src/index.css';
+
+    #contact > * {
+      margin-top: var(--space-2x);
+    }
+
+    #contact > *:first-child {
+      margin-top: 0;
+    }
+
+    #contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2x);
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1x);
+    }
+
+    .form-field label {
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .form-field textarea {
+      border: solid 1px var(--color-border);
+      border-radius: var(--round-radius);
+      font-size: inherit;
+      padding: var(--space-1x);
+      resize: vertical;
+      width: 100%;
+    }
+
+    .form-field textarea:focus {
+      box-shadow: 0 0 0 2px var(--color-interactive);
+      outline: none;
+    }
+
+    .field-hint {
+      color: var(--color-dimgray);
+      font-size: 0.875em;
+    }
+
+    #contact-status {
+      min-height: 1.5em;
+    }
+
+    #contact-status.success {
+      color: var(--color-info);
+    }
+
+    #contact-status.error {
+      color: var(--color-error);
+    }
+  </style>
+
+  <script>
+    /* Populate technical data field from URL query parameter */
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var t = params.get('t');
+      if (t) {
+        var field = document.getElementById('technical-data');
+        if (field) field.value = t;
+      }
+    })();
+
+    /* Handle form submission */
+    document.getElementById('contact-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      var form = event.target;
+      var submitBtn = document.getElementById('submit-btn');
+      var statusEl = document.getElementById('contact-status');
+      var comment = form.elements['c'].value.trim();
+
+      statusEl.textContent = '';
+      statusEl.className = '';
+
+      if (!comment) {
+        statusEl.textContent = 'Veuillez saisir un message avant d\u2019envoyer.';
+        statusEl.className = 'error';
+        form.elements['c'].focus();
+        return;
+      }
+
+      if (comment.length > 2000) {
+        statusEl.textContent = 'Votre message est trop long (maximum 2000 caractères).';
+        statusEl.className = 'error';
+        form.elements['c'].focus();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi\u2026';
+
+      var params = new URLSearchParams();
+      params.set('c', comment);
+      var technicalData = form.elements['t'].value;
+      if (technicalData) params.set('t', technicalData);
+
+      var apiBase = '%VITE_API_URL%';
+      var apiKey = '%VITE_API_KEY%';
+      var url = apiBase + '/feedback?code=' + encodeURIComponent(apiKey);
+
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      })
+        .then(function (response) {
+          if (response.ok || response.status === 201) {
+            statusEl.textContent = 'Votre message a été envoyé. Merci\u00a0!';
+            statusEl.className = 'success';
+            form.reset();
+          } else {
+            statusEl.textContent = 'L\u2019envoi a échoué. Veuillez réessayer.';
+            statusEl.className = 'error';
+          }
+        })
+        .catch(function () {
+          statusEl.textContent = 'L\u2019envoi a échoué. Êtes-vous connecté\u00a0?';
+          statusEl.className = 'error';
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Envoyer';
+        });
+    });
+  </script>
+</body>
+
+</html>

@@ -28,7 +28,7 @@ export function App(props) {
     <>
       <IntlProvider definition={translations}>
         <Router>
-          <Home path={`${import.meta.env.VITE_APP_BASE}/`}>
+          <Home path={`${import.meta.env.VITE_APP_BASE}/`} language={props.language}>
             <LanguagePicker value={props.language} onChange={handleLanguageChange} />
           </Home>
           <Journey path={`${import.meta.env.VITE_APP_BASE}/journey`} />
