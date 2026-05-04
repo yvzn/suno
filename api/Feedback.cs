@@ -31,6 +31,9 @@ public class Feedback(ILogger<Feedback> logger)
 {
 	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
 
+	private const int MaxCommentLength = 2000;
+	private const int MaxTechnicalDataLength = 4000;
+
 	[Function("Feedback")]
 	public async Task<FeedbackOutput> Run(
 		[HttpTrigger(AuthorizationLevel.Function, "post", Route = "feedback")] HttpRequest req)
@@ -66,6 +69,16 @@ public class Feedback(ILogger<Feedback> logger)
 		if (string.IsNullOrWhiteSpace(comment))
 		{
 			return new FeedbackOutput { HttpResponse = new BadRequestResult() };
+		}
+
+		if (comment.Length > MaxCommentLength)
+		{
+			return new FeedbackOutput { HttpResponse = new BadRequestResult() };
+		}
+
+		if (technicalData?.Length > MaxTechnicalDataLength)
+		{
+			technicalData = technicalData[..MaxTechnicalDataLength];
 		}
 
 		req.HttpContext.Response.Headers.Append("X-Content-Type-Options", "nosniff");

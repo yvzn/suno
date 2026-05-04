@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'preact/hooks';
 import { Text, withText } from 'preact-i18n';
 
 import { PageTitle } from '../components/PageTitle';
@@ -8,7 +9,12 @@ const Title = withText('notFound.title')(PageTitle);
 const SetDocumentTitle = withText('notFound.title')(DocumentTitle);
 
 export function NotFound() {
-  const contactHref = `${import.meta.env.VITE_APP_BASE}/contact.en.html`;
+  const [contactHref, setContactHref] = useState(`${import.meta.env.VITE_APP_BASE}/contact.en.html`);
+
+  useEffect(() => {
+    const lang = document.documentElement.getAttribute('lang');
+    setContactHref(`${import.meta.env.VITE_APP_BASE}/contact.${lang === 'fr' ? 'fr' : 'en'}.html`);
+  }, []);
 
   return (
     <>
