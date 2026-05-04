@@ -1,9 +1,6 @@
-import { useEffect, useRef, useState } from 'preact/hooks';
 import { Text } from 'preact-i18n';
 
-import { drawChart } from '../services/chart';
 import { aggregateSunPositions } from '../services/table';
-import { formatDurationInMinutes } from '../services/duration';
 
 import './LegSunDirection.css';
 
@@ -14,105 +11,29 @@ const headingKeys = [
     'sun.position.heading3',
 ];
 
-export function LegSunDirection({ positions, legIndex }) {
-    const containerRef = useRef();
-    const canvasRef = useRef();
-    const [chartRendered, setChartRendered] = useState(false);
-
-    useEffect(() => {
-        if (chartRendered) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setChartRendered(true);
-                }
-            },
-            { rootMargin: '200px' }
-        );
-
-        if (containerRef.current) {
-            observer.observe(containerRef.current);
-        }
-
-        return () => observer.disconnect();
-    }, [chartRendered]);
-
-    useEffect(() => {
-        if (chartRendered && canvasRef.current) {
-            drawChart(canvasRef.current, positions);
-        }
-    }, [chartRendered]);
-
+export function LegSunDirection({ positions }) {
     const aggregated = aggregateSunPositions(positions);
     const hasValues = aggregated.some(d => d > 0);
-    const captionId = `leg-sun-caption-${legIndex}`;
+
+    if (!hasValues) return null;
 
     return (
-        <div ref={containerRef} className="leg-sun-direction">
-            <figure className="leg-sun-figure">
-                <figcaption id={captionId}>
-                    <Text id="sun.chart.description"></Text>
-                </figcaption>
-                <div className="leg-sun-chart-container">
-                    {chartRendered ? (
-                        <canvas
-                            ref={canvasRef}
-                            tabIndex={0}
-                            aria-labelledby={captionId}
-                        >
-                            <Text id="sun.chart.altText"></Text>
-                        </canvas>
-                    ) : (
-                        <div
-                            className="leg-sun-chart-placeholder"
-                            aria-hidden="true"
-                        ></div>
-                    )}
-                </div>
-            </figure>
-            {hasValues ? (
-                <table className="leg-sun-table">
-                    <caption>
-                        <Text id="sun.position.description"></Text>
-                    </caption>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <th scope="col"><Text id="sun.position.direction"></Text></th>
-                            <th scope="col"><Text id="sun.position.duration"></Text></th>
-                        </tr>
-                        {aggregated.map((durationInSeconds, index) => {
-                            if (durationInSeconds <= 0) return null;
-                            return (
-                                <tr key={"position-" + index}>
-                                    <td>
-                                        <svg
-                                            viewBox="0 0 32 32"
-                                            data-heading={index}
-                                            role="presentation"
-                                            aria-hidden="true"
-                                        >
-                                            <title></title>
-                                            <circle r="16" cx="16" cy="16" />
-                                        </svg>
-                                    </td>
-                                    <td>
-                                        <Text id={headingKeys[index]}></Text>
-                                    </td>
-                                    <td>
-                                        {formatDurationInMinutes(Math.round(durationInSeconds / 60))}
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            ) : (
-                <p className="leg-sun-empty">
-                    <Text id="sun.positionsEmpty"></Text>
-                </p>
-            )}
-        </div>
+        <span className="leg-sun-icons">
+            {aggregated.map((durationInSeconds, index) => {
+                if (durationInSeconds <= 0) return null;
+                return (
+                    <svg
+                        key={"sun-" + index}
+                        viewBox="0 0 32 32"
+                        data-heading={index}
+                        className="leg-sun-icon"
+                        role="img"
+                    >
+                        <title><Text id={headingKeys[index]}></Text></title>
+                        <circle r="16" cx="16" cy="16" />
+                    </svg>
+                );
+            })}
+        </span>
     );
 }

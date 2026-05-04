@@ -80,7 +80,6 @@ export function Directions() {
                 (leg, index) => <ItineraryLeg
                   leg={leg}
                   sunPositions={sunPositionsPerLeg?.[index]}
-                  legIndex={index}
                   key={"leg-" + index}
                 />
               )}
@@ -102,7 +101,7 @@ export function Directions() {
   )
 }
 
-function ItineraryLeg({ leg, sunPositions, legIndex }) {
+function ItineraryLeg({ leg, sunPositions }) {
   const legDuration = formatDurationInSeconds(leg.durationInSeconds)
   return (<>
     <dt>
@@ -116,12 +115,8 @@ function ItineraryLeg({ leg, sunPositions, legIndex }) {
     </dt>
     <dd>
       {legDuration}
+      {sunPositions && <LegSunDirection positions={sunPositions} />}
     </dd>
-    {sunPositions && (
-      <dd>
-        <LegSunDirection positions={sunPositions} legIndex={legIndex} />
-      </dd>
-    )}
   </>)
 }
 
