@@ -1,0 +1,34 @@
+.leg-sun-icon {
+    background: transparent;
+    border: solid 1px var(--color-dimgray-200);
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+}
+
+.leg-sun-icon[data-heading="0"] {
+    transform: rotate(-135deg);
+}
+
+.leg-sun-icon[data-heading="1"] {
+    transform: rotate(-225deg);
+}
+
+.leg-sun-icon[data-heading="2"] {
+    transform: rotate(-315deg);
+}
+
+.leg-sun-icon[data-heading="3"] {
+    transform: rotate(-45deg);
+}
+
+.leg-sun-icon circle {
+    fill: transparent;
+    stroke: #ffb703aa;
+    stroke-dasharray: 25 100;
+    stroke-width: 32;
+}
+
+.leg-sun-icons {
+    display: inline-flex;
+}
