@@ -16,8 +16,6 @@ export default defineConfig(({ mode, command }) => {
           en: resolve(__dirname, 'index.en.html'),
           fr: resolve(__dirname, 'index.fr.html'),
           offline: resolve(__dirname, 'offline.html'),
-          contactEn: resolve(__dirname, 'contact.en.html'),
-          contactFr: resolve(__dirname, 'contact.fr.html'),
         },
       },
     },
