@@ -114,8 +114,8 @@ function ItineraryLeg({ leg, sunPositions }) {
       ></Text>
     </dt>
     <dd>
-      {legDuration}
       {sunPositions && <LegSunDirection positions={sunPositions} />}
+      {legDuration}
     </dd>
   </>)
 }

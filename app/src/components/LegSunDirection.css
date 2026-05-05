@@ -31,7 +31,4 @@
 
 .leg-sun-icons {
     display: inline-flex;
-    gap: var(--space-1x);
-    margin-inline-start: var(--space-1x);
-    vertical-align: middle;
 }
