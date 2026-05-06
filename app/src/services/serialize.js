@@ -29,7 +29,7 @@ function serializeDate(maybeSomeDate) {
     if (maybeSomeDate instanceof Date && !isNaN(maybeSomeDate)) {
       return maybeSomeDate.toISOString()
     }
-  } catch (_) {
+  } catch {
   }
   return maybeSomeDate
 }
@@ -52,7 +52,7 @@ function deserializeDate(maybeSomeDate) {
     if (!maybeSomeDate) return 'now'
     const d = new Date(maybeSomeDate)
     if (!isNaN(d)) return d
-  } catch (_) {
+  } catch {
   }
   return 'now'
 }

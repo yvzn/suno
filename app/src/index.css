@@ -221,9 +221,9 @@ header {
 
 #app {
   background-color: var(--color-bg);
-  min-height: 100%;
   margin: 0 auto;
   max-width: 640px;
+  min-height: 100%;
 }
 
 #app>* {

@@ -26,8 +26,8 @@
 }
 
 #journey .journey-tools {
+  align-items: start;
   column-gap: var(--space-1x);
   display: grid;
   grid-template-columns: 1fr var(--button-width);
-  align-items: start;
 }

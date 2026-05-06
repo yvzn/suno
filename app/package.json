@@ -1,7 +1,7 @@
 {
   "name": "suno-app",
   "private": true,
-  "version": "0.4.2",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "start": "npm run dev",
@@ -13,7 +13,8 @@
     "build": "npm run index:en && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "lint": "npm run lint:css",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "oxlint",
     "lint:css": "stylelint src/**/*.css"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
+    "oxlint": "^1.63.0",
     "stylelint": "^17.4.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-order": "^8.1.1",

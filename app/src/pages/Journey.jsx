@@ -73,8 +73,10 @@ function JourneyForm() {
 
   const onSelectLocation = (value) => {
     if (search.target === 'from') {
-      setLocationFrom(value)
-      inputToRef.current && inputToRef.current.focus()
+      setLocationFrom(value);
+      if (inputToRef.current) {
+        inputToRef.current.focus();
+      }
     }
     if (search.target === 'to') {
       setLocationTo(value)

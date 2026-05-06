@@ -1,9 +1,9 @@
 #directions dd {
-    margin-bottom: var(--space-2x);
-    display: flex;
-    gap: var(--space-1x);
     align-items: center;
     border-bottom: solid 1px #ccc;
+    display: flex;
+    gap: var(--space-1x);
+    margin-bottom: var(--space-2x);
     padding: var(--space-1x) 0;
 }
 

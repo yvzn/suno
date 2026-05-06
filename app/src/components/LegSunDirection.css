@@ -32,3 +32,7 @@
 .leg-sun-icons {
     display: inline-flex;
 }
+
+.leg-sun-icons svg + svg {
+    margin-left: var(--space-1x);
+}

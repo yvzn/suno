@@ -8,7 +8,7 @@
 //
 
 // Version number
-let version = '0.4.2';
+let version = '1.0.1';
 
 // Cache IDs
 let coreID = `${version}_core`;
@@ -151,7 +151,7 @@ self.addEventListener('fetch', function (event) {
                 // Return the response
                 return response;
 
-            }).catch(function (error) {
+            }).catch(function () {
 
                 // If there's no item in cache, respond with a fallback
                 return caches.match(request).then(function (response) {
@@ -235,7 +235,7 @@ self.addEventListener('fetch', function (event) {
                     // Return the response
                     return response;
 
-                }).catch(function (error) {
+                }).catch(function () {
                     return cachedAPI;
                 });
 

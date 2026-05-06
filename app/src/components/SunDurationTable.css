@@ -2,7 +2,12 @@
     margin-top: var(--space-4x);
 }
 
-#sun-duration-table th {
-    font-weight: 500;
-    text-align: left;
+#sun-duration-table th[scope="row"] {
+    font-weight: normal;
+    text-align: right;
+}
+
+#sun-duration-table th[scope="col"] {
+    font-weight: bold;
+    text-align: center;
 }
