@@ -64,8 +64,8 @@
 
 #contact .contact-details-checkbox input[type="checkbox"] {
     flex-shrink: 0;
-    height: 1.1em;
-    width: 1.1em;
+    height: 16px;
+    width: 16px;
 }
 
 #contact .contact-message {

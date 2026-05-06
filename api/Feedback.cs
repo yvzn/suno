@@ -19,7 +19,11 @@ public class Feedback(ILogger<Feedback> logger)
 
 		try
 		{
-			string requestBody = await new System.IO.StreamReader(req.Body).ReadToEndAsync();
+			string requestBody;
+			using (var reader = new System.IO.StreamReader(req.Body))
+			{
+				requestBody = await reader.ReadToEndAsync();
+			}
 			var requestParams = System.Web.HttpUtility.ParseQueryString(requestBody);
 
 			string? score = requestParams["s"];

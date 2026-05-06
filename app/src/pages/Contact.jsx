@@ -46,7 +46,7 @@ export function Contact() {
         technicalData: technicalPayload,
       })
 
-      if (response.ok || response.status === 201) {
+      if (response.ok) {
         setSubmitState('success')
       } else {
         setSubmitState('error')
