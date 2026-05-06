@@ -5,14 +5,16 @@ import { CustomLink } from './CustomLink';
 import './ErrorMessage.css'
 
 export function ErrorMessage(props) {
+  const showContactLink = props.showContactLink !== false
+
   const handleRetryClick = (event) => {
     event.preventDefault();
-    props.onRetry();
+    if (props.onRetry) props.onRetry();
   }
 
-  const contactHref = props.error
-    ? '/contact?data=' + encodeURIComponent(String(props.error))
-    : '/contact'
+  const contactHref = '/contact'
+    + '?data=' + encodeURIComponent(String(props.error))
+    + '&url=' + encodeURIComponent(window.location.href)
 
   return <section id="error-message">
     <p role="alert">
@@ -25,9 +27,11 @@ export function ErrorMessage(props) {
         <button class="btn btn-primary" onClick={handleRetryClick}>
           <Text id="fetch.retry"></Text>
         </button>
-        <CustomLink href={contactHref} className="btn btn-secondary">
-          <Text id="contact.title"></Text>
-        </CustomLink>
+        {showContactLink && (
+          <CustomLink href={contactHref} className="btn btn-secondary">
+            <Text id="contact.title"></Text>
+          </CustomLink>
+        )}
       </div>
     )}
   </section>;

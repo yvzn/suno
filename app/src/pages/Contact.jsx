@@ -4,7 +4,9 @@ import { useEffect, useState } from 'preact/hooks'
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 import { CustomLink } from '../components/CustomLink'
-import { sendFeedback } from '../services/api'
+import { LoadingIndicator } from '../components/LoadingIndicator'
+import { ErrorMessage } from '../components/ErrorMessage'
+import { sendFeedback, sendFeedbackWithRetry } from '../services/api'
 
 import './Contact.css'
 
@@ -16,6 +18,7 @@ export function Contact() {
   const [comment, setComment] = useState('')
   const [includeDetails, setIncludeDetails] = useState(false)
   const [technicalData, setTechnicalData] = useState('')
+  const [sourceUrl, setSourceUrl] = useState('')
   const [submitState, setSubmitState] = useState('idle') // idle | loading | success | error
 
   useEffect(() => {
@@ -24,11 +27,13 @@ export function Contact() {
     if (data) {
       setTechnicalData(data)
     }
+    const url = params.get('url')
+    if (url) {
+      setSourceUrl(url)
+    }
   }, [])
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
+  const submitFeedback = async (submitFn = sendFeedback) => {
     if (!score) return
 
     setSubmitState('loading')
@@ -40,10 +45,11 @@ export function Contact() {
     }
 
     try {
-      const response = await sendFeedback({
+      const response = await submitFn({
         score,
         comment: comment.trim() || undefined,
         technicalData: technicalPayload,
+        sourceUrl: sourceUrl || undefined,
       })
 
       if (response.ok) {
@@ -54,6 +60,15 @@ export function Contact() {
     } catch {
       setSubmitState('error')
     }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    submitFeedback()
+  }
+
+  const handleRetry = () => {
+    submitFeedback(sendFeedbackWithRetry)
   }
 
   if (submitState === 'success') {
@@ -87,6 +102,8 @@ export function Contact() {
         <p id="contact-tagline">
           <Text id="contact.tagline"></Text>
         </p>
+        <LoadingIndicator isLoading={submitState === 'loading'} />
+        <ErrorMessage error={submitState === 'error' ? true : undefined} onRetry={handleRetry} showContactLink={false} />
         <form onSubmit={handleSubmit} aria-describedby="contact-tagline">
           <div class="contact-score">
             <p id="contact-score-label">
@@ -121,7 +138,7 @@ export function Contact() {
             />
           </div>
 
-          {technicalData && (
+          {(technicalData || sourceUrl) && (
             <div class="contact-details">
               <div class="contact-details-checkbox">
                 <input
@@ -135,12 +152,6 @@ export function Contact() {
                 </label>
               </div>
             </div>
-          )}
-
-          {submitState === 'error' && (
-            <p class="contact-message contact-message-error" role="alert">
-              <Text id="contact.error"></Text>
-            </p>
           )}
 
           <button
