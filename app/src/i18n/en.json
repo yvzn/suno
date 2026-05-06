@@ -2,6 +2,23 @@
   "app": {
     "title": "Suno"
   },
+  "contact": {
+    "comment": {
+      "label": "Your message (optional):",
+      "placeholder": "Enter your message or feedback here..."
+    },
+    "error": "Failed to send your feedback. Please try again.",
+    "includeDetails": "Include technical details (browser and OS)",
+    "score": {
+      "down": "👎 Not helpful",
+      "label": "Was this helpful?",
+      "up": "👍 Helpful"
+    },
+    "submit": "Send feedback",
+    "success": "Thank you for your feedback!",
+    "tagline": "Share your feedback or report an issue.",
+    "title": "Contact Us"
+  },
   "directions": {
     "from": "From {{from}}",
     "leave": "Leave on {{startDate}} at {{startTime}}",

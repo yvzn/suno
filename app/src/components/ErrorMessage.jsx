@@ -1,5 +1,7 @@
 import { Text } from 'preact-i18n';
 
+import { CustomLink } from './CustomLink';
+
 import './ErrorMessage.css'
 
 export function ErrorMessage(props) {
@@ -8,6 +10,10 @@ export function ErrorMessage(props) {
     props.onRetry();
   }
 
+  const contactHref = props.error
+    ? '/contact?data=' + encodeURIComponent(String(props.error))
+    : '/contact'
+
   return <section id="error-message">
     <p role="alert">
       {props.error && (
@@ -15,9 +21,14 @@ export function ErrorMessage(props) {
       )}
     </p>
     {props.error && (
-      <button class="btn btn-primary" onClick={handleRetryClick}>
-        <Text id="fetch.retry"></Text>
-      </button>
+      <>
+        <button class="btn btn-primary" onClick={handleRetryClick}>
+          <Text id="fetch.retry"></Text>
+        </button>
+        <CustomLink href={contactHref} className="btn btn-secondary">
+          <Text id="contact.title"></Text>
+        </CustomLink>
+      </>
     )}
   </section>;
 }

@@ -1,0 +1,12 @@
+#home ~ footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2x);
+}
+
+@media (width > 400px) {
+    #home ~ footer {
+        align-items: flex-start;
+        flex-direction: row;
+    }
+}

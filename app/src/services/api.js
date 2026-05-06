@@ -56,4 +56,23 @@ function fetchWithTimeout(resource, timeout) {
   return fetch(resource, { signal: controller.signal }).finally(() => clearTimeout(id));
 }
 
-export { findLocationsApi as findLocations, findLocationsApiWithRetry as findLocationsWithRetry, getDirectionsApi as getDirections, getDirectionsApiWithRetry as getDirectionsWithRetry, healthCheckApi as healthCheck }
+export { findLocationsApi as findLocations, findLocationsApiWithRetry as findLocationsWithRetry, getDirectionsApi as getDirections, getDirectionsApiWithRetry as getDirectionsWithRetry, healthCheckApi as healthCheck, sendFeedbackApi as sendFeedback }
+
+async function sendFeedbackApi({ score, comment, technicalData }) {
+  const params = new URLSearchParams()
+  params.set("code", apiKey)
+
+  const body = new URLSearchParams()
+  body.set("s", score)
+  if (comment) body.set("c", comment)
+  if (technicalData) body.set("d", technicalData)
+
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT);
+  return fetch(`${apiUrl}/feedback?${params.toString()}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+    signal: controller.signal
+  }).finally(() => clearTimeout(id));
+}

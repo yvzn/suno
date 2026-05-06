@@ -7,6 +7,7 @@ import { Journey } from './pages/Journey'
 import { Sun } from './pages/Sun'
 import { Directions } from './pages/Directions'
 import { NotFound } from './pages/NotFound'
+import { Contact } from './pages/Contact'
 import { healthCheck } from './services/api'
 import { customRoute } from './services/router'
 import { LanguagePicker } from './components/LanguagePicker'
@@ -34,6 +35,7 @@ export function App(props) {
           <Journey path={`${import.meta.env.VITE_APP_BASE}/journey`} />
           <Sun path={`${import.meta.env.VITE_APP_BASE}/sun`} />
           <Directions path={`${import.meta.env.VITE_APP_BASE}/directions`} />
+          <Contact path={`${import.meta.env.VITE_APP_BASE}/contact`} />
           <NotFound default />
         </Router>
       </IntlProvider>
