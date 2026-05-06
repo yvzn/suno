@@ -21,14 +21,14 @@ export function ErrorMessage(props) {
       )}
     </p>
     {props.error && (
-      <>
+      <div class="error-actions">
         <button class="btn btn-primary" onClick={handleRetryClick}>
           <Text id="fetch.retry"></Text>
         </button>
         <CustomLink href={contactHref} className="btn btn-secondary">
           <Text id="contact.title"></Text>
         </CustomLink>
-      </>
+      </div>
     )}
   </section>;
 }

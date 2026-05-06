@@ -10,7 +10,9 @@
     color: var(--color-error);
 }
 
-#error-message .btn {
-    display: inline-block;
-    margin-right: var(--space-1x);
+#error-message .error-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1x);
 }

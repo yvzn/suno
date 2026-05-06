@@ -44,7 +44,7 @@ public class Feedback(ILogger<Feedback> logger)
 				CreatedAt = DateTimeOffset.UtcNow
 			};
 
-			logger.LogInformation("Feedback received: score={Score}", score);
+			logger.LogInformation("Feedback received");
 
 			return new FeedbackOutput
 			{
@@ -75,7 +75,7 @@ public class FeedbackOutput
 public class FeedbackTableEntity : ITableEntity
 {
 	public string PartitionKey { get; set; } = "Feedbacks";
-	public string RowKey { get; set; } = Guid.NewGuid().ToString();
+	public string RowKey { get; set; } = string.Empty;
 	public DateTimeOffset? Timestamp { get; set; }
 	public ETag ETag { get; set; }
 

@@ -118,7 +118,6 @@ export function Contact() {
               id="contact-comment"
               value={comment}
               onInput={(e) => setComment(e.target.value)}
-              placeholder=""
             />
           </div>
 
