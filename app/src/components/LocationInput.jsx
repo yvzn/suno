@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'preact/hooks'
 import { Text } from 'preact-i18n'
-import { hideVirtualKeyboard, showVirtualKeyboard, supportsVirtualKeyboardApi } from '../services/virtual-keyboard'
 
 import './LocationInput.css'
 
@@ -9,12 +8,9 @@ export function LocationInput(props) {
   const tooltipId = `tooltip-${Math.random()}`
   const [nameValue, setNameValue] = useState(props.nameValue)
 
-  const virtualKeyboardPolicy = supportsVirtualKeyboardApi() ? 'manual' : undefined
-
   const handleSubmit = (event) => {
-    event.preventDefault()
-    props.onChange(nameValue)
-    hideVirtualKeyboard()
+    event.preventDefault();
+    props.onChange(nameValue);
   }
 
   const handleInput = (event) => {
@@ -27,13 +23,8 @@ export function LocationInput(props) {
   }, [props.nameValue])
 
   const handleSetFocus = (event) => {
-    event.target.select()
-    showVirtualKeyboard()
+    event.target.select();
   }
-
-  const handleBlur = (event) => {
-    hideVirtualKeyboard();
-  };
 
   return (
     <search>
@@ -46,14 +37,12 @@ export function LocationInput(props) {
           value={nameValue}
           onInput={handleInput}
           onFocus={handleSetFocus}
-          onBlur={handleBlur}
           enterKeyHint="search"
           autoComplete="street-address"
           required="required"
           spellCheck={false}
           disabled={props.disabled}
           aria-describedby={tooltipId}
-          virtualkeyboardpolicy={virtualKeyboardPolicy}
         />
         <div id={tooltipId} role="tooltip">
           <Text id="journey.locationTooltip"></Text>
