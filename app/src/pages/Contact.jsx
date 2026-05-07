@@ -38,7 +38,7 @@ export function Contact() {
 
     setSubmitState('loading')
 
-    const commentValue = commentRef.current?.value.trim()
+    const commentValue = commentRef.current?.value?.trim() || ''
 
     let technicalPayload = technicalData || undefined
     if (includeDetails) {
