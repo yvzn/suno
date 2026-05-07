@@ -3,6 +3,7 @@
     "title": "Suno"
   },
   "contact": {
+    "cancel": "Cancel",
     "comment": {
       "label": "Your message (optional):",
       "placeholder": "Enter your message or feedback here..."
@@ -11,7 +12,7 @@
     "includeDetails": "Include technical details (browser and OS)",
     "score": {
       "down": "👎 Not helpful",
-      "label": "Was this helpful?",
+      "label": "How would you rate this app?",
       "up": "👍 Helpful"
     },
     "submit": "Send feedback",

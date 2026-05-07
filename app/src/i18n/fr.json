@@ -3,6 +3,7 @@
     "title": "Direction Soleil"
   },
   "contact": {
+    "cancel": "Annuler",
     "comment": {
       "label": "Votre message (optionnel) :",
       "placeholder": "Entrez votre message ou commentaire ici..."
@@ -11,7 +12,7 @@
     "includeDetails": "Inclure les détails techniques (navigateur et système)",
     "score": {
       "down": "👎 Pas utile",
-      "label": "Était-ce utile ?",
+      "label": "Comment évaluez-vous cette application ?",
       "up": "👍 Utile"
     },
     "submit": "Envoyer",

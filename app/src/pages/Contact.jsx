@@ -1,5 +1,5 @@
 import { Text, withText } from 'preact-i18n'
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
@@ -15,11 +15,11 @@ const SetDocumentTitle = withText('contact.title')(DocumentTitle)
 
 export function Contact() {
   const [score, setScore] = useState(null)
-  const [comment, setComment] = useState('')
   const [includeDetails, setIncludeDetails] = useState(false)
   const [technicalData, setTechnicalData] = useState('')
   const [sourceUrl, setSourceUrl] = useState('')
   const [submitState, setSubmitState] = useState('idle') // idle | loading | success | error
+  const commentRef = useRef(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -38,6 +38,8 @@ export function Contact() {
 
     setSubmitState('loading')
 
+    const commentValue = commentRef.current?.value.trim()
+
     let technicalPayload = technicalData || undefined
     if (includeDetails) {
       const details = [technicalData, navigator.userAgent].filter(Boolean).join(' | ')
@@ -47,7 +49,7 @@ export function Contact() {
     try {
       const response = await submitFn({
         score,
-        comment: comment.trim() || undefined,
+        comment: commentValue || undefined,
         technicalData: technicalPayload,
         sourceUrl: sourceUrl || undefined,
       })
@@ -102,8 +104,6 @@ export function Contact() {
         <p id="contact-tagline">
           <Text id="contact.tagline"></Text>
         </p>
-        <LoadingIndicator isLoading={submitState === 'loading'} />
-        <ErrorMessage error={submitState === 'error' ? true : undefined} onRetry={handleRetry} showContactLink={false} />
         <form onSubmit={handleSubmit} aria-describedby="contact-tagline">
           <div class="contact-score">
             <p id="contact-score-label">
@@ -133,8 +133,7 @@ export function Contact() {
             </label>
             <textarea
               id="contact-comment"
-              value={comment}
-              onInput={(e) => setComment(e.target.value)}
+              ref={commentRef}
             />
           </div>
 
@@ -154,20 +153,23 @@ export function Contact() {
             </div>
           )}
 
-          <button
-            type="submit"
-            class="btn btn-primary"
-            disabled={!score || submitState === 'loading'}
-          >
-            <Text id="contact.submit"></Text>
-          </button>
+          <LoadingIndicator isLoading={submitState === 'loading'} />
+          <ErrorMessage error={submitState === 'error' ? true : undefined} onRetry={handleRetry} showContactLink={false} />
+
+          <div class="contact-actions">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              disabled={!score || submitState === 'loading'}
+            >
+              <Text id="contact.submit"></Text>
+            </button>
+            <CustomLink href="/" className="btn btn-secondary">
+              <Text id="contact.cancel"></Text>
+            </CustomLink>
+          </div>
         </form>
       </main>
-      <footer>
-        <CustomLink href="/" className="btn btn-secondary">
-          <Text id="notFound.home"></Text>
-        </CustomLink>
-      </footer>
     </>
   )
 }
