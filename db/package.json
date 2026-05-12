@@ -1,0 +1,15 @@
+{
+  "name": "suno-db",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "azurite --location ./azurite"
+  },
+  "author": "Yvan Razafindramanana",
+  "license": "MIT",
+  "dependencies": {
+    "azurite": "^3.29.0"
+  }
+}
