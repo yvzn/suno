@@ -15,7 +15,6 @@ const SetDocumentTitle = withText('contact.title')(DocumentTitle)
 
 export function Contact() {
   const scoreRef = useRef(null)
-  const [hasScore, setHasScore] = useState(false)
   const [includeDetails, setIncludeDetails] = useState(false)
   const [technicalData, setTechnicalData] = useState('')
   const [sourceUrl, setSourceUrl] = useState('')
@@ -36,7 +35,6 @@ export function Contact() {
 
   const handleScoreChange = useCallback((e) => {
     scoreRef.current = e.target.value
-    setHasScore(true)
   }, [])
 
   const submitFeedback = async (submitFn = sendFeedback) => {
@@ -72,6 +70,7 @@ export function Contact() {
   }
 
   const handleRetry = () => {
+    if (submitState === 'loading') return;
     submitFeedback(sendFeedbackWithRetry)
   }
 
