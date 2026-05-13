@@ -47,7 +47,7 @@ async function healthCheckApi() {
 }
 
 function createSendFeedbackApi(timeout) {
-  return async function({ score, comment, technicalData, sourceUrl }) {
+  return async function({ score, comment, technicalData, userAgent, sourceUrl }) {
     const params = new URLSearchParams()
     params.set("code", apiKey)
 
@@ -55,6 +55,7 @@ function createSendFeedbackApi(timeout) {
     body.set("s", score)
     if (comment) body.set("c", comment)
     if (technicalData) body.set("d", technicalData)
+    if (userAgent) body.set("a", userAgent)
     if (sourceUrl) body.set("u", sourceUrl)
 
     return httpPost(`${apiUrl}/feedback?${params.toString()}`, body.toString(), timeout)

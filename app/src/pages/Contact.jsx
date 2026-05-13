@@ -46,17 +46,12 @@ export function Contact() {
 
     const commentValue = commentRef.current?.value?.trim() || ''
 
-    let technicalPayload = technicalData || undefined
-    if (includeDetails) {
-      const details = [technicalData, navigator.userAgent].filter(Boolean).join(' | ')
-      technicalPayload = details || undefined
-    }
-
     try {
       const response = await submitFn({
         score: scoreRef.current,
         comment: commentValue || undefined,
-        technicalData: technicalPayload,
+        technicalData: technicalData || undefined,
+        userAgent: includeDetails ? navigator.userAgent : undefined,
         sourceUrl: sourceUrl || undefined,
       })
 
@@ -71,8 +66,9 @@ export function Contact() {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    submitFeedback()
+    event.preventDefault();
+    if (submitState === 'loading') return;
+    submitFeedback();
   }
 
   const handleRetry = () => {
@@ -122,6 +118,7 @@ export function Contact() {
                   id="contact-score-up"
                   name="score"
                   value="up"
+                  required
                   onChange={handleScoreChange}
                 />
                 <label for="contact-score-up">
@@ -134,6 +131,7 @@ export function Contact() {
                   id="contact-score-down"
                   name="score"
                   value="down"
+                  required
                   onChange={handleScoreChange}
                 />
                 <label for="contact-score-down">
@@ -176,7 +174,6 @@ export function Contact() {
             <button
               type="submit"
               class="btn btn-primary"
-              disabled={!hasScore || submitState === 'loading'}
             >
               <Text id="contact.submit"></Text>
             </button>

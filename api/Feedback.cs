@@ -30,6 +30,7 @@ public class Feedback(ILogger<Feedback> logger)
 			string? comment = requestParams["c"];
 			string? technicalData = requestParams["d"];
 			string? sourceUrl = requestParams["u"];
+			string? userAgent = requestParams["a"];
 
 			if (string.IsNullOrWhiteSpace(score))
 			{
@@ -46,6 +47,7 @@ public class Feedback(ILogger<Feedback> logger)
 				Score = score,
 				Comment = string.IsNullOrWhiteSpace(comment) ? null : comment,
 				TechnicalData = string.IsNullOrWhiteSpace(technicalData) ? null : technicalData,
+				UserAgent = string.IsNullOrWhiteSpace(userAgent) ? null : userAgent,
 				SourceUrl = string.IsNullOrWhiteSpace(sourceUrl) ? null : sourceUrl,
 				CreatedAt = DateTimeOffset.UtcNow
 			};
@@ -88,6 +90,7 @@ public class FeedbackTableEntity : ITableEntity
 	public string? Score { get; set; }
 	public string? Comment { get; set; }
 	public string? TechnicalData { get; set; }
+	public string? UserAgent { get; set; }
 	public string? SourceUrl { get; set; }
 	public DateTimeOffset CreatedAt { get; set; }
 }
