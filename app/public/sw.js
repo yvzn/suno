@@ -8,7 +8,7 @@
 //
 
 // Version number
-let version = '1.0.2';
+let version = '1.0.3';
 
 // Cache IDs
 let coreID = `${version}_core`;
@@ -205,7 +205,7 @@ self.addEventListener('fetch', function (event) {
 
     // API Calls
     // Offline-first
-    if (request.url.includes('/api/')) {
+    if (request.url.includes('/api/') && request.method === 'GET') {
         event.respondWith(
             caches.match(request).then(function (response) {
 
