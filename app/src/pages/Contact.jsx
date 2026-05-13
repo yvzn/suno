@@ -1,5 +1,5 @@
 import { Text, withText } from 'preact-i18n'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useCallback, useEffect, useRef, useState } from 'preact/hooks'
 
 import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
@@ -14,7 +14,8 @@ const Title = withText('contact.title')(PageTitle)
 const SetDocumentTitle = withText('contact.title')(DocumentTitle)
 
 export function Contact() {
-  const [score, setScore] = useState(null)
+  const scoreRef = useRef(null)
+  const [hasScore, setHasScore] = useState(false)
   const [includeDetails, setIncludeDetails] = useState(false)
   const [technicalData, setTechnicalData] = useState('')
   const [sourceUrl, setSourceUrl] = useState('')
@@ -33,8 +34,13 @@ export function Contact() {
     }
   }, [])
 
+  const handleScoreChange = useCallback((e) => {
+    scoreRef.current = e.target.value
+    setHasScore(true)
+  }, [])
+
   const submitFeedback = async (submitFn = sendFeedback) => {
-    if (!score) return
+    if (!scoreRef.current) return
 
     setSubmitState('loading')
 
@@ -48,7 +54,7 @@ export function Contact() {
 
     try {
       const response = await submitFn({
-        score,
+        score: scoreRef.current,
         comment: commentValue || undefined,
         technicalData: technicalPayload,
         sourceUrl: sourceUrl || undefined,
@@ -116,8 +122,7 @@ export function Contact() {
                   id="contact-score-up"
                   name="score"
                   value="up"
-                  checked={score === 'up'}
-                  onChange={() => setScore('up')}
+                  onChange={handleScoreChange}
                 />
                 <label for="contact-score-up">
                   <Text id="contact.score.up"></Text>
@@ -129,8 +134,7 @@ export function Contact() {
                   id="contact-score-down"
                   name="score"
                   value="down"
-                  checked={score === 'down'}
-                  onChange={() => setScore('down')}
+                  onChange={handleScoreChange}
                 />
                 <label for="contact-score-down">
                   <Text id="contact.score.down"></Text>
@@ -172,7 +176,7 @@ export function Contact() {
             <button
               type="submit"
               class="btn btn-primary"
-              disabled={!score || submitState === 'loading'}
+              disabled={!hasScore || submitState === 'loading'}
             >
               <Text id="contact.submit"></Text>
             </button>
