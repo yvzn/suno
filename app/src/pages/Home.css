@@ -1,0 +1,13 @@
+#home ~ footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2x);
+}
+
+@media (width > 400px) {
+    #home ~ footer {
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

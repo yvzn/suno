@@ -2,6 +2,24 @@
   "app": {
     "title": "Direction Soleil"
   },
+  "contact": {
+    "cancel": "Annuler",
+    "comment": {
+      "label": "Votre message (optionnel) :",
+      "placeholder": "Entrez votre message ou commentaire ici..."
+    },
+    "error": "Impossible d'envoyer votre message. Veuillez réessayer.",
+    "includeDetails": "Inclure les détails techniques (navigateur et système)",
+    "score": {
+      "down": "👎 Pas utile",
+      "label": "Comment évaluez-vous cette application ?",
+      "up": "👍 Utile"
+    },
+    "submit": "Envoyer",
+    "success": "Merci pour votre retour !",
+    "tagline": "Partagez vos commentaires ou signalez un problème.",
+    "title": "Nous contacter"
+  },
   "directions": {
     "from": "De {{from}}",
     "leave": "Partir le {{startDate}} à {{startTime}}",

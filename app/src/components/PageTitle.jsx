@@ -4,9 +4,8 @@ export function PageTitle(props) {
     const headingRef = useRef()
 
     useEffect(() => {
-        if (!headingRef.current) return
-        headingRef.current.focus()
-    }, [headingRef.current])
+        headingRef.current?.focus()
+    }, [])
 
     const ariaAttributes = { 'aria-live': 'polite' };
     if (props['aria-describedby']) {
