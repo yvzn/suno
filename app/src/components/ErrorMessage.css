@@ -15,4 +15,5 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2x);
+    justify-content: space-between;
 }

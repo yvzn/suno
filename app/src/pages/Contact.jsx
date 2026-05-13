@@ -105,27 +105,39 @@ export function Contact() {
           <Text id="contact.tagline"></Text>
         </p>
         <form onSubmit={handleSubmit} aria-describedby="contact-tagline">
-          <div class="contact-score">
-            <p id="contact-score-label">
+          <fieldset class="contact-score">
+            <legend id="contact-score-label">
               <Text id="contact.score.label"></Text>
-            </p>
-            <div class="contact-score-buttons" role="group" aria-labelledby="contact-score-label">
-              <button
-                type="button"
-                aria-pressed={score === 'up'}
-                onClick={() => setScore('up')}
-              >
-                <Text id="contact.score.up"></Text>
-              </button>
-              <button
-                type="button"
-                aria-pressed={score === 'down'}
-                onClick={() => setScore('down')}
-              >
-                <Text id="contact.score.down"></Text>
-              </button>
+            </legend>
+            <div class="contact-score-buttons">
+              <div>
+                <input
+                  type="radio"
+                  id="contact-score-up"
+                  name="score"
+                  value="up"
+                  checked={score === 'up'}
+                  onChange={() => setScore('up')}
+                />
+                <label for="contact-score-up">
+                  <Text id="contact.score.up"></Text>
+                </label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="contact-score-down"
+                  name="score"
+                  value="down"
+                  checked={score === 'down'}
+                  onChange={() => setScore('down')}
+                />
+                <label for="contact-score-down">
+                  <Text id="contact.score.down"></Text>
+                </label>
+              </div>
             </div>
-          </div>
+          </fieldset>
 
           <div class="contact-field">
             <label for="contact-comment">

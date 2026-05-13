@@ -15,9 +15,7 @@
 }
 
 #contact .contact-score {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1x);
+    border: none;
 }
 
 #contact .contact-score-buttons {
@@ -26,18 +24,9 @@
     gap: var(--space-1x);
 }
 
-#contact .contact-score-buttons button {
-    border: solid 1px var(--color-border);
-    border-radius: var(--round-radius);
+#contact .contact-score-buttons input[type="radio"] {
     cursor: pointer;
-    font-weight: inherit;
-}
-
-#contact .contact-score-buttons button[aria-pressed="true"] {
-    border-color: var(--color-interactive);
-    border-width: 2px;
-    color: var(--color-interactive);
-    font-weight: 500;
+    margin-right: var(--space-1x);
 }
 
 #contact .contact-field {
