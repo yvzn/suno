@@ -2,7 +2,7 @@ export function JourneySwapButton(props) {
   return (
     <button
       type="button"
-      className="btn btn-secondary"
+      className="btn btn-secondary journey-swap-button"
       onClick={props.onClick}
       disabled={props.disabled}
       title={props.description}

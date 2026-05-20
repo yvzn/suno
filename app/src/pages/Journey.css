@@ -31,3 +31,13 @@
   display: grid;
   grid-template-columns: 1fr var(--button-width);
 }
+
+#journey #start-date-input {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+#journey .journey-swap-button {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}

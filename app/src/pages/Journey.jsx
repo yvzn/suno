@@ -119,10 +119,10 @@ function JourneyForm() {
         />
         {locationFrom.coord && locationTo.coord && (
           <div className="journey-tools">
+            <SwapButton onClick={onSwapLocations} disabled={!!search.target} />
             <StartDateInput
               value={startDate}
               onChange={onChangeStartDate} />
-            <SwapButton onClick={onSwapLocations} disabled={!!search.target} />
           </div>
         )}
         <LocationSearchResults
