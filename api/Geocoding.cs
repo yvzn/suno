@@ -20,6 +20,9 @@ public class Geocoding(ILogger<Directions> logger)
 
 	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
 
+	/// <summary>Allowed Azure Maps language codes accepted by the geocoding API.</summary>
+	private static readonly HashSet<string> allowedLanguages = new(StringComparer.OrdinalIgnoreCase) { "en-US", "fr-FR" };
+
 	[Function("Geocoding")]
 	public async Task<IActionResult> Run(
 		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "geocoding")] HttpRequest req)
@@ -31,9 +34,17 @@ public class Geocoding(ILogger<Directions> logger)
 			return new BadRequestResult();
 		}
 
+		string? language = GetValidLanguage(req.Query["lang"]);
+
 		string azureMapsApiEndpoint = $"https://atlas.microsoft.com/geocode?api-version=2023-06-01&query={searchQuery}&subscription-key={azureMapsApiKey}";
 
-		var response = await httpClient.GetAsync(azureMapsApiEndpoint);
+		var request = new HttpRequestMessage(HttpMethod.Get, azureMapsApiEndpoint);
+		if (language is not null)
+		{
+			request.Headers.Add("Accept-Language", language);
+		}
+
+		var response = await httpClient.SendAsync(request);
 
 		if (!response.IsSuccessStatusCode)
 		{
@@ -68,6 +79,9 @@ public class Geocoding(ILogger<Directions> logger)
 
 		return new OkObjectResult(new { results = searchResults ?? Array.Empty<object>() });
 	}
+
+	private static string? GetValidLanguage(string? language) =>
+		allowedLanguages.Contains(language ?? string.Empty) ? language : null;
 }
 
 internal static class LinqExtensions

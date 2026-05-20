@@ -21,6 +21,9 @@ public class Directions(ILogger<Directions> logger)
 
 	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
 
+	/// <summary>Allowed Azure Maps language codes accepted by the route directions API.</summary>
+	private static readonly HashSet<string> allowedLanguages = new(StringComparer.OrdinalIgnoreCase) { "en-US", "fr-FR" };
+
 	[Function("Directions")]
 	public async Task<IActionResult> Run(
 		[HttpTrigger(AuthorizationLevel.Function, "get", Route = "directions")] HttpRequest req)
@@ -46,12 +49,15 @@ public class Directions(ILogger<Directions> logger)
 			startDate = "";
 		}
 
+		string? language = GetValidLanguage(req.Query["lang"]);
+
 		string azureMapsApiEndpoint = "https://atlas.microsoft.com/route/directions/json";
 
 		string requestUrl = $"{azureMapsApiEndpoint}?" +
 			$"api-version=1.0&subscription-key={azureMapsApiKey}&" +
 			$"query={fromLatitude},{fromLongitude}:{toLatitude},{toLongitude}&" +
-			$"departAt={startDate}&instructionsType=coded";
+			$"departAt={startDate}&instructionsType=coded" +
+			(language is not null ? $"&language={language}" : string.Empty);
 
 		var response = await httpClient.GetAsync(requestUrl);
 
@@ -98,6 +104,9 @@ public class Directions(ILogger<Directions> logger)
 	private static bool IsValidStartDate(string? maybeStartDate)
 		=> "now".Equals(maybeStartDate, StringComparison.InvariantCulture)
 			|| DateTimeOffset.TryParse(maybeStartDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+
+	private static string? GetValidLanguage(string? language) =>
+		allowedLanguages.Contains(language ?? string.Empty) ? language : null;
 
 	internal static IEnumerable<Leg> MapInstructions(IEnumerable<AzureMapsGuidanceInstruction> instructions)
 	{

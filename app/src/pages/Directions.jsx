@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useContext, useEffect, useState } from 'preact/hooks'
 import { Text, withText } from 'preact-i18n'
 import { deserializeJourney } from '../services/serialize'
 
@@ -12,6 +12,7 @@ import { LegSunDirection } from '../components/LegSunDirection'
 import { HomeLink } from '../components/HomeLink'
 
 import { getDirections, getDirectionsWithRetry } from '../services/api'
+import { LanguageContext } from '../context/language'
 import { formatDurationInSeconds } from '../services/duration'
 import { aggregateLegs } from '../services/directions'
 import { computeSunPositionsPerLeg } from '../services/sun-position'
@@ -29,6 +30,7 @@ export function Directions() {
 
   const [itinerary, setItinerary] = useState()
   const [sunPositionsPerLeg, setSunPositionsPerLeg] = useState()
+  const language = useContext(LanguageContext)
 
   useEffect(() => {
     const journey = deserializeJourney(location.search)
@@ -44,7 +46,7 @@ export function Directions() {
     setItinerary(undefined)
     setSunPositionsPerLeg(undefined)
     setLoading(true)
-    fetchFn(journey)
+    fetchFn(journey, language)
       .then(setItinerary, setError)
       .finally(() => setLoading(false))
   }
