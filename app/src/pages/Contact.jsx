@@ -9,6 +9,7 @@ import { ErrorMessage } from '../components/ErrorMessage'
 import { sendFeedback, sendFeedbackWithRetry } from '../services/api'
 
 import './Contact.css'
+import { HomeLink } from '../components/HomeLink'
 
 const Title = withText('contact.title')(PageTitle)
 const SetDocumentTitle = withText('contact.title')(DocumentTitle)
@@ -80,6 +81,7 @@ export function Contact() {
         <header>
           <Title />
           <SetDocumentTitle />
+          <HomeLink />
         </header>
         <main id="contact">
           <p class="contact-message contact-message-success" role="status">
@@ -88,7 +90,7 @@ export function Contact() {
         </main>
         <footer>
           <CustomLink href="/" className="btn btn-primary">
-            <Text id="notFound.home"></Text>
+            <Text id="nav.home"></Text>
           </CustomLink>
         </footer>
       </>
@@ -100,6 +102,7 @@ export function Contact() {
       <header>
         <Title />
         <SetDocumentTitle />
+        <HomeLink />
       </header>
       <main id="contact">
         <p id="contact-tagline">

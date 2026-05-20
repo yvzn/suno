@@ -11,6 +11,7 @@ import { PageTitle } from '../components/PageTitle';
 import { DocumentTitle } from '../components/DocumentTitle';
 import { ItinerarySummary } from '../components/ItinerarySummary';
 import { CustomLink } from '../components/CustomLink';
+import { HomeLink } from '../components/HomeLink';
 
 import { getDirections, getDirectionsWithRetry } from '../services/api';
 import { computeSunPositions } from "../services/sun-position";
@@ -60,6 +61,7 @@ export function Sun() {
       <header>
         <Title aria-describedby="sun-tagline" />
         <SetDocumentTitle />
+        <HomeLink />
       </header>
       <main id="sun">
         <section id="sun-tagline">

@@ -8,6 +8,7 @@ import { PageTitle } from '../components/PageTitle'
 import { DocumentTitle } from '../components/DocumentTitle'
 import { CustomLink } from '../components/CustomLink';
 import { JourneySwapButton } from '../components/JourneySwapButton';
+import { HomeLink } from '../components/HomeLink';
 
 import { deserializeJourney, serializeJourney } from '../services/serialize'
 
@@ -31,6 +32,7 @@ export function Journey() {
       <header>
         <Title aria-describedby="journey-tagline" />
         <SetDocumentTitle />
+        <HomeLink />
       </header>
       <JourneyForm />
     </>

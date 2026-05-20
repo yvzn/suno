@@ -67,10 +67,10 @@
     }
   },
   "nav": {
-    "continue": "Continue"
+    "continue": "Continue",
+    "home": "Home Page"
   },
   "notFound": {
-    "home": "Home Page",
     "message": "The requested content is either deleted or has been moved. Apologies for the inconvenience.",
     "title": "Not found"
   },

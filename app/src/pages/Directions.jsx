@@ -9,6 +9,7 @@ import { DocumentTitle } from '../components/DocumentTitle'
 import { ItinerarySummary } from '../components/ItinerarySummary'
 import { CustomLink } from '../components/CustomLink'
 import { LegSunDirection } from '../components/LegSunDirection'
+import { HomeLink } from '../components/HomeLink'
 
 import { getDirections, getDirectionsWithRetry } from '../services/api'
 import { formatDurationInSeconds } from '../services/duration'
@@ -64,6 +65,7 @@ export function Directions() {
       <header>
         <Title />
         <SetDocumentTitle />
+        <HomeLink />
       </header>
       <main id="directions">
         <ItinerarySummary

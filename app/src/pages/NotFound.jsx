@@ -3,6 +3,7 @@ import { Text, withText } from 'preact-i18n';
 import { PageTitle } from '../components/PageTitle';
 import { DocumentTitle } from '../components/DocumentTitle';
 import { CustomLink } from '../components/CustomLink';
+import { HomeLink } from '../components/HomeLink';
 
 const Title = withText('notFound.title')(PageTitle);
 const SetDocumentTitle = withText('notFound.title')(DocumentTitle);
@@ -13,6 +14,7 @@ export function NotFound() {
       <header>
         <Title />
         <SetDocumentTitle />
+        <HomeLink />
       </header>
       <main>
         <p>
@@ -20,7 +22,7 @@ export function NotFound() {
         </p>
       </main>
       <footer>
-        <CustomLink href="/" className="btn btn-primary"><Text id="notFound.home"></Text></CustomLink>
+        <CustomLink href="/" className="btn btn-primary"><Text id="nav.home"></Text></CustomLink>
         <CustomLink href="/contact" className="btn btn-secondary"><Text id="contact.title"></Text></CustomLink>
       </footer>
     </>

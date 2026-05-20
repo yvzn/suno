@@ -12,14 +12,9 @@ export function PageTitle(props) {
         ariaAttributes['aria-describedby'] = props['aria-describedby'];
     }
 
-    const goToHomePage = () => {
-        // use onClick instead of a link, to avoid breaking accessibility focus flow
-        window.location.href = import.meta.env.VITE_APP_BASE || '/';
-    }
-
     return (
         <>
-            <h1 ref={headingRef} tabIndex={-1} onClick={goToHomePage} className="pointer" {...ariaAttributes}>
+            <h1 ref={headingRef} tabIndex={-1} {...ariaAttributes}>
                 {props.title}
             </h1>
         </>
