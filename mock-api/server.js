@@ -1,10 +1,12 @@
 import express from 'express'
 import cors from 'cors'
+import bodyParser from 'body-parser'
 
 const app = express()
 const PORT = 7071
 
 app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // --- Helpers ---
 
@@ -13,7 +15,8 @@ const SLOW_DELAY_MS = 2_000
 function hasKeyword(req, keyword) {
   const q = req.query.q ?? ''
   const f = req.query.f ?? ''
-  return q.includes(keyword) || f.includes(keyword)
+  const c = req.body?.c ?? ''
+  return q.includes(keyword) || f.includes(keyword) || c.includes(keyword)
 }
 
 async function applyBehaviours(req, res) {
@@ -100,12 +103,34 @@ app.get('/api/health', async (_req, res) => {
   res.json({ healthy: true, timestamp: new Date().toISOString() })
 })
 
+app.post('/api/feedback', async (req, res) => {
+  if (!await applyBehaviours(req, res)) return
+  
+  const score = req.body.s
+  
+  if (!score) {
+    res.status(400).json({ error: 'Missing required parameter: s (score).' })
+    return
+  }
+  
+  res.status(201).json({
+    success: true,
+    message: 'Feedback recorded',
+    score: req.body.s,
+    comment: req.body.c,
+    technicalData: req.body.d,
+    sourceUrl: req.body.u,
+    userAgent: req.body.a,
+  })
+})
+
 // --- Start ---
 
 app.listen(PORT, () => {
   console.log(`Suno mock API listening on http://localhost:${PORT}`)
   console.log('  GET /geocoding?q=<query>       – location search')
   console.log('  GET /directions?f=...&t=...    – route directions')
+  console.log('  POST /feedback                 – submit feedback')
   console.log('  GET /health                    – health check')
   console.log()
   console.log('Special keywords (in q= or f= params):')
