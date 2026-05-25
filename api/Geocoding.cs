@@ -28,9 +28,16 @@ public class Geocoding(ILogger<Directions> logger)
 
 		string? language = I18n.GetValidLanguage(req.Query["lang"]);
 
-		string azureMapsApiEndpoint = $"https://atlas.microsoft.com/geocode?api-version=2023-06-01&query={searchQuery}&subscription-key={azureMapsApiKey}";
+		var azureMapsApiEndpoint = "https://atlas.microsoft.com/geocode";
 
-		var request = new HttpRequestMessage(HttpMethod.Get, azureMapsApiEndpoint);
+		var requestUrl = new UriBuilder(azureMapsApiEndpoint);
+		var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
+		query["api-version"] = "2026-01-01";
+		query["subscription-key"] = azureMapsApiKey;
+		query["query"] = searchQuery;
+		requestUrl.Query = query.ToString() ?? string.Empty;
+
+		var request = new HttpRequestMessage(HttpMethod.Get, requestUrl.ToString());
 		if (language is not null)
 		{
 			request.Headers.Add("Accept-Language", language);
@@ -40,7 +47,7 @@ public class Geocoding(ILogger<Directions> logger)
 
 		if (!response.IsSuccessStatusCode)
 		{
-			logger.LogError("Azure Maps API request failed with status code: {AzureMapsStatusCode}", response.StatusCode);
+			logger.LogError("Azure Maps API request failed with status code: {AzureMapsStatusCode} response: {ResponseContent}", response.StatusCode, await response.Content.ReadAsStringAsync());
 			return new StatusCodeResult(StatusCodes.Status502BadGateway);
 		}
 

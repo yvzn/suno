@@ -45,17 +45,26 @@ public class Directions(ILogger<Directions> logger)
 
 		string azureMapsApiEndpoint = "https://atlas.microsoft.com/route/directions/json";
 
-		string requestUrl = $"{azureMapsApiEndpoint}?" +
-			$"api-version=1.0&subscription-key={azureMapsApiKey}&" +
-			$"query={fromLatitude},{fromLongitude}:{toLatitude},{toLongitude}&" +
-			$"departAt={startDate}&instructionsType=coded" +
-			(language is not null ? $"&language={language}" : string.Empty);
+		var requestUrl = new UriBuilder(azureMapsApiEndpoint);
+		var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
+		query["api-version"] = "1.0";
+		query["subscription-key"] = azureMapsApiKey;
+		query["query"] = $"{fromLatitude},{fromLongitude}:{toLatitude},{toLongitude}";
+		query["departAt"] = startDate;
+		query["instructionsType"] = "coded";
+		if (language is not null)
+		{
+			query["language"] = language;
+		}
+		requestUrl.Query = query.ToString() ?? string.Empty;
 
-		var response = await httpClient.GetAsync(requestUrl);
+		var request = new HttpRequestMessage(HttpMethod.Get, requestUrl.ToString());
+
+		var response = await httpClient.SendAsync(request);
 
 		if (!response.IsSuccessStatusCode)
 		{
-			logger.LogError("Azure Maps API request failed with status code: {StatusCode}", response.StatusCode);
+			logger.LogError("Azure Maps API request failed with status code: {StatusCode} response: {ResponseContent}", response.StatusCode, await response.Content.ReadAsStringAsync());
 			return new StatusCodeResult(StatusCodes.Status502BadGateway);
 		}
 
