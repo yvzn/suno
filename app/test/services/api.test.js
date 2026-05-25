@@ -39,6 +39,36 @@ describe('findLocations timeout', () => {
 
     expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60_000)
   })
+
+  test('includes mapped Azure Maps language code when language is provided', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const { findLocations } = await import('../../src/services/api')
+
+    await findLocations('Paris', 'fr')
+
+    const calledUrl = fetchSpy.mock.calls[0][0]
+    expect(calledUrl).toContain('lang=fr-FR')
+  })
+
+  test('includes en-US as Azure Maps language code for English', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const { findLocations } = await import('../../src/services/api')
+
+    await findLocations('London', 'en')
+
+    const calledUrl = fetchSpy.mock.calls[0][0]
+    expect(calledUrl).toContain('lang=en-US')
+  })
+
+  test('omits language param when no language is provided', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const { findLocations } = await import('../../src/services/api')
+
+    await findLocations('Berlin')
+
+    const calledUrl = fetchSpy.mock.calls[0][0]
+    expect(calledUrl).not.toContain('lang=')
+  })
 })
 
 describe('getDirections timeout', () => {
@@ -73,5 +103,35 @@ describe('getDirections timeout', () => {
     await getDirectionsWithRetry(journey)
 
     expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 60_000)
+  })
+
+  test('includes mapped Azure Maps language code when language is provided', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const { getDirections } = await import('../../src/services/api')
+
+    await getDirections(journey, 'fr')
+
+    const calledUrl = fetchSpy.mock.calls[0][0]
+    expect(calledUrl).toContain('lang=fr-FR')
+  })
+
+  test('includes en-US as Azure Maps language code for English', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const { getDirections } = await import('../../src/services/api')
+
+    await getDirections(journey, 'en')
+
+    const calledUrl = fetchSpy.mock.calls[0][0]
+    expect(calledUrl).toContain('lang=en-US')
+  })
+
+  test('omits language param when no language is provided', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch')
+    const { getDirections } = await import('../../src/services/api')
+
+    await getDirections(journey)
+
+    const calledUrl = fetchSpy.mock.calls[0][0]
+    expect(calledUrl).not.toContain('lang=')
   })
 })

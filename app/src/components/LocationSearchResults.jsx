@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useContext, useEffect, useRef, useState } from 'preact/hooks'
 import { Text } from 'preact-i18n'
 
 import { findLocations, findLocationsWithRetry } from '../services/api'
+import { LanguageContext } from '../context/language'
 import { LoadingIndicator } from './LoadingIndicator'
 import { ErrorMessage } from './ErrorMessage'
 
@@ -21,6 +22,7 @@ export function LocationSearchResults(props) {
   const [searchResults, setSearchResults] = useState()
   const displayedResultsRef = useRef()
   const submitButtonRef = useRef()
+  const language = useContext(LanguageContext)
 
   const search = (fetchFn = findLocations) => {
     setSearchResults(undefined)
@@ -31,7 +33,7 @@ export function LocationSearchResults(props) {
     }
 
     setLoading(true)
-    fetchFn(props.query)
+    fetchFn(props.query, language)
       .then(setSearchResults, setError)
       .finally(() => setLoading(false))
   }

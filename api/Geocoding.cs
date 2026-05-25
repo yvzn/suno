@@ -1,13 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Collections.Generic;
 using Microsoft.Azure.Functions.Worker;
 
 namespace suno;
@@ -31,13 +26,28 @@ public class Geocoding(ILogger<Directions> logger)
 			return new BadRequestResult();
 		}
 
-		string azureMapsApiEndpoint = $"https://atlas.microsoft.com/geocode?api-version=2023-06-01&query={searchQuery}&subscription-key={azureMapsApiKey}";
+		string? language = I18n.GetValidLanguage(req.Query["lang"]);
 
-		var response = await httpClient.GetAsync(azureMapsApiEndpoint);
+		var azureMapsApiEndpoint = "https://atlas.microsoft.com/geocode";
+
+		var requestUrl = new UriBuilder(azureMapsApiEndpoint);
+		var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
+		query["api-version"] = "2026-01-01";
+		query["subscription-key"] = azureMapsApiKey;
+		query["query"] = searchQuery;
+		requestUrl.Query = query.ToString() ?? string.Empty;
+
+		var request = new HttpRequestMessage(HttpMethod.Get, requestUrl.ToString());
+		if (language is not null)
+		{
+			request.Headers.Add("Accept-Language", language);
+		}
+
+		var response = await httpClient.SendAsync(request);
 
 		if (!response.IsSuccessStatusCode)
 		{
-			logger.LogError("Azure Maps API request failed with status code: {AzureMapsStatusCode}", response.StatusCode);
+			logger.LogError("Azure Maps API request failed with status code: {AzureMapsStatusCode} response: {ResponseContent}", response.StatusCode, await response.Content.ReadAsStringAsync());
 			return new StatusCodeResult(StatusCodes.Status502BadGateway);
 		}
 

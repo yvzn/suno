@@ -6,10 +6,13 @@ const DEFAULT_TIMEOUT = 30_000
 const RETRY_TIMEOUT_FACTOR = 2
 
 function createFindLocationsApi(timeout) {
-  return async function(searchQuery) {
+  return async function(searchQuery, language) {
     const params = new URLSearchParams()
     params.set("code", apiKey)
     params.set("q", searchQuery)
+    if (language) {
+      params.set("lang", language)
+    }
 
     const response = await httpGet(`${apiUrl}/geocoding?${params.toString()}`, timeout)
 
@@ -22,9 +25,12 @@ const findLocationsApi = createFindLocationsApi(DEFAULT_TIMEOUT)
 const findLocationsApiWithRetry = createFindLocationsApi(DEFAULT_TIMEOUT * RETRY_TIMEOUT_FACTOR)
 
 function createGetDirectionsApi(timeout) {
-  return async function({ from, to, startDate }) {
+  return async function({ from, to, startDate }, language) {
     const params = serializeJourney({ from, to, startDate })
     params.set("code", apiKey)
+    if (language) {
+      params.set("lang", language)
+    }
 
     const response = await httpGet(`${apiUrl}/directions?${params.toString()}`, timeout)
 

@@ -8,7 +8,7 @@
 //
 
 // Version number
-let version = '1.0.4';
+let version = '1.0.5';
 
 // Cache IDs
 let coreID = `${version}_core`;
