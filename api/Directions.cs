@@ -1,13 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
-using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Collections.Generic;
 using System.Globalization;
 using Microsoft.Azure.Functions.Worker;
 
@@ -20,9 +15,6 @@ public class Directions(ILogger<Directions> logger)
 	private static readonly HttpClient httpClient = new();
 
 	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
-
-	/// <summary>Allowed Azure Maps language codes accepted by the route directions API.</summary>
-	private static readonly HashSet<string> allowedLanguages = new(StringComparer.OrdinalIgnoreCase) { "en-US", "fr-FR" };
 
 	[Function("Directions")]
 	public async Task<IActionResult> Run(
@@ -49,7 +41,7 @@ public class Directions(ILogger<Directions> logger)
 			startDate = "";
 		}
 
-		string? language = GetValidLanguage(req.Query["lang"]);
+		string? language = I18n.GetValidLanguage(req.Query["lang"]);
 
 		string azureMapsApiEndpoint = "https://atlas.microsoft.com/route/directions/json";
 
@@ -104,9 +96,6 @@ public class Directions(ILogger<Directions> logger)
 	private static bool IsValidStartDate(string? maybeStartDate)
 		=> "now".Equals(maybeStartDate, StringComparison.InvariantCulture)
 			|| DateTimeOffset.TryParse(maybeStartDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
-
-	private static string? GetValidLanguage(string? language) =>
-		allowedLanguages.Contains(language ?? string.Empty) ? language : null;
 
 	internal static IEnumerable<Leg> MapInstructions(IEnumerable<AzureMapsGuidanceInstruction> instructions)
 	{

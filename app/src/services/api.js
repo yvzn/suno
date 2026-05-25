@@ -5,34 +5,13 @@ const apiKey = import.meta.env.VITE_API_KEY || localStorage.getItem('apiKey')
 const DEFAULT_TIMEOUT = 30_000
 const RETRY_TIMEOUT_FACTOR = 2
 
-/**
- * Maps frontend language codes to Azure Maps language codes.
- * Azure Maps requires full locale codes (e.g. 'en-US') while the app
- * uses short codes (e.g. 'en').
- */
-const AZURE_MAPS_LANGUAGE_MAP = {
-  'en': 'en-US',
-  'fr': 'fr-FR',
-}
-
-/**
- * Returns the Azure Maps language code for a given frontend language code.
- * Returns undefined for unknown or missing language codes.
- * @param {string} [language]
- * @returns {string|undefined}
- */
-function toAzureMapsLanguage(language) {
-  return AZURE_MAPS_LANGUAGE_MAP[language]
-}
-
 function createFindLocationsApi(timeout) {
   return async function(searchQuery, language) {
     const params = new URLSearchParams()
     params.set("code", apiKey)
     params.set("q", searchQuery)
-    const azureMapsLanguage = toAzureMapsLanguage(language)
-    if (azureMapsLanguage) {
-      params.set("lang", azureMapsLanguage)
+    if (language) {
+      params.set("lang", language)
     }
 
     const response = await httpGet(`${apiUrl}/geocoding?${params.toString()}`, timeout)
@@ -49,9 +28,8 @@ function createGetDirectionsApi(timeout) {
   return async function({ from, to, startDate }, language) {
     const params = serializeJourney({ from, to, startDate })
     params.set("code", apiKey)
-    const azureMapsLanguage = toAzureMapsLanguage(language)
-    if (azureMapsLanguage) {
-      params.set("lang", azureMapsLanguage)
+    if (language) {
+      params.set("lang", language)
     }
 
     const response = await httpGet(`${apiUrl}/directions?${params.toString()}`, timeout)
