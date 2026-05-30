@@ -1,0 +1,139 @@
+.home__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.home__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.home__illo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: var(--space-4) 0;
+}
+
+.home__mode-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.home__mode-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-3);
+}
+
+.home__mode-cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.home__mode-card {
+  border-radius: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-gray-2);
+  background: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.15s;
+}
+
+.home__mode-card:focus-visible {
+  outline: 2px solid var(--color-nav);
+  outline-offset: 2px;
+}
+
+.home__mode-card--selected-route {
+  border-color: var(--color-nav);
+  background: var(--color-nav-bg);
+}
+
+.home__mode-card--selected-parking {
+  border-color: var(--color-sun-dark);
+  background: var(--color-sun-bg);
+}
+
+.home__mode-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__mode-icon--route-sel {
+  background: var(--color-nav);
+}
+
+.home__mode-icon--route-unsel {
+  background: var(--color-gray-1);
+}
+
+.home__mode-icon--parking-sel {
+  background: var(--color-sun);
+}
+
+.home__mode-icon--parking-unsel {
+  background: var(--color-gray-1);
+}
+
+.home__mode-card-text {
+  flex: 1;
+}
+
+.home__mode-card-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.home__mode-card-title--route {
+  color: var(--color-nav-text);
+}
+
+.home__mode-card-title--parking {
+  color: var(--color-sun-text);
+}
+
+.home__mode-card-desc {
+  font-size: 11px;
+  color: var(--color-gray-3);
+  margin-top: 1px;
+  line-height: 1.4;
+}
+
+.home__mode-check {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  border: 1.5px solid var(--color-gray-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__mode-check--nav {
+  background: var(--color-nav);
+  border-color: var(--color-nav);
+}
+
+.home__mode-check--sun {
+  background: var(--color-sun-dark);
+  border-color: var(--color-sun-dark);
+}

@@ -1,0 +1,7 @@
+.journey__section-title {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}

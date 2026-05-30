@@ -1,0 +1,77 @@
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.input-field__label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-3);
+}
+
+.input-field__button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 9px 11px;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  border: 0.5px solid var(--color-gray-2);
+  background: var(--color-gray-1);
+  color: var(--color-gray-3);
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+  text-align: left;
+}
+
+.input-field__button:focus-visible {
+  outline: 2px solid var(--color-nav);
+  outline-offset: 2px;
+}
+
+.input-field__button--focused {
+  border: 1.5px solid var(--color-nav);
+  background: var(--color-nav-bg);
+  color: var(--color-nav-text);
+}
+
+.input-field__button--confirmed {
+  border: 0.5px solid var(--color-sun-border);
+  background: var(--color-sun-bg);
+  color: var(--color-sun-text);
+}
+
+.input-field__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.input-field__dot--departure {
+  background: var(--color-nav);
+}
+
+.input-field__dot--destination {
+  background: var(--color-gray-3);
+}
+
+.input-field__dot--destination-confirmed {
+  background: var(--color-sun-dark);
+}
+
+.input-field__value {
+  flex: 1;
+}
+
+.input-field__chevron {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}

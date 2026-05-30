@@ -1,0 +1,26 @@
+@keyframes spin-arc {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin-arc 1s linear infinite;
+}
+
+.spinner--sm {
+  width: 16px;
+  height: 16px;
+}
+
+.spinner--md {
+  width: 24px;
+  height: 24px;
+}
+
+.spinner--lg {
+  width: 32px;
+  height: 32px;
+}

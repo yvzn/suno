@@ -1,0 +1,38 @@
+.time-chips {
+  display: flex;
+  gap: 6px;
+}
+
+.time-chip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 36px;
+  padding: 7px 9px;
+  background: var(--color-gray-1);
+  border: 0.5px solid var(--color-gray-2);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.time-chip:hover {
+  border-color: var(--color-nav-border);
+}
+
+.time-chip:focus-visible {
+  outline: 2px solid var(--color-nav);
+  outline-offset: 2px;
+}
+
+.time-chip__icon {
+  color: var(--color-nav);
+  font-size: 10px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}

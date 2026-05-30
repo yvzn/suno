@@ -1,0 +1,50 @@
+.lang-toggle {
+  display: flex;
+  border: 0.5px solid var(--color-gray-2);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.lang-toggle__legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.lang-toggle__option {
+  position: relative;
+}
+
+.lang-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.lang-toggle__label {
+  display: block;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-gray-3);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lang-toggle__input:checked + .lang-toggle__label {
+  background: var(--color-nav);
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.lang-toggle__input:focus-visible + .lang-toggle__label {
+  outline: 2px solid var(--color-nav);
+  outline-offset: 2px;
+}
