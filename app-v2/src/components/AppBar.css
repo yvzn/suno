@@ -1,0 +1,61 @@
+.app-bar {
+  height: 52px;
+  background: var(--color-white);
+  border-bottom: 0.5px solid var(--color-gray-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+}
+
+.app-bar__logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-bar__logo:focus-visible {
+  outline: 2px solid var(--color-nav);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.app-bar__logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--color-sun);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-bar__logo-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.app-bar__right {
+  display: flex;
+  align-items: center;
+}
+
+.app-bar__step {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-nav);
+}
+
+.app-bar__edit {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-nav);
+  text-decoration: none;
+}
+
+.app-bar__edit:hover {
+  color: var(--color-nav-dark);
+}

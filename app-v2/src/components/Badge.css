@@ -1,0 +1,19 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+
+.badge--sun {
+  background: var(--color-sun-bg);
+  color: var(--color-sun-text);
+  border: 0.5px solid var(--color-sun-border);
+}
+
+.badge--nav {
+  background: var(--color-nav-bg);
+  color: var(--color-nav-text);
+}

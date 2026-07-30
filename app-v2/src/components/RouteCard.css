@@ -1,0 +1,99 @@
+.route-card {
+  background: var(--color-white);
+  border: 0.5px solid var(--color-gray-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.route-card__title {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gray-3);
+  margin-bottom: var(--space-3);
+}
+
+.route-card__fields {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.route-card__track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-top: 10px;
+  align-self: stretch;
+}
+
+.route-card__track-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.route-card__track-dot--departure {
+  background: var(--color-nav);
+}
+
+.route-card__track-dot--destination {
+  background: var(--color-sun-dark);
+}
+
+.route-card__track-line {
+  width: 1.5px;
+  flex: 1;
+  background: var(--color-gray-2);
+  min-height: 14px;
+}
+
+.route-card__inputs {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.route-card__swap {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  border: 0.5px solid var(--color-gray-2);
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.route-card__swap:hover {
+  background: var(--color-nav-bg);
+  border-color: var(--color-nav-border);
+}
+
+.route-card__swap:focus-visible {
+  outline: 2px solid var(--color-nav);
+  outline-offset: 2px;
+}
+
+.route-card__divider {
+  border: none;
+  border-top: 0.5px solid var(--color-gray-2);
+  margin: var(--space-3) 0;
+}
+
+.route-card__footer {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.route-card__footer .time-chips {
+  flex: 1;
+}
