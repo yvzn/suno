@@ -1,6 +1,14 @@
 import { describe, expect, test } from 'vitest'
+import * as SunCalc from 'suncalc';
 
 import { computeLegDates, computeAngleBetween, computeSunPositions, computeSunPositionsPerLeg, bucketize } from '../../src/services/sun-position';
+
+test('SunCalc returns accurate degree-based north azimuths', () => {
+    const position = SunCalc.getPosition(new Date('2023-08-01T12:00:00.000Z'), 51.5, 0);
+
+    expect(position.altitude).toBeCloseTo(56.49, 1);
+    expect(position.azimuth).toBeCloseTo(177.26, 1);
+})
 
 describe(computeSunPositions.name, () => {
     test('compute sun positions bucketed by sector, going east around midday', () => {
@@ -46,6 +54,21 @@ describe(computeSunPositions.name, () => {
         // the itinerary goes west, the sun is south
         // the sun position (with respect to the itinerary) sould be in the topmost buckets
         expect(positions).toEqual([5 * 60, 0, 0, 0, 0, 0, 0, 0]);
+    })
+
+    test('compute sun positions bucketed by sector, going north around midday', () => {
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [{
+            start: Greenwich(),
+            end: GreenwichNorth(),
+            durationInSeconds: 5 * 60
+        }]
+
+        const positions = computeSunPositions({ legs }, tripDate)
+
+        // the itinerary goes north, the sun is south
+        // the sun position (with respect to the itinerary) should be behind the vehicle
+        expect(positions).toEqual([0, 0, 0, 0, 5 * 60, 0, 0, 0]);
     })
 });
 
@@ -254,6 +277,15 @@ function Bromley() {
     return ({
         coord: {
             lat: 51.4,
+            lon: 0,
+        },
+    })
+}
+
+function GreenwichNorth() {
+    return ({
+        coord: {
+            lat: 51.6,
             lon: 0,
         },
     })
