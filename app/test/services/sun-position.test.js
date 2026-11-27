@@ -1,6 +1,14 @@
 import { describe, expect, test } from 'vitest'
+import * as SunCalc from 'suncalc';
 
 import { computeLegDates, computeAngleBetween, computeSunPositions, computeSunPositionsPerLeg, bucketize } from '../../src/services/sun-position';
+
+test('SunCalc returns accurate degree-based north azimuths', () => {
+    const position = SunCalc.getPosition(new Date('2023-08-01T12:00:00.000Z'), 51.5, 0);
+
+    expect(position.altitude).toBeCloseTo(56.49, 1);
+    expect(position.azimuth).toBeCloseTo(177.26, 1);
+})
 
 describe(computeSunPositions.name, () => {
     test('compute sun positions bucketed by sector, going east around midday', () => {
