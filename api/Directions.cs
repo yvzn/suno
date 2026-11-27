@@ -48,7 +48,7 @@ public class Directions(ILogger<Directions> logger)
 
 		string? language = I18n.GetValidLanguage(req.Query["lang"]);
 
-		string azureMapsApiEndpoint = "https://atlas.microsoft.com/route/directions/json";
+		string azureMapsApiEndpoint = "https://atlas.microsoft.com/route/directions";
 
 		var requestUrl = new UriBuilder(azureMapsApiEndpoint);
 		var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
@@ -144,7 +144,8 @@ public class Directions(ILogger<Directions> logger)
 		foreach (var feature in response?.features ?? [])
 		{
 			var properties = feature.properties;
-			if (!"ManeuverPoint".Equals(properties?.type, StringComparison.OrdinalIgnoreCase))
+			if (!"ManeuverPoint".Equals(properties?.type, StringComparison.OrdinalIgnoreCase)
+				&& !"Waypoint".Equals(properties?.type, StringComparison.OrdinalIgnoreCase))
 			{
 				continue;
 			}
