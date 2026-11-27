@@ -1,4 +1,4 @@
-import SunCalc from 'suncalc';
+import * as SunCalc from 'suncalc';
 
 // representing the number of heading sectors
 // the full circle (2 * Math.PI) is divided into SECTOR_COUNT heading sectors
@@ -120,16 +120,8 @@ function calculateBucketIncrement(leg, bucketCount) {
 function getSunPosition(timeAndDate, coords) {
   const { altitude, azimuth } = SunCalc.getPosition(timeAndDate, coords.lat, coords.lon);
 
-  // suncalc.js returns the sun azimuth in radians, (direction along the horizon, measured from south to west)
-  // e.g. 0 is south and Math.PI * 3/4 is northwest
-  // https://github.com/mourner/suncalc#sun-position
-
-  // with azimuth defined as the angle between a line due south and the shadow cast by a vertical rod
-  // the angle is positive if the shadow is west of south and negative if it is east of south
-
-  // our trigonometric computations are typically counterclockwise, so the azimuth value should be inverted
-
-  return { altitude, azimuth: -1 * azimuth };
+  // SunCalc uses degrees clockwise from north; internal calculations use radians counterclockwise from south.
+  return { altitude, azimuth: (180 - azimuth) * Math.PI / 180 };
 }
 
 function convertLegToVector(leg) {
@@ -146,10 +138,8 @@ function convertLegToVector(leg) {
  * @returns {number} The normalized angle within the [0, 2π) range.
  */
 function normalizeAngle(angleInRadians) {
-  var result = angleInRadians;
-  while (result < 0) result += 2 * Math.PI;
-  while (result > 2 * Math.PI) result -= 2 * Math.PI;
-  return result;
+  const fullCircle = 2 * Math.PI;
+  return (angleInRadians % fullCircle + fullCircle) % fullCircle;
 }
 
 /**

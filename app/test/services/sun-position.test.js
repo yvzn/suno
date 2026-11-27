@@ -47,6 +47,21 @@ describe(computeSunPositions.name, () => {
         // the sun position (with respect to the itinerary) sould be in the topmost buckets
         expect(positions).toEqual([5 * 60, 0, 0, 0, 0, 0, 0, 0]);
     })
+
+    test('compute sun positions bucketed by sector, going north around midday', () => {
+        const tripDate = new Date('2023-08-01T12:00:00.000Z');
+        const legs = [{
+            start: Greenwich(),
+            end: GreenwichNorth(),
+            durationInSeconds: 5 * 60
+        }]
+
+        const positions = computeSunPositions({ legs }, tripDate)
+
+        // the itinerary goes north, the sun is south
+        // the sun position (with respect to the itinerary) should be behind the vehicle
+        expect(positions).toEqual([0, 0, 0, 0, 5 * 60, 0, 0, 0]);
+    })
 });
 
 describe(computeSunPositionsPerLeg.name, () => {
@@ -254,6 +269,15 @@ function Bromley() {
     return ({
         coord: {
             lat: 51.4,
+            lon: 0,
+        },
+    })
+}
+
+function GreenwichNorth() {
+    return ({
+        coord: {
+            lat: 51.6,
             lon: 0,
         },
     })
