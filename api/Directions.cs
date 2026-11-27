@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Globalization;
+using System.Text;
 using Microsoft.Azure.Functions.Worker;
 
 namespace suno;
@@ -14,7 +15,11 @@ public class Directions(ILogger<Directions> logger)
 
 	private static readonly HttpClient httpClient = new();
 
-	private static readonly JsonSerializerOptions jsonSerializerOptions = new() { Converters = { new JsonStringEnumConverter() } };
+	private static readonly JsonSerializerOptions jsonSerializerOptions = new()
+	{
+		Converters = { new JsonStringEnumConverter() },
+		DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+	};
 
 	[Function("Directions")]
 	public async Task<IActionResult> Run(
@@ -47,18 +52,30 @@ public class Directions(ILogger<Directions> logger)
 
 		var requestUrl = new UriBuilder(azureMapsApiEndpoint);
 		var query = System.Web.HttpUtility.ParseQueryString(string.Empty);
-		query["api-version"] = "1.0";
+		query["api-version"] = "2025-01-01";
 		query["subscription-key"] = azureMapsApiKey;
-		query["query"] = $"{fromLatitude},{fromLongitude}:{toLatitude},{toLongitude}";
-		query["departAt"] = startDate;
-		query["instructionsType"] = "coded";
-		if (language is not null)
-		{
-			query["language"] = language;
-		}
 		requestUrl.Query = query.ToString() ?? string.Empty;
 
-		var request = new HttpRequestMessage(HttpMethod.Get, requestUrl.ToString());
+		var routeRequest = new AzureMapsRouteRequest
+		{
+			features =
+			[
+				CreateWaypoint(fromLongitude, fromLatitude, 0),
+				CreateWaypoint(toLongitude, toLatitude, 1)
+			],
+			departAt = string.IsNullOrWhiteSpace(startDate) ? null : startDate
+		};
+		var request = new HttpRequestMessage(HttpMethod.Post, requestUrl.ToString())
+		{
+			Content = new StringContent(
+				JsonSerializer.Serialize(routeRequest, jsonSerializerOptions),
+				Encoding.UTF8,
+				"application/geo+json")
+		};
+		if (language is not null)
+		{
+			request.Headers.AcceptLanguage.ParseAdd(language);
+		}
 
 		var response = await httpClient.SendAsync(request);
 
@@ -72,13 +89,7 @@ public class Directions(ILogger<Directions> logger)
 
 		var azureMapsResponse = await JsonSerializer.DeserializeAsync<AzureMapsDirectionsResponse>(jsonContent, jsonSerializerOptions);
 
-		if (azureMapsResponse?.routes.Count is not > 0)
-		{
-			return new NotFoundObjectResult("Route not found.");
-		}
-
-		var instructions = azureMapsResponse.routes.First().guidance.instructions;
-
+		var instructions = GetInstructions(azureMapsResponse);
 		if (instructions.Count < 1)
 		{
 			return new NotFoundObjectResult("Route not found.");
@@ -105,6 +116,57 @@ public class Directions(ILogger<Directions> logger)
 	private static bool IsValidStartDate(string? maybeStartDate)
 		=> "now".Equals(maybeStartDate, StringComparison.InvariantCulture)
 			|| DateTimeOffset.TryParse(maybeStartDate, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+
+	private static AzureMapsRouteRequestFeature CreateWaypoint(string? longitude, string? latitude, int pointIndex)
+		=> new()
+		{
+			geometry = new()
+			{
+				coordinates =
+				[
+					decimal.Parse(longitude!, CultureInfo.InvariantCulture),
+					decimal.Parse(latitude!, CultureInfo.InvariantCulture)
+				]
+			},
+			properties = new() { pointIndex = pointIndex }
+		};
+
+	internal static IReadOnlyCollection<AzureMapsGuidanceInstruction> GetInstructions(AzureMapsDirectionsResponse? response)
+	{
+		var legacyInstructions = response?.routes?.FirstOrDefault()?.guidance?.instructions;
+		if (legacyInstructions is not null)
+		{
+			return legacyInstructions.ToList();
+		}
+
+		var instructions = new List<AzureMapsGuidanceInstruction>();
+		var elapsedSeconds = 0;
+		foreach (var feature in response?.features ?? [])
+		{
+			var properties = feature.properties;
+			if (!"ManeuverPoint".Equals(properties?.type, StringComparison.OrdinalIgnoreCase))
+			{
+				continue;
+			}
+
+			var coordinates = feature.geometry?.coordinates?.ToList() ?? [];
+			var stepNames = properties?.steps?.SelectMany(step => step.names ?? []).ToList() ?? [];
+			instructions.Add(new()
+			{
+				travelTimeInSeconds = elapsedSeconds,
+				point = coordinates.Count >= 2
+					? new() { longitude = coordinates[0], latitude = coordinates[1] }
+					: null,
+				street = properties?.street ?? properties?.towardsRoadName,
+				roadNumbers = properties?.roadNumbers?.ToList() ?? stepNames,
+				signpostText = properties?.signpostText ?? properties?.signs?.FirstOrDefault() ?? properties?.exitIdentifier,
+				maneuver = properties?.maneuver ?? properties?.instruction?.maneuverType
+			});
+			elapsedSeconds += properties?.durationInSeconds ?? 0;
+		}
+
+		return instructions;
+	}
 
 	internal static IEnumerable<Leg> MapInstructions(IEnumerable<AzureMapsGuidanceInstruction> instructions)
 	{
@@ -139,12 +201,14 @@ public class Directions(ILogger<Directions> logger)
 			return instruction.street;
 		}
 
-		if (instruction.roadNumbers.Count > 0)
+		if (instruction.roadNumbers?.Count > 0)
 		{
 			return string.Join('/', instruction.roadNumbers);
 		}
 
-		if (!string.IsNullOrWhiteSpace(instruction.signpostText) && "TAKE_EXIT".Equals(instruction.maneuver))
+		if (!string.IsNullOrWhiteSpace(instruction.signpostText)
+			&& instruction.maneuver is not null
+			&& instruction.maneuver.Replace("_", string.Empty).Equals("TAKEEXIT", StringComparison.OrdinalIgnoreCase))
 		{
 			return "exit: " + CultureInfo.InvariantCulture.TextInfo.ToTitleCase(instruction.signpostText.ToLowerInvariant());
 		}
@@ -152,10 +216,17 @@ public class Directions(ILogger<Directions> logger)
 		return default;
 	}
 
-	internal static Coordinates MapCoordinates(AzureMapsPoint azureMapsPoint)
-		=> new()
+	internal static Coordinates? MapCoordinates(AzureMapsPoint? azureMapsPoint)
+	{
+		if (azureMapsPoint is null)
+		{
+			return default;
+		}
+
+		return new()
 		{
 			lat = azureMapsPoint.latitude,
 			lon = azureMapsPoint.longitude
 		};
+	}
 }
